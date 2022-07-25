@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const { Schema } = mongoose;
+const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 // note: import other models here if related to user profile...
 // const ambitions = require("./Ambitions");
@@ -24,7 +22,8 @@ const userSchema = new Schema ({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        match: [/.+@.+\..+/, 'Must use a valid email address'], // validation for now
     },
     password: {
         type: String,
@@ -49,6 +48,6 @@ userSchema.methods.isCorrectPassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;
