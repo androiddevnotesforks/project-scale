@@ -10,8 +10,14 @@ const typeDefs = gql`
         # don't want to display password
     }
 
+    type Category {
+        _id: ID
+        name: String
+    }
+
     type Query {
         user: User
+        categories: [Category]
     }
 
     type Mutation {
