@@ -1,0 +1,25 @@
+{
+  "name": "project-scale",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "npm": "7.x"
+    },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r134x7/project-scale.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/r134x7/project-scale/issues"
+  },
+  "homepage": "https://github.com/r134x7/project-scale#readme"
+}
