@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const { Schema } = mongoose;
+const calendarSchema = require("./Calendar") // importing subdocument schema
 
 const ambitionsSchema = new Schema({
     name: {
@@ -23,11 +23,23 @@ const ambitionsSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }
-});
+    },
+    calendar: [calendarSchema],
+  },
+  {
+    toJSON: {
+        virtuals: true,        
+    },
+    id: false, // forgot what this is for but it's always used after toJSON
+  }
+);
+
+ambitionsSchema.virtual("daysCount").get(function () {
+    return this.calendar.length;
+})
 
 // do i create sideEffects as a submodel or just put it in with the schema?...
 
-const Ambitions = mongoose.model("Ambitions", ambitionsSchema);
+const Ambitions = model("Ambitions", ambitionsSchema);
 
 module.exports = Ambitions;
