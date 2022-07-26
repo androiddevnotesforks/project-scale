@@ -30,7 +30,6 @@ const typeDefs = gql`
         name: String!
         timeLimit: Int!
         category: Category!
-        user: User!
         daysCount: Int
         calendar: [Calendar]
     }
@@ -51,6 +50,9 @@ const typeDefs = gql`
         # maybe I'll put in a mutation to update user...
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
+        addIdentity(name: String!): User
+        addAmbition(name: String!, timeLimit: Int!, category: Category!): User
+        addCalendar(createdAt: String!, dataInput: Float!, notes: String): User
     }
 `;
 
