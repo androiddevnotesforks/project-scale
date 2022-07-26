@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-const calendarSchema = new Schema({ // this will be a subdocument schema for ambitions
+const eventsSchema = new Schema({ // this will be a subdocument schema for ambitions
     createdAt: {
         type: Date,
         default: Date.now,
@@ -28,4 +28,4 @@ const calendarSchema = new Schema({ // this will be a subdocument schema for amb
         return `${createdAt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${createdAt.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric'})}`
     }
 
-module.exports = calendarSchema;
+module.exports = eventsSchema;
