@@ -23,7 +23,7 @@ const typeDefs = gql`
         category: Category!
         user: User!
         daysCount: Int
-        calendarEntries: [Calendar]
+        calendar: [Calendar]
     }
 
     type Calendar {
