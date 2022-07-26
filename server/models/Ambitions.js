@@ -3,15 +3,10 @@ const { Schema, model } = require('mongoose');
 const eventsSchema = require("./Events"); // importing subdocument schema
 
 const ambitionsSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
     identity: { 
-        type: String,
-        required: true,
-        trim: true
+        type: Schema.Types.ObjectId,
+        ref: "Identity",
+        required: true
     },
     timeLimit: {
         type: Number,
@@ -22,11 +17,6 @@ const ambitionsSchema = new Schema({
     category: { // every ambition belongs to a category
         type: Schema.Types.ObjectId,
         ref: "Category",
-        required: true
-    },
-    user: { // every ambition belongs to a user
-        type: Schema.Types.ObjectId,
-        ref: "User",
         required: true
     },
     public: { // if true = public, false = private

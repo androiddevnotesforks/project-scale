@@ -18,6 +18,12 @@ const userSchema = new Schema({
         required: true,
         minlength: 8
     },
+    ambitions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Ambitions',
+        },
+      ],
 });
 
 // set up pre-save middleware to create password

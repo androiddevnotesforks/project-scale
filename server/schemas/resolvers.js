@@ -1,4 +1,4 @@
-const { User, Category, Ambitions } = require("../models");
+const { User, Category, Ambitions, Identity } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -8,12 +8,15 @@ const resolvers = {
             if (context.user) {
                 return User.findOne({
                     _id: context.user._id
-                })
+                }).populate("ambitions");
             }
             throw new AuthenticationError("Session expired, login again.");
         },
         categories: async () => {
             return await Category.find();
+        },
+        identities: async () => {
+            return await Identity.find();
         },
         ambitions: async () => { // assuming it will find all public ambitions that are true
             return await Ambitions.find()
@@ -47,17 +50,22 @@ const resolvers = {
         addAmbition: async (parent, { name, identity, timeLimit, category }, context) => {
             if (context.user) {
                 const createAmbition = await Ambitions.create(
-                    { name, identity, timeLimit, category, user: context.user._id }
+                    { identity, timeLimit, category }
                 );
+                    console.log(createAmbition);
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { ambitions: createAmbition._id } }
+                  );
 
                 return createAmbition;
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        addEvent: async (parent, { _id, dataInput, notes }, context) => {
+        addEvent: async (parent, { ambitionId, dataInput, notes }, context) => {
             if (context.user) {
                 const addEvent = await Ambitions.findOneAndUpdate(
-                    { _id: _id },
+                    { _id: ambitionId },
                     { $addToSet: {
                         events: { dataInput, notes },
                         },

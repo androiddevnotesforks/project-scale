@@ -6,7 +6,7 @@ const typeDefs = gql`
         username: String!
         email: String!
         # You don't want to display the password
-        ambitions: [Ambitions]!
+        ambitions: [Ambitions]
     }
 
     type Auth {
@@ -16,17 +16,19 @@ const typeDefs = gql`
 
     type Category {
         _id: ID!
-        identityCategories: String!
-        ambitionCategories: String!
+        ambitionCategories: String
+    }
+
+    type Identity {
+        _id: ID!
+        identityCategories: String
     }
 
     type Ambitions {
         _id: ID!
-        name: String!
         identity: String!
         timeLimit: Int!
         category: ID!
-        user: ID!
         public: Boolean
         daysCount: Int
         events: [Events]!
@@ -41,6 +43,7 @@ const typeDefs = gql`
     type Query {
         user: User
         categories: [Category]
+        identities: [Identity]
         ambitions: [Ambitions]
     }
 
@@ -48,8 +51,8 @@ const typeDefs = gql`
         # maybe I'll put in a mutation to update user...
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        addAmbition(name: String!, identity: String! timeLimit: Int!, category: ID!): Ambitions
-        addEvent(dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
+        addAmbition(identity: ID!, timeLimit: Int!, category: ID!): Ambitions
+        addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
         # plan for removing identity, ambitions and maybe calendar entries
     }
 `;
