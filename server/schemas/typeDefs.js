@@ -8,6 +8,7 @@ const typeDefs = gql`
         username: String!
         email: String!
         # don't want to display password
+        # consider tying identity and ambitions to user
     }
 
     type Category {
@@ -21,6 +22,14 @@ const typeDefs = gql`
         timeLimit: Int!
         category: Category!
         user: User!
+        daysCount: Int
+        calendarEntries: [Calendar]
+    }
+
+    type Calendar {
+        createdAt: String!
+        dataInput: Float!
+        notes: String
     }
 
     type Query {

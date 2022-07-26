@@ -9,7 +9,7 @@ const calendarSchema = new Schema({ // this will be a subdocument schema for amb
     dataInput: { // mongoose docs mention string inputs are fine and that entering true gives 1 and false gives zero... idea... for ambitions that have only a yes or no answer put in buttons instead of a text input field. https://mongoosejs.com/docs/schematypes.html#numbers
         type: Number,
         required: true,
-        maxLength: 8,
+        maxLength: 8, // note: consider using buttons for all number inputs, not just the yes/no
     },
     notes: {
         type: String,
