@@ -30,6 +30,8 @@ const typeDefs = gql`
         name: String!
         timeLimit: Int!
         category: Category!
+        user: User!
+        public: Boolean!
         daysCount: Int
         calendar: [Calendar]
     }
@@ -43,6 +45,7 @@ const typeDefs = gql`
     type Query {
         user: User
         categories: [Category]
+        ambitions: [User]
         # ambitions: [Ambitions] # very likely cannot query ambitions directly now that it is a subdoc
     }
 
@@ -51,7 +54,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
         addIdentity(name: String!): User
-        addAmbition(name: String!, timeLimit: Int!, category: Category!): Identity # assuming we are referencing its nearest parent to save: Identity and not the top-level parent: User
+        addAmbition(name: String!, timeLimit: Int!, category: Category!, user:User!, public: Boolean!): Identity # assuming we are referencing its nearest parent to save: Identity and not the top-level parent: User
         addCalendar(createdAt: String!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
         # plan for removing identity, ambitions and maybe calendar entries
     }
