@@ -7,13 +7,19 @@ const typeDefs = gql`
         lastName: String!
         username: String!
         email: String!
-        # don't want to display password
-        # consider tying identity and ambitions to user
+        # You don't want to display the password
+        identity: [Identity]
     }
 
     type Category {
         _id: ID!
         name: String!
+    }
+
+    type Identity {
+        _id: ID!
+        name: String!
+        ambitions: [Ambitions]
     }
 
     type Ambitions {
@@ -35,7 +41,7 @@ const typeDefs = gql`
     type Query {
         user: User
         categories: [Category]
-        ambitions: [Ambitions]
+        # ambitions: [Ambitions] # very likely cannot query ambitions directly now that it is a subdoc
     }
 
     type Mutation {
