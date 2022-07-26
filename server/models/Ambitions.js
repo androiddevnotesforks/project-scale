@@ -24,6 +24,10 @@ const ambitionsSchema = new Schema({
         ref: "User",
         required: true
     },
+    public: { // if true = public, false = private
+        type: Boolean,
+        required: true
+    },
     calendar: [calendarSchema], // ambitions' parent is Identity
   },
   {

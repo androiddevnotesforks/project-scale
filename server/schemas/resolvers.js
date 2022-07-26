@@ -1,7 +1,6 @@
 const { User, Category } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const { identity } = require("rxjs");
 
 const resolvers = {
     Query: {
@@ -16,6 +15,9 @@ const resolvers = {
         categories: async () => {
             return await Category.find();
         },
+        ambitions: async () => { // assuming it will find all public ambitions that are true
+            return await User.find({ identity: { ambitions: { public: true }}})
+        }
         // will have to consider querying ambitions when displaying them publicly
         // see redux store for reference: products
     },
@@ -54,13 +56,14 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        addAmbition: async (parent, { name, timeLimit, category }, context) => {
+        addAmbition: async (parent, { identityId, name, timeLimit, category }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
+                    // { _id: context.user._id },
+                    { "user._id": context.user._id, "user.identity._id": identityId },
                     { $addToSet: { 
                         identity: { 
-                            ambitions: { name, timeLimit, category } } } }, // ensure object keys are the same
+                            ambitions: { name, timeLimit, category, public: false } } } }, // ensure object keys are the same
                     { new: true, runValidators: true }
                 );
 
@@ -68,10 +71,13 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        addCalendar: async (parent, { createdAt, dataInput, notes }, context) => {
+        addCalendar: async (parent, { ambitionsId, identityid, createdAt, dataInput, notes }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
+                    { "user._id": context.user._id, 
+                      "user.identity._id": identityid,
+                      "user.identity.ambitions._id": ambitionsId 
+                    },
                     { $addToSet: { 
                         identity: { 
                             ambitions: { 
