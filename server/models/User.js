@@ -1,8 +1,5 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-// note: import other models here if related to user profile...
-
-const identitySchema = require("./Identity");
 
 const userSchema = new Schema({
     username: {
@@ -21,7 +18,6 @@ const userSchema = new Schema({
         required: true,
         minlength: 8
     },
-    identity: [identitySchema] // to top-level parent of deeply nested subdocuments
 });
 
 // set up pre-save middleware to create password

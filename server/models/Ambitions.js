@@ -1,9 +1,14 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const calendarSchema = require("./Calendar"); // importing subdocument schema
+const eventsSchema = require("./Events"); // importing subdocument schema
 
 const ambitionsSchema = new Schema({
     name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    identity: { 
         type: String,
         required: true,
         trim: true
@@ -19,21 +24,16 @@ const ambitionsSchema = new Schema({
         ref: "Category",
         required: true
     },
-    identity: { // every ambition belongs to a category
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        // required: true
-    },
     user: { // every ambition belongs to a user
         type: Schema.Types.ObjectId,
         ref: "User",
-        // required: true
+        required: true
     },
     public: { // if true = public, false = private
         type: Boolean,
         default: false,
     },
-    calendar: [calendarSchema], // ambitions' parent is Identity
+    calendar: [eventsSchema],
   },
   {
     toJSON: {
@@ -47,6 +47,7 @@ ambitionsSchema.virtual("daysCount").get(function () {
     return this.calendar.length;
 })
 
+const Ambitions = model("Ambitions", ambitionsSchema);
 // do i create sideEffects as a submodel or just put it in with the schema?...
 
-module.exports = ambitionsSchema;
+module.exports = Ambitions;
