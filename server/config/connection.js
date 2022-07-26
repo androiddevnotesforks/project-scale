@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/projectscale', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/projectscale');
 
 module.exports = mongoose.connection;

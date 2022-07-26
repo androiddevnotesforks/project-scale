@@ -24,9 +24,9 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get("*", (req, res) => { // wild card route whenever a request for a non-API route is received
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-})
+// app.get("*", (req, res) => { // wild card route whenever a request for a non-API route is received
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// })
 
 const startApolloServer = async (typeDefs, resolvers) => {
     await server.start(); // await to start the server

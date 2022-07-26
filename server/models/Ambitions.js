@@ -19,14 +19,19 @@ const ambitionsSchema = new Schema({
         ref: "Category",
         required: true
     },
+    identity: { // every ambition belongs to a category
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        // required: true
+    },
     user: { // every ambition belongs to a user
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        // required: true
     },
     public: { // if true = public, false = private
         type: Boolean,
-        required: true
+        default: false,
     },
     calendar: [calendarSchema], // ambitions' parent is Identity
   },
@@ -44,4 +49,4 @@ ambitionsSchema.virtual("daysCount").get(function () {
 
 // do i create sideEffects as a submodel or just put it in with the schema?...
 
-module.exports = Ambitions;
+module.exports = ambitionsSchema;
