@@ -11,6 +11,11 @@ const typeDefs = gql`
         identity: [Identity]
     }
 
+    type Auth {
+        token: ID!
+        user: User
+    }
+
     type Category {
         _id: ID!
         name: String!
