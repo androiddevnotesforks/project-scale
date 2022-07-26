@@ -1,4 +1,4 @@
-const { User, Category } = require("../models");
+const { User, Category, Ambitions } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -16,7 +16,7 @@ const resolvers = {
             return await Category.find();
         },
         ambitions: async () => { // assuming it will find all public ambitions that are true
-            return await User.find({ identity: { ambitions: { public: true }}})
+            return await Ambitions.find()
         }
         // will have to consider querying ambitions when displaying them publicly
         // see redux store for reference: products
@@ -34,9 +34,9 @@ const resolvers = {
             if (!correctPw) {
                 throw new AuthenticationError("Invalid credentials");
             };
-
+            console.log(user);
             const token = signToken(user); // creates a JWT and assigns it to the user
-            return { user, token };
+            return { token, user };
         },
         addUser: async (parent, { username, email, password }) => {
             const user = await User.create({username, email, password});
@@ -44,48 +44,28 @@ const resolvers = {
 
             return { user, token };
         },
-        addIdentity: async (parent, { name }, context) => {
+        addAmbition: async (parent, { name, identity, timeLimit, category }, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { identity: { name } } }, // ensure object keys are the same
-                    { new: true, runValidators: true }
+                const createAmbition = await Ambitions.create(
+                    { name, identity, timeLimit, category, user: context.user._id }
                 );
 
-                return updatedUser;
+                return createAmbition;
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        addAmbition: async (parent, { identityId, name, timeLimit, category }, context) => {
+        addEvent: async (parent, { _id, dataInput, notes }, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    // { _id: context.user._id },
-                    { "user._id": context.user._id, "user.identity._id": identityId },
-                    { $addToSet: { 
-                        identity: { 
-                            ambitions: { name, timeLimit, category, public: false } } } }, // ensure object keys are the same
-                    { new: true, runValidators: true }
-                );
-
-                return updatedUser;
-            }
-            throw new AuthenticationError("Session expired, login again.");
-        },
-        addCalendar: async (parent, { ambitionsId, identityid, createdAt, dataInput, notes }, context) => {
-            if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { "user._id": context.user._id, 
-                      "user.identity._id": identityid,
-                      "user.identity.ambitions._id": ambitionsId 
+                const addEvent = await Ambitions.findOneAndUpdate(
+                    { _id: _id },
+                    { $addToSet: {
+                        events: { dataInput, notes },
+                        },
                     },
-                    { $addToSet: { 
-                        identity: { 
-                            ambitions: { 
-                                calendar: { createdAt, dataInput, notes } } } } }, // ensure object keys are the same
                     { new: true, runValidators: true }
                 );
 
-                return updatedUser;
+                return addEvent;
             }
             throw new AuthenticationError("Session expired, login again.");
         },

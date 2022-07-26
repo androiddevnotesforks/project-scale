@@ -33,7 +33,7 @@ const ambitionsSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    calendar: [eventsSchema],
+    events: [eventsSchema],
   },
   {
     toJSON: {
@@ -44,7 +44,7 @@ const ambitionsSchema = new Schema({
 );
 
 ambitionsSchema.virtual("daysCount").get(function () {
-    return this.calendar.length;
+    return this.events.length;
 })
 
 const Ambitions = model("Ambitions", ambitionsSchema);
