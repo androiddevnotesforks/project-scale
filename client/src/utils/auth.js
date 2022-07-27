@@ -11,7 +11,7 @@ class AuthService {
     return !!token && !this.isTokenExpired(token);
   }
 
-  isTokenExpired(token: string) { // Typescript uses Strong typing so the token is of type string
+  isTokenExpired(token) { 
     try { // checks if the token is expired
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -24,10 +24,10 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('id_token'); 
   }
 
-  login(idToken: string) { // Typescript uses Strong typing so the token is of type string
+  login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken);
 
