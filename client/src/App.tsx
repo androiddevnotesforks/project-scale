@@ -22,6 +22,8 @@ import {
 } from '@mantine/core';
 
 // import pages here
+import Home from "./pages/Home";
+import NoMatch from './pages/NoMatch';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -56,7 +58,7 @@ function App() {
     navbarOffsetBreakpoint="sm"
     navbar={
       <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-        <Text>Application navbar</Text>
+        <Text>Navbar...</Text>
       </Navbar>
     }
     header={
@@ -71,8 +73,7 @@ function App() {
               mr="xl"
             />
           </MediaQuery>
-
-          <Text>Application header</Text>
+          <Text>Project S.C.A.L.E.</Text>
         </div>
       </Header>
     }
@@ -81,8 +82,8 @@ function App() {
         <Router>
           <div>
               <Routes>
-                {/* <Route path="/" component={Home} />
-                <Route component={NoMatch} /> */}
+                <Route path="/" element={<Home />} />
+                <Route element={<NoMatch />} />
               </Routes>
           </div>
         </Router>
