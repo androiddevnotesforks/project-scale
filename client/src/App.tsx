@@ -19,12 +19,15 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
+  Button,
 } from '@mantine/core';
 
 // import pages here
 import Home from "./pages/Home";
 import NoMatch from './pages/NoMatch';
 import LoginSignup from './components/LoginSignup';
+
+import Auth from "./utils/auth";
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -60,7 +63,11 @@ function App() {
     navbar={
       <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
         <Text>Navbar...</Text>
-        <LoginSignup />
+        {Auth.loggedIn() ? (
+          <Button color={"orange"} onClick={Auth.logout}>Logout</Button>
+        ) : (
+          <LoginSignup />
+        )}
       </Navbar>
     }
     header={
