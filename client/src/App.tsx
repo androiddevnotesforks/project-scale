@@ -25,6 +25,8 @@ import {
 // import pages here
 import Home from "./pages/Home";
 import NoMatch from './pages/NoMatch';
+import Profile from './pages/Profile';
+
 import LoginSignup from './components/LoginSignup';
 
 import Auth from "./utils/auth";
@@ -64,6 +66,7 @@ function App() {
       <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
         <Text>Navbar...</Text>
         {Auth.loggedIn() ? (
+          // profile button or tab also appears here
           <Button color={"orange"} onClick={Auth.logout}>Logout</Button>
         ) : (
           <LoginSignup />
@@ -92,6 +95,7 @@ function App() {
           <div>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route element={<NoMatch />} />
               </Routes>
           </div>
