@@ -5,18 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
-// import store from "./utils/store";
+import store from "./utils/store";
 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  // <Provider store={store}>
+  <Provider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  /* </Provider> */
+  </Provider>
 );
 // root.render(
 //   <React.StrictMode>
