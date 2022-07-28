@@ -4,19 +4,31 @@ const eventsSchema = require("./Events"); // importing subdocument schema
 
 const ambitionsSchema = new Schema({
     identity: { 
-        type: Schema.Types.ObjectId,
-        ref: "Identity",
+        // type: Schema.Types.ObjectId,
+        // ref: "Identity",
+        // required: true
+        type: String,
+        required: true 
+    },
+    // timeLimit: { // might end up not using a time limit
+    //     type: Number,
+    //     required: true,
+    //     max: 365, //days...
+    //     min: 7 //days
+    // },
+    startValue: { // starting value
+        type: String,
         required: true
     },
-    timeLimit: {
-        type: Number,
-        required: true,
-        max: 365, //days...
-        min: 7 //days
+    endValue: { // where they want to end up
+        type: String,
+        required: true
     },
     category: { // every ambition belongs to a category
-        type: Schema.Types.ObjectId,
-        ref: "Category",
+        // type: Schema.Types.ObjectId,
+        // ref: "Category",
+        // required: true
+        type: String,
         required: true
     },
     public: { // if true = public, false = private
