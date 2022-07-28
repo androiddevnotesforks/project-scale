@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Modal, Button, Group, TextInput, PasswordInput, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useMutation } from '@apollo/client';
+import { LOGIN, ADD_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const emailValidation = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ; // regex taken from 16-Stu_React-Forms utils/helpers.js
 
 export default function LoginSignup() {
+
+  const [addUser] = useMutation(ADD_USER);
+  const [login, { error }] = useMutation(LOGIN);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [opened, setOpened] = useState(false);
   const [signup, setSignup] = useState(false);
@@ -26,7 +32,7 @@ export default function LoginSignup() {
     },
   });
 
-  const login = useForm({ // useForm is a Mantine function
+  const logOn = useForm({ // useForm is a Mantine function
     initialValues: { // objects for the fields you are using
         email: '',
         password: '',
@@ -38,7 +44,37 @@ export default function LoginSignup() {
     },
   });
 
-    
+    const handleSignUpSubmit = async (event: any) => {
+      event.preventDefault();
+      
+      const mutationResponse = await addUser({
+        variables: {
+          username: form.values.username,
+          email: form.values.email,
+          password: form.values.password,
+        },
+      });
+      const token = mutationResponse.data.addUser.token;
+      Auth.login(token);
+    };
+
+    const handleLoginSubmit = async (event: any) => {
+      event.preventDefault();
+      
+      try {
+        const mutationResponse = await login({
+          variables: { 
+            email: logOn.values.email, 
+            password: logOn.values.password},
+        });
+        
+        const token = mutationResponse.data.login.token;
+        
+        Auth.login(token);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
   return (
     <>
@@ -48,19 +84,20 @@ export default function LoginSignup() {
         onClose={() => setOpened(false)}
         title="Login"
       >
-        <form onSubmit={login.onSubmit((values) => console.log(values))}>
+        {/* <form onSubmit={login.onSubmit((values) => console.log(values))}> */}
+        <form onSubmit={handleLoginSubmit}>
         <TextInput // email field
             required // requires entry
             label="Email"
             placeholder="your@email.com"
-            {...login.getInputProps('email')} // uses email input on submit
+            {...logOn.getInputProps('email')} // uses email input on submit
             />
 
         <PasswordInput // password field
             required
             label="Password"
             placeholder="Enter Password"
-            {...login.getInputProps("password")} // uses password input on submit
+            {...logOn.getInputProps("password")} // uses password input on submit
           />
 
         <Group position="apart" spacing="xl" mt="md">
@@ -75,12 +112,12 @@ export default function LoginSignup() {
         onClose={() => setOpened(false)}
         title="Signup!"
       >
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={handleSignUpSubmit}>
         <TextInput //username field
             required // requires entry
             label="Username"
             placeholder="Your username"
-            {...form.getInputProps('name')} // uses username input on submit
+            {...form.getInputProps('username')} // uses username input on submit
         />
 
         <TextInput // email field
