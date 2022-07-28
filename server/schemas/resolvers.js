@@ -47,12 +47,12 @@ const resolvers = {
 
             return { user, token };
         },
-        addAmbition: async (parent, { name, identity, timeLimit, category }, context) => {
+        addAmbition: async (parent, { identity, category, startValue, endValue }, context) => {
             if (context.user) {
                 const createAmbition = await Ambitions.create(
-                    { identity, timeLimit, category }
+                    { identity, category, startValue, endValue }
                 );
-                    console.log(createAmbition);
+                    
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { ambitions: createAmbition._id } }

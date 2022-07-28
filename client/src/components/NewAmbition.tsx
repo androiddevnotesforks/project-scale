@@ -1,8 +1,28 @@
 import { useState } from "react";
-import { Button, NativeSelect, TextInput } from "@mantine/core";
+import { Button, NativeSelect, TextInput, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { ADD_AMBITION } from "../utils/mutations";
+import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES } from "../utils/queries";
+import { useMutation, useQuery } from "@apollo/client";
 
 export default function NewAmbition() {
+    const { loading, data } = useQuery(CATEGORY_AMBITIONS, {
+        fetchPolicy: "cache-and-network"
+      });
+
+    const ambitionsData = data?.categories || [];
+
+    const loadingDataTwo = useQuery(CATEGORY_IDENTITIES, {
+            fetchPolicy: "cache-and-network"
+          }); 
+
+    const identitiesData = loadingDataTwo.data?.identities || [];
+
+    // const ({{loadingTwo = loading}, {dataTwo = data}}) = useQuery(CATEGORY_IDENTITIES, {
+    //     fetchPolicy: "cache-and-network"
+    //   });
+
+    const [addAmbition, { error }] = useMutation(ADD_AMBITION);
 
     const [identity, setIdentity] = useState("Determined"); // default states need to be set
     const [ambition, setAmbition] = useState("Lose Weight"); // default states need to be set
@@ -22,17 +42,43 @@ export default function NewAmbition() {
             endValue: (value) => (!isNaN(Number(value)) ? null : "Your ending value must be numbers only, e.g. 88.8"),
         }
     });
+
+
+    const handleAmbitionSubmit = async (event: any) => {
+        event.preventDefault();
+        console.log(form.values);
+        
+        try {
+            const { data } = await addAmbition({
+                variables: {
+                    identity: form.values.identity,
+                    category: form.values.ambition,
+                    startValue: form.values.startValue,
+                    endValue: form.values.endValue,
+                },
+            });
+            } catch (error) {
+                console.log(error);
+                
+            }
+    };
     
     
     return (
     <>
-
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        {loading ? (
+            <Text>Loading...</Text>
+        ) : (
+        <form onSubmit={handleAmbitionSubmit}>
         
         <NativeSelect
             label="Choose your identity:"
             description="I am..."
-            data={["Determined", "Inspired"]}
+            // data={["Determined", "Inspired"]}
+            data={identitiesData.map((data: any) => {
+                // console.log(data);
+                return data.identityCategories
+            })}
             required
             {...form.getInputProps('identity')}
             onChange={(event) => setIdentity(event.target.value)}
@@ -42,7 +88,11 @@ export default function NewAmbition() {
         <NativeSelect
             label="Choose your ambition!"
             description="I am going to..."
-            data={["Lose Weight", "Save Money"]}
+            // data={["Lose Weight", "Save Money"]}
+            data={ambitionsData.map((data: any) => {
+                // console.log(data);
+                return data.ambitionCategories
+            })}
             required
             {...form.getInputProps('ambition')}
             onChange={(event) => setAmbition(event.target.value)}
@@ -78,7 +128,7 @@ export default function NewAmbition() {
             color={"red"} type="submit">Start!</Button>
         </form>
         
-    
+        )}
     </>
     )
 }

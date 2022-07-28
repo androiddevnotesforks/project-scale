@@ -23,12 +23,13 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_AMBITION = gql`
-    mutation AddAmbition($identity: ID!, $timeLimit: Int!, $category: ID!) {
-      addAmbition(identity: $identity, timeLimit: $timeLimit, category: $category) {
+    mutation AddAmbition($identity: String!, $category: String!, $startValue: String!, $endValue: String!) {
+      addAmbition(identity: $identity, category: $category, startValue: $startValue, endValue: $endValue) {
         _id
         identity
-        timeLimit
         category
+        startValue
+        endValue
         public
       }
     }
