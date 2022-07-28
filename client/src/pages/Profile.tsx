@@ -28,6 +28,8 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
 
+    // on clicking to start a new ambition, you will be asked to select an identity...
+
     return (
         <div className="clamps">
             <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
