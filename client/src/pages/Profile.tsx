@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Tabs, Loader, Text, Button, Group, Space } from "@mantine/core"
+import { Tabs, Loader, Text, Button, Group, Space, Collapse } from "@mantine/core"
 import { useInterval } from "@mantine/hooks";
 import "../App.css"
+import NewAmbition from "../components/NewAmbition";
 
 const Profile = () => {
 
@@ -28,6 +29,8 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
 
+    const [openNewAmbition, setOpenNewAmbition] = useState(false)
+
     // on clicking to start a new ambition, you will be asked to select an identity...
 
     return (
@@ -36,9 +39,12 @@ const Profile = () => {
             <Space h="md" />
 
             <Group position="center" spacing="xl">
-            <Button color={"red"}>Start an ambition</Button>
+            <Button onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start an ambition</Button>
             <Button color={"teal"}>View your ambitions</Button>
             </Group>
+            <Collapse in={openNewAmbition}>
+            <NewAmbition />
+            </Collapse>
         </div>
     );
 };
