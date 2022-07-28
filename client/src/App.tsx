@@ -25,8 +25,6 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
-  useMantineColorScheme,
-  Group,
 } from '@mantine/core';
 
 // import pages here
@@ -66,21 +64,13 @@ function App() {
   const toggleColorScheme = (value?: ColorScheme) =>
       setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-  // const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  // const dark = colorScheme === "dark";
-
   // fixed issue for why the routing wasn't working, source: https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor
   return (
     <ApolloProvider client={client}>
       <Router>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <AppShell
-          styles={{
-            main: {
-              background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-            },
-          }}
+       <MantineProvider theme={{ colorScheme: colorScheme }} withGlobalStyles withNormalizeCSS>
+        <AppShell // the default styles implemented in appShell was overwriting the colorScheme
           navbarOffsetBreakpoint="sm"
         navbar={
           <Navbar p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
