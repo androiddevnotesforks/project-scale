@@ -35,7 +35,7 @@ const Home = () => {
             interval.start();
             setText(text + test[seconds])
         }
-        console.log(seconds === test.length - 1)
+
         if (seconds === test.length + testTwo.length + 1) {
             interval.stop();
             // eslint-disable-next-line react-hooks/exhaustive-deps

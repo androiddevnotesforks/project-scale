@@ -2,7 +2,7 @@ body {
   font-size: clamp(1rem, 10vw, 2rem); 
   font-style: italic;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-variant: small-caps;
+  /* font-variant: small-caps; */
   opacity: 0.95;
 }
 /* .App {

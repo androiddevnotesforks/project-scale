@@ -25,6 +25,7 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
+  Group,
 } from '@mantine/core';
 
 // import pages here
@@ -75,14 +76,18 @@ function App() {
         navbar={
           <Navbar p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
             <Center>
-              <Tabs color="orange" variant="pills" orientation="vertical" defaultValue="Home">
+              <Tabs color="teal" variant="pills" orientation="vertical" defaultValue="Home">
                 <Tabs.List>
                   <Link to="/">
                     <Tabs.Tab value="Home">Home</Tabs.Tab>
                   </Link>
+                  {Auth.loggedIn() ? (
                   <Link to="/profile">
                     <Tabs.Tab value="Profile">Profile</Tabs.Tab>
                   </Link>
+                  ) : (
+                    null
+                  )}
                   <Link to="/search">
                     <Tabs.Tab value="search">Search</Tabs.Tab>
                   </Link>
@@ -91,8 +96,10 @@ function App() {
             </Center>
             {Auth.loggedIn() ? (
               // profile button or tab also appears here
-              <Button color={"orange"} onClick={Auth.logout}>Logout</Button>
-            ) : (
+              <Group position="center" style={{padding: "1em"}}>
+              <Button color={"red"} onClick={Auth.logout}>Logout</Button>
+              </Group>
+              ) : (
               <LoginSignup />
             )}
           </Navbar>
