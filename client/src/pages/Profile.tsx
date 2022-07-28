@@ -1,10 +1,11 @@
 import React from "react";
-import { Tabs, Loader, Text } from "@mantine/core"
+import { Tabs, Loader, Text, Button } from "@mantine/core"
 
 const Profile = () => {
     return (
-        <div className="container">
+        <div>
             <Text size="lg"> your profile is here...</Text>
+            <Button color={"red"}>Start an ambition</Button>
         </div>
     );
 };

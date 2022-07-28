@@ -113,7 +113,7 @@ export default function LoginSignup() {
     )}
       
 
-      <Group position="left">
+      <Group position="center" style={{padding: "1em"}}>
         <Button radius="lg" variant="gradient" gradient={{ from: 'teal', to: 'red' }} onClick={() => setOpened(true)}>Login/Signup</Button>
       </Group>
     </>
