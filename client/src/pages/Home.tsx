@@ -5,8 +5,12 @@ import "../App.css" // have to import the css to get it to work
 
 const Home = () => {
 
-    const test = ["Do", "you", "hear", "it?", "...", "...", "..."]
-    const testTwo = ["Can", "you", "hear", "their", "voices?", "...", "...", "..."]
+    const one = "Do you hear it? ... ... ...";
+    const test = one.split("");
+    // const test = ["Do", "you", "hear", "it?", "...", "...", "..."]
+    const two = "Can you hear their voices? ... ... ...";
+    const testTwo = two.split("");
+    // const testTwo = ["Can", "you", "hear", "their", "voices?", "...", "...", "..."]
 
     const [text, setText] = useState("");
     const [textTwo, setTextTwo] = useState("")
@@ -15,7 +19,7 @@ const Home = () => {
     const [seconds, setSeconds] = useState(0);
     // const [secondsTwo, setSecondsTwo] = useState((testTwo.length - 1));
     // const [secondsTwo, setSecondsTwo] = useState(0);
-    const interval = useInterval(() => setSeconds((s) => s + 1), 500);
+    const interval = useInterval(() => setSeconds((s) => s + 1), 140);
     // const intervalTwo = useInterval(() => setSecondsTwo((t) => t + 1), 500);
 
 
@@ -29,7 +33,7 @@ const Home = () => {
             // intervalTwo.start();
         } else if (seconds <= test.length + 1) {
             interval.start();
-            setText(text + " " + test[seconds])
+            setText(text + test[seconds])
         }
         console.log(seconds === test.length - 1)
         if (seconds === test.length + testTwo.length + 1) {
@@ -38,10 +42,10 @@ const Home = () => {
             setTextColourTwo({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
         } else if (seconds >= test.length + 1) {
             interval.start();
-            setTextTwo(textTwo + " " + testTwo[seconds-testTwo.length])
+            setTextTwo(textTwo + testTwo[seconds-test.length - 1])
         }
-        console.log(seconds);
-        // console.log(secondsTwo);
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds]);
 
     // useEffect(() => {
