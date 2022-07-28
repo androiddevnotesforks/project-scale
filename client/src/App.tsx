@@ -22,6 +22,11 @@ import {
   Button,
   Tabs,
   Center,
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+  useMantineColorScheme,
+  Group,
 } from '@mantine/core';
 
 // import pages here
@@ -57,10 +62,19 @@ function App() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
 
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light'); // when pressing a specific icon it toggles the light/dark mode
+  const toggleColorScheme = (value?: ColorScheme) =>
+      setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+  // const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  // const dark = colorScheme === "dark";
+
   // fixed issue for why the routing wasn't working, source: https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor
   return (
     <ApolloProvider client={client}>
       <Router>
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <AppShell
           styles={{
             main: {
@@ -95,8 +109,8 @@ function App() {
         }
         header={
           <Header height={70} p="md">
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", height: '100%' }}>
+              <MediaQuery largerThan="sm" styles={{ display: "none"}}>
                 <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
@@ -105,7 +119,12 @@ function App() {
                   mr="xl"
                 />
               </MediaQuery>
-              <Text>Project S.C.A.L.E.</Text>
+              {/* <Group position='apart' spacing="xl"> */}
+                <Text>Project S.C.A.L.E.</Text>
+                <Button radius="xl" color={colorScheme === "dark" ? "yellow" : "blue"} onClick={() => toggleColorScheme()} title="Toggle mode">
+                  {colorScheme === "dark" ? "Light" : "Dark"}
+                </Button>
+              {/* </Group> */}
             </div>
           </Header>
         }
@@ -119,6 +138,8 @@ function App() {
               </Routes>
           </div>
         </AppShell>
+       </MantineProvider>
+       </ColorSchemeProvider>
       </Router>
     </ApolloProvider>
   );
