@@ -124,7 +124,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<Search />} />
-                <Route element={<NoMatch />} />
+                <Route path="*" element={<NoMatch />} />
               </Routes>
           </div>
         </AppShell>

@@ -70,8 +70,8 @@ const Home = () => {
 
     return (
         <div className="clamps">
-            <Text sx={textColour} size="lg">{text}</Text>
-            <Text sx={textColourTwo} size="lg">{textTwo}</Text>
+            <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
+            <Text style={{textAlign: "center"}} sx={textColourTwo} size="lg">{textTwo}</Text>
         </div>
     );
 };
