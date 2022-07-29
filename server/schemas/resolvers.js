@@ -45,7 +45,7 @@ const resolvers = {
             if (!correctPw) {
                 throw new AuthenticationError("Invalid credentials");
             };
-            console.log(user);
+            
             const token = signToken(user); // creates a JWT and assigns it to the user
             return { token, user };
         },
