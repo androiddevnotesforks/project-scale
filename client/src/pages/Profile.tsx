@@ -3,10 +3,20 @@ import { Tabs, Loader, Text, Button, Group, Space, Collapse } from "@mantine/cor
 import { useInterval } from "@mantine/hooks";
 import "../App.css"
 import NewAmbition from "../components/NewAmbition";
+import ViewAmbitions from "../components/ViewAmbitions";
+import { USERNAME } from "../utils/queries";
+import { useQuery } from "@apollo/client";
 
 const Profile = () => {
+    const { loading, data } = useQuery(USERNAME, {
+        fetchPolicy: "cache-and-network"
+    });
 
-    const message = "This is where you'll begin your new ambitions!";
+    const username = data?.user.username || "ERROR"; // retrieves only the username otherwise gives ERROR if data wasn't retrieved in time for the message.
+
+
+
+    const message = `Welcome ${username}, this is where you'll begin your new ambitions!`;
     const splitMessage = message.split("");
 
     const [text, setText] = useState("");
@@ -30,6 +40,7 @@ const Profile = () => {
     }, [seconds])
 
     const [openNewAmbition, setOpenNewAmbition] = useState(false)
+    const [viewAmbitions, setViewAmbitions] = useState(false)
 
     // on clicking to start a new ambition, you will be asked to select an identity...
 
@@ -39,11 +50,14 @@ const Profile = () => {
             <Space h="md" />
 
             <Group position="center" spacing="xl">
-            <Button onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start an ambition</Button>
-            <Button color={"teal"}>View your ambitions</Button>
+                <Button onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start an ambition</Button>
+                <Button onClick={() => setViewAmbitions((o) => (!o))} color={"teal"}>View your ambitions</Button>
             </Group>
             <Collapse in={openNewAmbition}>
-            <NewAmbition />
+                <NewAmbition />
+            </Collapse>
+            <Collapse in={viewAmbitions}>
+                <ViewAmbitions />
             </Collapse>
         </div>
     );

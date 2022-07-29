@@ -43,6 +43,7 @@ const typeDefs = gql`
 
     type Query {
         user: User
+        username: User
         categories: [Category]
         identities: [Identity]
         ambitions: [Ambitions]
