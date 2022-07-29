@@ -13,7 +13,7 @@ export default function AddEvent() {
 
     const form = useForm({ // useForm is a Mantine function
         initialValues: { // objects for the fields you are using
-            createdAt: "",
+            // createdAt: "",
             dataInput: "",
             notes: "",
         },

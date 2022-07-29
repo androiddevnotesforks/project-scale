@@ -36,8 +36,8 @@ export const ADD_AMBITION = gql`
 `;
 
 export const ADD_EVENT = gql`
-    mutation AddEvent($ambitionId: ID!, $dataInput: Float!) {
-      addEvent(ambitionId: $ambitionId, dataInput: $dataInput) {
+    mutation AddEvent($ambitionId: ID!, $dataInput: Float!, $notes: String) {
+      addEvent(ambitionId: $ambitionId, dataInput: $dataInput, notes: $notes) {
         daysCount
         events {
           createdAt
