@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Image, Text, Badge, Button, Group, Space, Grid } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader } from '@mantine/core';
 import { USER } from "../utils/queries";
 import { useQuery } from "@apollo/client";
+import AddEvent from "./AddEvent";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -25,7 +26,7 @@ export default function ViewAmbitions() {
     return (
         <>
             {loading ? (
-                <Text>Loading...</Text>
+                <Loader color="red" size="xl" />
             ) : (
                 <div>
                 <Grid grow>
@@ -58,9 +59,7 @@ export default function ViewAmbitions() {
                             <Space />
                             {`public: ${data.public}`}
                         </Text>
-                        <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-                            What did you do today?
-                        </Button>
+                     <AddEvent />
                     </Card>
                     </Grid.Col>
                     )
