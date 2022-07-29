@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, NativeSelect, TextInput, Text } from "@mantine/core";
+import { Button, NativeSelect, TextInput, Loader } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ADD_AMBITION } from "../utils/mutations";
 import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES } from "../utils/queries";
@@ -67,7 +67,7 @@ export default function NewAmbition() {
     return (
     <>
         {loading ? (
-            <Text>Loading...</Text>
+            <Loader color="red" size="xl" />
         ) : (
         <form onSubmit={handleAmbitionSubmit}>
         
