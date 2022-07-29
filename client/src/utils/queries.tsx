@@ -9,7 +9,8 @@ export const USER = gql`
         ambitions {
           _id
           identity
-          timeLimit
+          startValue
+          endValue
           category
           public
           daysCount
@@ -19,6 +20,14 @@ export const USER = gql`
             notes
           }
         }
+      }
+    }
+`;
+
+export const USERNAME = gql`
+    query getUsername {
+      user {
+        username
       }
     }
 `;

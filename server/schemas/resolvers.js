@@ -12,6 +12,14 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
+        username: async (parent, args, context) => { // requires resolver context and the use of the JWT to verify the user is using their account
+            if (context.user) {
+                return User.findOne({
+                    _id: context.user._id
+                })
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        },
         categories: async () => {
             return await Category.find();
         },
