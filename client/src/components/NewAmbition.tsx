@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, NativeSelect, TextInput, Loader } from "@mantine/core";
+import { Button, NativeSelect, TextInput, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ADD_AMBITION } from "../utils/mutations";
 import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES } from "../utils/queries";
@@ -26,22 +26,49 @@ export default function NewAmbition() {
 
     const [identity, setIdentity] = useState("Determined"); // default states need to be set
     const [ambition, setAmbition] = useState("Lose Weight"); // default states need to be set
-    const [startValue, setStartValue] = useState("");
-    const [endValue, setEndValue] = useState("");
+    const [dailyPlan, setDailyPlan] = useState(""); // how they are going to get there
+    const [endValue, setEndValue] = useState(""); // where they want to be
+
+    const [dailyErr, setDailyErr] = useState("");
+    const [endErr, setEndErr] = useState("");
+    const [disableButton, setDisableButton] = useState(true);
+    const [errorCheckOne, setErrorCheckOne] = useState(false)
+    const [errorCheckTwo, setErrorCheckTwo] = useState(false)
 
     const form = useForm({
         initialValues: {
-            startValue: startValue,
+            dailyPlan: dailyPlan,
             endValue: endValue,
             identity: identity,
             ambition: ambition,
         },
 
-        validate: {
-            startValue: (value) => (!isNaN(Number(value)) ? null : "Your starting value must be numbers only, e.g. 88.8"),
-            endValue: (value) => (!isNaN(Number(value)) ? null : "Your ending value must be numbers only, e.g. 88.8"),
-        }
+        // validate: { // Mantine's validation isn't working...
+        //     dailyPlan: (value) => (!isNaN(Number(value)) ? null : "Your starting value must be numbers only, e.g. 88.8"),
+        //     // dailyPlan: (value) => (Number(value) ? null : "Your starting value must be numbers only, e.g. 88.8"),
+        //     endValue: (value) => (!isNaN(Number(value)) ? null : "Your ending value must be numbers only, e.g. 88.8"),
+        // },
+
     });
+
+    function handleChangeEnd(event: any) {
+        setEndValue(event.target.value);
+
+        Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
+        Number(endValue) ? setErrorCheckOne(true) : setErrorCheckOne(false);
+
+        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
+    }
+
+    function handleChangeDaily(event: any) {
+        setDailyPlan(event.target.value);   
+
+        dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
+        dailyPlan.length > 1000 ? setErrorCheckTwo(false) : setErrorCheckTwo(true);
+
+
+        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
+    }
 
 
     const handleAmbitionSubmit = async (event: any) => {
@@ -53,13 +80,12 @@ export default function NewAmbition() {
                 variables: {
                     identity: form.values.identity,
                     category: form.values.ambition,
-                    startValue: form.values.startValue,
+                    dailyPlan: form.values.dailyPlan,
                     endValue: form.values.endValue,
                 },
             });
             } catch (error) {
                 console.log(error);
-                
             }
     };
     
@@ -99,27 +125,29 @@ export default function NewAmbition() {
             value={ambition}
         />
 
-        <TextInput // start value
-            required // requires entry
-            label={ ambition === "Save Money" ? ("How much money haved you saved up right now? e.g. Enter $50.21 as 50.21") : ("What is your starting weight? e.g. Enter 88.8kg as 88.8")}
-            placeholder="Example: 50.21"
-            {...form.getInputProps('startValue')} // text input
-            value={startValue}
-            onChange={(event) => setStartValue(event.target.value)}
-        />
-
         <TextInput // end value
             required // requires entry
             label={ ambition === "Save Money" ? ("How much money do you want to save? e.g. Enter $5000.21 as 5000.21") : ("How much do you want to weigh? e.g. Enter 68.8kg as 68.8")}
             placeholder="Example: 5000.21"
             {...form.getInputProps('endValue')} // uses text input on submit
             value={endValue}
-            onChange={(event) => setEndValue(event.target.value)}
+            onChange={handleChangeEnd}
+            error={endErr}
         />
 
-        <Button onSubmit={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
+        <Textarea // start value
+            required // requires entry
+            label="What do you to plan to do daily to reach your ambition? Your plans will change at any time so update them accordingly."
+            placeholder="..."
+            {...form.getInputProps('dailyPlan')} // text input
+            value={dailyPlan}
+            onChange={handleChangeDaily}
+            error={dailyErr}
+        />
+
+        <Button disabled={disableButton} onSubmit={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
             form.setValues({
-                startValue: startValue,
+                dailyPlan: dailyPlan,
                 endValue: endValue,
                 identity: identity,
                 ambition: ambition,
