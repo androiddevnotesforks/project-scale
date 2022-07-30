@@ -27,7 +27,7 @@ const typeDefs = gql`
     type Ambitions {
         _id: ID!
         identity: String!
-        startValue: String!
+        dailyPlan: String!
         endValue: String!
         category: String!
         public: Boolean
@@ -47,6 +47,7 @@ const typeDefs = gql`
         categories: [Category]
         identities: [Identity]
         ambitions: [Ambitions]
+        searchEvents(ambitionId: ID!): Ambitions
     }
 
     type Mutation {
@@ -54,7 +55,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
         # addAmbition(identity: ID!, timeLimit: Int!, category: ID!): Ambitions
-        addAmbition(identity: String!, category: String!, startValue: String!, endValue: String!): Ambitions
+        addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
         addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
         # plan for removing identity, ambitions and maybe calendar entries
     }

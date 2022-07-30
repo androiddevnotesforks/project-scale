@@ -27,8 +27,13 @@ const resolvers = {
             return await Identity.find();
         },
         ambitions: async () => { // assuming it will find all public ambitions that are true
-            return await Ambitions.find()
-        }
+            return await Ambitions.find();
+        },
+        searchEvents: async (parent, { ambitionId }, context) => {
+            return await Ambitions.findOne({
+                _id: ambitionId
+            });
+        },
         // will have to consider querying ambitions when displaying them publicly
         // see redux store for reference: products
     },
@@ -55,10 +60,10 @@ const resolvers = {
 
             return { user, token };
         },
-        addAmbition: async (parent, { identity, category, startValue, endValue }, context) => {
+        addAmbition: async (parent, { identity, category, dailyPlan, endValue }, context) => {
             if (context.user) {
                 const createAmbition = await Ambitions.create(
-                    { identity, category, startValue, endValue }
+                    { identity, category, dailyPlan, endValue }
                 );
                     
                 await User.findOneAndUpdate(

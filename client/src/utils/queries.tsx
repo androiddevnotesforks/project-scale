@@ -9,7 +9,7 @@ export const USER = gql`
         ambitions {
           _id
           identity
-          startValue
+          dailyPlan
           endValue
           category
           public

@@ -19,15 +19,10 @@ export default function ViewAmbitions() {
     // console.log(viewAmbitionsData.length);
     // console.log(viewAmbitionsData.map((data: any) => { return data.category}));
 
-    // category, daysCount, endValue, events, identity, public, startValue 
+    // category, daysCount, endValue, events, identity, public, dailyPlan 
     
     const dispatch = useDispatch();
 
-    
-    
-
-    
-    
     return (
         <>
             {loading ? (
@@ -57,7 +52,7 @@ export default function ViewAmbitions() {
     
                         <Text>
                             {/* something else goes here... */}
-                            {`starting point: ${data.startValue}`}
+                            {`starting point: ${data.dailyPlan}`}
                             <Space />
                             {`end point: ${data.endValue}`}
                             {/* {`events: ${data.events}`} */}
