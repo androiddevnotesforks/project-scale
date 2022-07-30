@@ -32,11 +32,12 @@ export default function AddEvent() {
                                                         : null),
             notes: (value) => (value.length > 255 ? "Cannot enter more than 255 characters" : null )
         },
-      });
-
-      const handleFormSubmit = async (event: any) => {
+    });
+    
+    const handleFormSubmit = async (event: any) => {
         event.preventDefault();
-
+        setDisableButton(true) // to prevent submit spamming
+        
         // doing the dispatch below overcomplicated the process and caused issues, it was only necessary to dispatch the ambitions ID and that's it for this whole process
         // dispatch(ADD_EVENT({ dataInput: form.values.dataInput, notes: form.values.notes, }))
         
@@ -52,7 +53,7 @@ export default function AddEvent() {
                 console.log(error);              
             }
 
-            setDisableButton(true) // to prevent submit spamming
+            setOpened(false) // to close after submit completes
       };
   
     return (
