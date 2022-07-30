@@ -2,6 +2,8 @@ import React from "react";
 import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader } from '@mantine/core';
 import { USER } from "../utils/queries";
 import { useQuery } from "@apollo/client";
+import { ADD_AMBITION_ID } from "../features/ambitions";
+import { useDispatch, useSelector } from "react-redux";
 import AddEvent from "./AddEvent";
 
 export default function ViewAmbitions() {
@@ -18,6 +20,9 @@ export default function ViewAmbitions() {
     // console.log(viewAmbitionsData.map((data: any) => { return data.category}));
 
     // category, daysCount, endValue, events, identity, public, startValue 
+    
+    const dispatch = useDispatch();
+
     
     
 
@@ -59,7 +64,11 @@ export default function ViewAmbitions() {
                             <Space />
                             {`public: ${data.public}`}
                         </Text>
-                     <AddEvent />
+                        <div onClick={() => dispatch(ADD_AMBITION_ID({
+                            ambitionId: data._id
+                        }))}>
+                            <AddEvent />
+                        </div>
                     </Card>
                     </Grid.Col>
                     )
