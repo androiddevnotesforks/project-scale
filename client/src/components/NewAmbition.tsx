@@ -46,7 +46,7 @@ export default function NewAmbition() {
 
     const handleAmbitionSubmit = async (event: any) => {
         event.preventDefault();
-        console.log(form.values);
+        // console.log(form.values);
         
         try {
             const { data } = await addAmbition({
@@ -117,7 +117,7 @@ export default function NewAmbition() {
             onChange={(event) => setEndValue(event.target.value)}
         />
 
-        <Button onClick={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
+        <Button onSubmit={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
             form.setValues({
                 startValue: startValue,
                 endValue: endValue,

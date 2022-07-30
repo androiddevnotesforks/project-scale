@@ -10,7 +10,6 @@ const eventSlice = createSlice({
     initialState,
     reducers: {
         ADD_EVENT(state, action) {
-            // console.log(action);
             return {
                 ...state,
                 dataInput: action.payload.dataInput,
