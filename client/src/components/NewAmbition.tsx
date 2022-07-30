@@ -73,22 +73,23 @@ export default function NewAmbition() {
 
     const handleAmbitionSubmit = async (event: any) => {
         event.preventDefault();
-        // console.log(form.values);
         
         try {
             const { data } = await addAmbition({
                 variables: {
-                    identity: form.values.identity,
-                    category: form.values.ambition,
-                    dailyPlan: form.values.dailyPlan,
-                    endValue: form.values.endValue,
+                    identity: identity,
+                    category: ambition,
+                    dailyPlan: dailyPlan,
+                    endValue: endValue,
                 },
             });
             } catch (error) {
                 console.log(error);
             }
+
+            // eslint-disable-next-line no-restricted-globals
+            location.reload();
     };
-    
     
     return (
     <>
@@ -130,30 +131,31 @@ export default function NewAmbition() {
             label={ ambition === "Save Money" ? ("How much money do you want to save? e.g. Enter $5000.21 as 5000.21") : ("How much do you want to weigh? e.g. Enter 68.8kg as 68.8")}
             placeholder="Example: 5000.21"
             {...form.getInputProps('endValue')} // uses text input on submit
-            value={endValue}
             onChange={handleChangeEnd}
+            value={endValue}
             error={endErr}
         />
 
         <Textarea // start value
             required // requires entry
-            label="What do you to plan to do daily to reach your ambition? Your plans will change at any time so update them accordingly."
-            placeholder="..."
+            label="What do you to plan to do daily to reach your ambition? Your plans will change and adapt at any time so update them accordingly."
+            placeholder="When I wake up, then I will do something. When it is 11:30am, then I will do something else."
             {...form.getInputProps('dailyPlan')} // text input
-            value={dailyPlan}
             onChange={handleChangeDaily}
+            value={dailyPlan}
             error={dailyErr}
         />
 
-        <Button disabled={disableButton} onSubmit={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
+        {/* <Button radius="lg" disabled={disableButton} onSubmit={() => // docs explaining how to get field values, if only they put it into the rest of the form docs... : https://mantine.dev/form/values/
             form.setValues({
-                dailyPlan: dailyPlan,
-                endValue: endValue,
                 identity: identity,
                 ambition: ambition,
+                dailyPlan: dailyPlan,
+                endValue: endValue,
             })
         } 
-            color={"red"} type="submit">Start!</Button>
+            color={"red"} type="submit">Start!</Button> */}
+            <Button radius="lg" disabled={disableButton} color={"red"} type="submit">Start!</Button>
         </form>
         
         )}

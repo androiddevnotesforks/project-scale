@@ -16,13 +16,13 @@ export default function AddEvent() {
     const [opened, setOpened] = useState(false);
     // const [date, setDate] = useState<Date | null>(new Date()); // if useState is not written like this then onChange doesn't work due to how the NPM package works, source: https://mantine.dev/dates/date-picker/
 
-    const [dataInputVal, setDataInputVal] = useState("");
-    const [notesVal, setNotesVal] = useState("");
+    const [dataInputVal, setDataInputVal] = useState(""); // value
+    const [notesVal, setNotesVal] = useState("Optional."); // value
     const [dataInputErr, setDataInputErr] = useState("");
     const [notesErr, setNotesErr] = useState("");
+
     const [errorCheckOne, setErrorCheckOne] = useState(false);
     const [errorCheckTwo, setErrorCheckTwo] = useState(false);
-
     const [disableButton, setDisableButton] = useState(true);
 
     const form = useForm({ // useForm is a Mantine function
@@ -69,8 +69,8 @@ export default function AddEvent() {
             const { data } = await addEvent({
                 variables: {
                     ambitionId: state.ambitions.ambitionId, // gets the Ambition ID that was dispatched when clicking to open up the events modal
-                    dataInput: Number(form.values.dataInput), // needs number not string due to model type
-                    notes: form.values.notes, 
+                    dataInput: Number(dataInputVal), // needs number not string due to model type
+                    notes: notesVal, 
                 },
             });
             } catch (error) {

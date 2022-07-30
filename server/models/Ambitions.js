@@ -16,7 +16,7 @@ const ambitionsSchema = new Schema({
     //     max: 365, //days...
     //     min: 7 //days
     // },
-    startValue: { // starting value
+    dailyPlan: { // starting value
         type: String,
         required: true
     },
