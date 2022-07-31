@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { ADD_AMBITION_ID } from "../features/ambitions";
 import { useDispatch, useSelector } from "react-redux";
 import AddEvent from "./AddEvent";
+import { Link } from "react-router-dom";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -63,6 +64,9 @@ export default function ViewAmbitions() {
                             ambitionId: data._id
                         }))}>
                             <AddEvent />
+                            <Link to="/records">
+                                <Button>View Records</Button>
+                            </Link>
                         </div>
                     </Card>
                     </Grid.Col>

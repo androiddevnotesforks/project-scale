@@ -50,3 +50,22 @@ export const CATEGORY_IDENTITIES = gql`
     }
 `;
 
+export const SEARCH_EVENTS = gql`
+    query SearchEvents($ambitionId: ID!) {
+      searchEvents(ambitionId: $ambitionId) {
+        _id
+        identity
+        dailyPlan
+        endValue
+        category
+        public
+        daysCount
+        events {
+          createdAt
+          dataInput
+          notes
+        }
+      }
+    }
+`;
+
