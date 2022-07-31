@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, isSameDate, DatePicker } from "@mantine/dates";
-import { Text, Indicator } from "@mantine/core";
+import { Text, Indicator, Loader } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { SEARCH_EVENTS } from "../utils/queries";
 import { useSelector } from "react-redux";
@@ -23,30 +23,51 @@ export default function EventCalendar() {
     const viewAmbition = data?.searchEvents || [];
 
     // const test = new Date(viewRecords["0"]["createdAt"]);
- const test = 1
+ 
     useEffect(() => {
         // const test = isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"])) ? viewRecords["0"]["createdAt"] : console.log("no")
-        selectEvent()
+        if (!loading) {
+            selectEvent()
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value])
 
     function selectEvent() {
         
         // setValue(new Date())
-        console.log(value);
-        isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"])) ? console.log("sth")
-         : console.log("no")
-        
+        // console.log(value);
+        // isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"])) ? console.log("sth")
+        //  : console.log("no")
 
-        if (isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"]))) {
-            return `Date: ${viewRecords["0"]["createdAt"]}, 
-            Data Input: ${viewRecords["0"]["dataInput"]}, 
-            Notes: ${viewRecords["0"]["notes"]}.`
+
+        // if (isSameDate(value || new Date(), new Date({...viewRecords.createdAt}))) {
+        //     return `Date: ${{...viewRecords.createdAt}}, 
+        //     Data Input: ${{...viewRecords.dataInput}}, 
+        //     Notes: ${{...viewRecords.notes}}.`
+        // } else {
+        //     return 0
+        // }
+
+      return  viewRecords.map((date: any) => {
+            if (isSameDate(value || new Date(), new Date(date.createdAt))) {
+                return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
+            } else {
+                return 0
+            }
+        })
+        
+    }
+
+    // console.log({...viewRecords});
+    console.log(viewRecords.map((date:any) => {
+        if (isSameDate(value || new Date(), new Date(date.createdAt))) {
+            return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
         } else {
             return 0
         }
-        
-    }
+    }));
+    
+    
 
     // console.log(value);
     
@@ -73,6 +94,10 @@ export default function EventCalendar() {
     // console.log(value);
     
     return (
+        <>
+        {loading ? (
+            <Loader color="red" size="xl" />
+            ) : (
         <div>
             <Calendar 
                 value={value} 
@@ -94,6 +119,8 @@ export default function EventCalendar() {
                 {selectEvent()}
             </Text>
         </div>
+        )}
 
+        </>
     );
 }
