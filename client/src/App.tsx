@@ -37,6 +37,7 @@ import Search from "./pages/Search";
 import LoginSignup from './components/LoginSignup';
 
 import Auth from "./utils/auth";
+import Records from './pages/Records';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -131,6 +132,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/records" element={<Records />} />
                 <Route path="*" element={<NoMatch />} />
               </Routes>
           </div>
