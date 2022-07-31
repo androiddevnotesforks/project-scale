@@ -24,8 +24,8 @@ const eventsSchema = new Schema({ // this will be a subdocument schema for ambit
      id: false, // forgot what this is for but it's always used after toJSON
     });
 
-    function timeFormat(createdAt) { // getter function to format timestamps, taken from my basic-social-network-api code
-        return `${createdAt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${createdAt.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric'})}`
+    function timeFormat(createdAt) { // getter function to format timestamps, taken from my basic-social-network-api code, removed toLocaleTimeString to be able to parse the date for the calendar
+        return `${createdAt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`
     }
 
 module.exports = eventsSchema;
