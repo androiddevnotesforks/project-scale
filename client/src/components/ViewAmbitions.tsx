@@ -6,6 +6,7 @@ import { ADD_AMBITION_ID } from "../features/ambitions";
 import { useDispatch, useSelector } from "react-redux";
 import AddEvent from "./AddEvent";
 import { Link } from "react-router-dom";
+import { isSameDate } from "@mantine/dates";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -13,6 +14,11 @@ export default function ViewAmbitions() {
     });
 
     const viewAmbitionsData = data?.user.ambitions || [];
+
+    const recentEvent = data?.["user"]["ambitions"]["0"]["events"].at(-1).createdAt || []; // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+
+    console.log(recentEvent);
+    
 
     // console.log(viewAmbitionsData);
     // console.log(viewAmbitionsData["2"]);
@@ -63,10 +69,17 @@ export default function ViewAmbitions() {
                         <div onClick={() => dispatch(ADD_AMBITION_ID({
                             ambitionId: data._id
                         }))}>
-                            <AddEvent />
+                            {(isSameDate(new Date(), new Date(recentEvent))) ? (
+                                null ) : (
+                                    <AddEvent />
+                            )}
+                            {(!recentEvent) ? (
+                                null
+                            ) : (
                             <Link to="/records">
                                 <Button>View Records</Button>
                             </Link>
+                            )}
                         </div>
                     </Card>
                     </Grid.Col>
