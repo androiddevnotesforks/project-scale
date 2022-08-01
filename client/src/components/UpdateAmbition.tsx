@@ -37,10 +37,10 @@ export default function UpdateAmbition() {
     // console.log(dailyPlan);
     // console.log(endValue);
     
-    useEffect(() => {
-        console.log(identity)
+    // useEffect(() => {
+    //     // console.log(identity)
         
-    }, [identity, dailyPlan, endValue])
+    // }, [identity, dailyPlan, endValue])
     
 
     const [dailyErr, setDailyErr] = useState("");
@@ -86,7 +86,7 @@ export default function UpdateAmbition() {
         try {
             const { data } = await updateAmbition({
                 variables: {
-                    _id: state.ambitions.ambitionId,
+                    ambitionId: state.ambitions.ambitionId,
                     identity: identity,
                     dailyPlan: dailyPlan,
                     endValue: endValue,
@@ -96,8 +96,7 @@ export default function UpdateAmbition() {
                 console.log(error);
             }
 
-            // eslint-disable-next-line no-restricted-globals
-            // location.reload();
+            setOpened(false);      
     };
 
     return (

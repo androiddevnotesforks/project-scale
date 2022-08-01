@@ -61,7 +61,7 @@ const typeDefs = gql`
         updateEmail(email: String!): User
         updateUsername(username: String!): User
         deleteAccount(_id: ID!): User
-        updateAmbition(_id: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
+        updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
         deleteAmbition(ambitionId: ID!): Ambitions
     }
 `;

@@ -16,9 +16,26 @@ export default function ViewAmbitions() {
 
     const viewAmbitionsData = data?.user.ambitions || [];
 
-    const recentEvent = data?.["user"]["ambitions"]["0"]["events"].at(-1).createdAt || []; // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+    // const eventsData = data?.user.ambitions.events || [];
 
-    console.log(recentEvent);
+    // console.log(viewAmbitionsData);
+    
+    // console.log(eventsData);
+    
+
+    // const recentEvent = data?.["user"]["ambitions"]["0"]["events"].at(-1).createdAt || []; // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+    // const recentEvent = data?.["user"]["ambitions"]["0"]["events"] || []; // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+    // const recentEvent2 = data?.["user"]["ambitions"]["1"]["events"] || []; // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+
+
+    // console.log(recentEvent);
+    // console.log(recentEvent2);
+
+    // console.log(Object.hasOwn(recentEvent, 0) + "1");
+    // console.log(Object.hasOwn(recentEvent2, 0) + "2");
+    
+    
+    // console.log(recentEvent);
     
 
     // console.log(viewAmbitionsData);
@@ -39,6 +56,20 @@ export default function ViewAmbitions() {
                 <div>
                 <Grid grow>
                 {viewAmbitionsData.map((data: any) => {
+                    
+                    var recentEvent;
+
+                    if (Object.hasOwn(data.events, 0)) {
+                        
+                        recentEvent = (data.events.at(-1).createdAt)
+                        
+                    } else {
+                        recentEvent = null
+                        
+                    }
+                    
+                    console.log(recentEvent);
+                    
                     return (
                         <Grid.Col key={data._id} span={4}>
                         <Card key={data._id} shadow="sm" p="sm" radius="md" withBorder style={{margin: "1em"}}>

@@ -77,7 +77,8 @@ export default function AddEvent() {
                 console.log(error);              
             }
 
-            setOpened(false) // to close after submit completes
+            // eslint-disable-next-line no-restricted-globals
+            location.reload();
       };
   
     return (
