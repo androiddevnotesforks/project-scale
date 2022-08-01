@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { Tabs, Loader, Text, Button, Modal, Group, TextInput, Textarea } from "@mantine/core"
-import { DatePicker } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+import { useState, useEffect } from "react";
+import { Button, Modal, Group, TextInput, Textarea } from "@mantine/core"
 import { useSelector } from "react-redux";
 import { ADD_EVENT as ADD_EVENT_MUTATION } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
-
 
 export default function AddEvent() {
     
@@ -14,50 +11,23 @@ export default function AddEvent() {
     const state: any = useSelector(state => state)
 
     const [opened, setOpened] = useState(false);
-    // const [date, setDate] = useState<Date | null>(new Date()); // if useState is not written like this then onChange doesn't work due to how the NPM package works, source: https://mantine.dev/dates/date-picker/
 
     const [dataInputVal, setDataInputVal] = useState(""); // value
-    const [notesVal, setNotesVal] = useState("Optional."); // value
+    const [notesVal, setNotesVal] = useState(""); // value
+    const [confirmData, setConfirmData] = useState("");
     const [dataInputErr, setDataInputErr] = useState("");
     const [notesErr, setNotesErr] = useState("");
 
-    const [errorCheckOne, setErrorCheckOne] = useState(false);
-    const [errorCheckTwo, setErrorCheckTwo] = useState(false);
     const [disableButton, setDisableButton] = useState(true);
 
-    const form = useForm({ // useForm is a Mantine function
-        initialValues: { // objects for the fields you are using
-            dataInput: "",
-            notes: "",
-        },
-        
-        // validate: {
-        //     // dataInput: (value) => (!isNaN(Number(value)) ? null : "Your data input must consist of numbers only, e.g. 88.8"),
-        //     // dataInput: (value) => (isNaN(Number(value)) ? "Your data input must consist of numbers only, e.g. 88.8"
-        //     //                                             : value.length > 9 
-        //     //                                             ? "Cannot enter more than 8 numbers and one decimal point."
-        //     //                                             : null),
-        //     // notes: (value) => (value.length > 255 ? "Cannot enter more than 255 characters" : null )
-        // },
-    });
-
-    function handleChangeData(event: any) {
-        setDataInputVal(event.target.value);
-
+    useEffect(() => {
         Number(dataInputVal) ? setDataInputErr("") : setDataInputErr("Your data input must be numbers only, e.g. 88.8");
-        Number(dataInputVal) ? setErrorCheckOne(true) : setErrorCheckOne(false);
-
-        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
-    }
-
-    function handleChangeNotes(event: any) {
-        setNotesVal(event.target.value);
-
-        notesVal.length > 255 ? setNotesErr("You cannot type more than 255 characters.") : setNotesErr("");
-        notesVal.length > 255 ? setErrorCheckTwo(false) : setErrorCheckTwo(true);
-
-        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
-    }
+        (Number(dataInputVal) === Number(confirmData)) ? setDisableButton(false) : setDisableButton(true);
+        
+        notesVal.length < 256 ? setNotesErr("") : setNotesErr("You cannot type more than 255 characters.");
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [notesVal, dataInputVal, confirmData])
     
     const handleFormSubmit = async (event: any) => {
         event.preventDefault();
@@ -94,19 +64,25 @@ export default function AddEvent() {
                     required // requires entry
                     label="Input data"
                     placeholder="..."
-                    {...form.getInputProps('dataInput')} // uses email input on submit
                     value={dataInputVal}
-                    onChange={handleChangeData}
+                    onChange={(event) => setDataInputVal(event.target.value)}
                     error={dataInputErr}
+                />
+
+                <TextInput // datainput
+                    required // requires entry
+                    label="Confirm data input."
+                    placeholder="..."
+                    value={confirmData}
+                    onChange={(event) => setConfirmData(event.target.value)}
                 />
 
                 <Textarea // notes
                     label="Notes"
                     description="(Optional) Write anything of significance that is relevant to your ambition."
                     placeholder="..."
-                    {...form.getInputProps('notes')} // uses email input on submit
                     value={notesVal}
-                    onChange={handleChangeNotes}
+                    onChange={(event) => setNotesVal(event.target.value)}
                     error={notesErr}
                 />
 

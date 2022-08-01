@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, NativeSelect, TextInput, Textarea, Modal, Group } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Button, TextInput, Modal, Group } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useMutation} from "@apollo/client";
 import { DELETE_AMBITION } from "../utils/mutations";
