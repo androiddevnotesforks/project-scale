@@ -32,8 +32,8 @@ export default function NewAmbition() {
     const [dailyErr, setDailyErr] = useState("");
     const [endErr, setEndErr] = useState("");
     const [disableButton, setDisableButton] = useState(true);
-    const [errorCheckOne, setErrorCheckOne] = useState(false)
-    const [errorCheckTwo, setErrorCheckTwo] = useState(false)
+    const [errorCheckOne, setErrorCheckOne] = useState(false);
+    const [errorCheckTwo, setErrorCheckTwo] = useState(false);
 
     const form = useForm({
         initialValues: {
@@ -99,7 +99,7 @@ export default function NewAmbition() {
         <form onSubmit={handleAmbitionSubmit}>
         
         <NativeSelect
-            label="Choose your identity:"
+            label="What is your ego?"
             description="I am..."
             // data={["Determined", "Inspired"]}
             data={identitiesData.map((data: any) => {

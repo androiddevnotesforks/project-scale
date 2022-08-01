@@ -90,7 +90,36 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
+        updateAmbition: async (parent, { ambitionId, identity, dailyPlan, endValue }, context) => {
+            if (context.user) {
+                const updateAmbition = await Ambitions.findOneAndUpdate(
+                    { _id: ambitionId },
+                    { $set: {
+                        identity: identity, 
+                        dailyPlan: dailyPlan, 
+                        endValue: endValue,
+                    }},
+                    { new: true, runValidators: true }
+                );
+                return updateAmbition;
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        },
+        deleteAmbition: async (parent, { ambitionId }, context) => {
+            if (context.user) {
+                const ambition = await Ambitions.findOneAndDelete({
+                    _id: ambitionId
+                });
 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { ambitions: ambitionId }}
+                );
+
+                return ambition;
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        },
     },
 };
 
