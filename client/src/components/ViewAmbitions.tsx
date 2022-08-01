@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddEvent from "./AddEvent";
 import { Link } from "react-router-dom";
 import { isSameDate } from "@mantine/dates";
+import UpdateAmbition from "./UpdateAmbition";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -67,7 +68,10 @@ export default function ViewAmbitions() {
                             {`public: ${data.public}`}
                         </Text>
                         <div onClick={() => dispatch(ADD_AMBITION_ID({
-                            ambitionId: data._id
+                            ambitionId: data._id,
+                            identity: data.identity,
+                            endValue: data.endValue,
+                            dailyPlan: data.dailyPlan,
                         }))}>
                             {(isSameDate(new Date(), new Date(recentEvent))) ? (
                                 null ) : (
@@ -80,6 +84,7 @@ export default function ViewAmbitions() {
                                 <Button>View Records</Button>
                             </Link>
                             )}
+                            <UpdateAmbition />
                         </div>
                     </Card>
                     </Grid.Col>

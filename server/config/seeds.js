@@ -7,10 +7,10 @@ db.once("open", async () => {
     await Identity.deleteMany();
 
     const ambitions = await Ambitions.create({
-        identity: "Lose Weight",
+        category: "Lose Weight",
         dailyPlan: "Weighing myself every morning, exercise six days per week, strict diet for weight loss.",
         endValue: 69.0,
-        category: "Determined",
+        identity: "Determined",
         public: false,
         events: [
           {createdAt: "June 15, 2022",
