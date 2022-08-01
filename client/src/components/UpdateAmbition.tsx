@@ -24,9 +24,9 @@ export default function UpdateAmbition() {
     const [updateAmbition, { error }] = useMutation(UPDATE_AMBITION);
 
     const state: any = useSelector(state => state);
-    // console.log(state.ambitions.identity);
-    // console.log(state.ambitions.endValue);
-    // console.log(state.ambitions.dailyPlan);
+    console.log(state.ambitions.identity);
+    console.log(state.ambitions.endValue);
+    console.log(state.ambitions.dailyPlan);
 
     
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
@@ -36,13 +36,6 @@ export default function UpdateAmbition() {
     // console.log(identity);
     // console.log(dailyPlan);
     // console.log(endValue);
-    
-    // useEffect(() => {
-    //     // console.log(identity)
-        
-    // }, [identity, dailyPlan, endValue])
-    
-
     const [dailyErr, setDailyErr] = useState("");
     const [endErr, setEndErr] = useState("");
     const [disableButton, setDisableButton] = useState(true);
@@ -50,6 +43,21 @@ export default function UpdateAmbition() {
     const [errorCheckTwo, setErrorCheckTwo] = useState(false);
 
     const [opened, setOpened] = useState(false);
+    
+    useEffect(() => {
+        setIdentity(state.ambitions.identity)
+        setDailyPlan(state.ambitions.dailyPlan)
+        setEndValue(state.ambitions.endValue)
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [opened])
+    
+    useEffect(() => {
+        Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
+        dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
+        dailyPlan.length === 0 ? setDailyErr("You need a daily plan if you are going to achieve something.") : setDailyErr("");
+
+    }, [endValue, dailyPlan])
 
 
     const form = useForm({
@@ -64,7 +72,7 @@ export default function UpdateAmbition() {
     function handleChangeEnd(event: any) {
         setEndValue(event.target.value);
 
-        Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
+        // Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
         Number(endValue) ? setErrorCheckOne(true) : setErrorCheckOne(false);
 
         errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
@@ -73,7 +81,8 @@ export default function UpdateAmbition() {
     function handleChangeDaily(event: any) {
         setDailyPlan(event.target.value);   
 
-        dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
+        // dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
+        // dailyPlan.length === 0 ? setDailyErr("You need a daily plan if you are going to achieve something.") : setDailyErr("");
         dailyPlan.length > 1000 ? setErrorCheckTwo(false) : setErrorCheckTwo(true);
 
 
