@@ -8,7 +8,7 @@ import AddEvent from "./AddEvent";
 import { Link } from "react-router-dom";
 import { isSameDate } from "@mantine/dates";
 import UpdateAmbition from "./UpdateAmbition";
-import AmbitionSettings from "./AmbitionSettings";
+import DeleteAmbition from "./DeleteAmbition";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -16,9 +16,6 @@ export default function ViewAmbitions() {
     });
 
     const viewAmbitionsData = data?.user.ambitions || [];
-
-
-    const [openAmbitionSettings, setOpenAmbitionSettings] = useState(false)
 
     // const eventsData = data?.user.ambitions.events || [];
 
@@ -115,12 +112,14 @@ export default function ViewAmbitions() {
                             </Link>
                             )}
                             <UpdateAmbition />
+                            <Space />
                             {/* <Group position="center" spacing="xl">
                                 <Button onClick={() => setOpenAmbitionSettings((o) => (!o))} color={"gray"}>Settings</Button>
                             </Group>
                             <Collapse in={openAmbitionSettings}> */}
                                 {/* <AmbitionSettings /> */}
                             {/* </Collapse> */}
+                            <DeleteAmbition />
                         </div>
                     </Card>
                     </Grid.Col>
