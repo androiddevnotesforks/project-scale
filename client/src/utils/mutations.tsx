@@ -49,8 +49,8 @@ export const ADD_EVENT = gql`
 `;
 
 export const UPDATE_AMBITION = gql`
-    mutation UpdateAmbition($_id: ID!, $identity: String!, $dailyPlan: String!, $endValue: String!) {
-      updateAmbition(_id: $_id, identity: $identity, dailyPlan: $dailyPlan, endValue: $endValue) {
+    mutation UpdateAmbition($ambitionId: ID!, $identity: String!, $dailyPlan: String!, $endValue: String!) {
+      updateAmbition(ambitionId: $ambitionId, identity: $identity, dailyPlan: $dailyPlan, endValue: $endValue) {
         _id
         identity
         category
@@ -62,8 +62,8 @@ export const UPDATE_AMBITION = gql`
 `;
 
 export const DELETE_AMBITION = gql`
-    mutation DeleteAmbition($_id: ID!) {
-      deleteAmbition(_id: $_id) {
+    mutation DeleteAmbition($ambitionId: ID!) {
+      deleteAmbition(ambitionId: $ambitionId) {
         _id
       }
     }
