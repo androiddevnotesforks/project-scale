@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader } from '@mantine/core';
+import React, { useState } from "react";
+import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader, Collapse } from '@mantine/core';
 import { USER } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import { ADD_AMBITION_ID } from "../features/ambitions";
@@ -8,6 +8,7 @@ import AddEvent from "./AddEvent";
 import { Link } from "react-router-dom";
 import { isSameDate } from "@mantine/dates";
 import UpdateAmbition from "./UpdateAmbition";
+import AmbitionSettings from "./AmbitionSettings";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -15,6 +16,9 @@ export default function ViewAmbitions() {
     });
 
     const viewAmbitionsData = data?.user.ambitions || [];
+
+
+    const [openAmbitionSettings, setOpenAmbitionSettings] = useState(false)
 
     // const eventsData = data?.user.ambitions.events || [];
 
@@ -57,18 +61,13 @@ export default function ViewAmbitions() {
                 <Grid grow>
                 {viewAmbitionsData.map((data: any) => {
                     
-                    var recentEvent;
+                    var recentEvent; // need to make undefined variable to get if statements inside the return statement to work
 
-                    if (Object.hasOwn(data.events, 0)) {
-                        
+                    if (Object.hasOwn(data.events, 0)) { // checks if an object contains an array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
                         recentEvent = (data.events.at(-1).createdAt)
-                        
                     } else {
-                        recentEvent = null
-                        
+                        recentEvent = null   
                     }
-                    
-                    console.log(recentEvent);
                     
                     return (
                         <Grid.Col key={data._id} span={4}>
@@ -116,6 +115,12 @@ export default function ViewAmbitions() {
                             </Link>
                             )}
                             <UpdateAmbition />
+                            {/* <Group position="center" spacing="xl">
+                                <Button onClick={() => setOpenAmbitionSettings((o) => (!o))} color={"gray"}>Settings</Button>
+                            </Group>
+                            <Collapse in={openAmbitionSettings}> */}
+                                {/* <AmbitionSettings /> */}
+                            {/* </Collapse> */}
                         </div>
                     </Card>
                     </Grid.Col>
