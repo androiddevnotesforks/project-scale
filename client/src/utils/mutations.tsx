@@ -68,3 +68,29 @@ export const DELETE_AMBITION = gql`
       }
     }
 `;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser($username: String!, $email: String!, $password: String!) {
+    updateUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation DeleteUser {
+    deleteUser {
+      _id
+      username
+      email
+      ambitions {
+        _id
+      }
+    }
+  }
+`;

@@ -26,6 +26,7 @@ import {
   ColorSchemeProvider,
   ColorScheme,
   Group,
+  Space,
 } from '@mantine/core';
 
 // import pages here
@@ -38,6 +39,7 @@ import LoginSignup from './components/LoginSignup';
 
 import Auth from "./utils/auth";
 import Records from './pages/Records';
+import Settings from './pages/Settings';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -98,7 +100,11 @@ function App() {
             {Auth.loggedIn() ? (
               // profile button or tab also appears here
               <Group position="center" style={{padding: "1em"}}>
-              <Button color={"red"} onClick={Auth.logout}>Logout</Button>
+                <Button color={"red"} onClick={Auth.logout}>Logout</Button>
+              <Space />
+              <Link to="/settings">
+                <Button color={"gray"}>Settings</Button>
+              </Link>
               </Group>
               ) : (
               <LoginSignup />
@@ -133,6 +139,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/records" element={<Records />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NoMatch />} />
               </Routes>
           </div>

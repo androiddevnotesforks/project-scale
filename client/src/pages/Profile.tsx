@@ -7,7 +7,7 @@ import ViewAmbitions from "../components/ViewAmbitions";
 import { USERNAME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
-const Profile = () => {
+export default function Profile() {
     const { loading, data } = useQuery(USERNAME, {
         fetchPolicy: "cache-and-network"
     });
@@ -45,7 +45,11 @@ const Profile = () => {
     // on clicking to start a new ambition, you will be asked to select an identity...
 
     return (
-        <div className="clamps">
+       <>
+        {loading ? (
+            <Loader color="red" size="xl" />
+            ) : (
+                <div className="clamps">
             <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
             <Space h="md" />
 
@@ -60,7 +64,7 @@ const Profile = () => {
                 <ViewAmbitions />
             </Collapse>
         </div>
+        )}
+      </> 
     );
 };
-
-export default Profile;

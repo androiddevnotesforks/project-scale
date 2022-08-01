@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Space } from "@mantine/core";
+import { Text, Space, Loader } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import "../App.css";
 import EventCalendar from "../components/EventCalendar";
@@ -38,6 +38,9 @@ export default function Records() {
 
     return (
         <>
+            {loading ? (
+                <Loader color="red" size="xl" />
+            ) : (
             <div className="clamps">
             <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
             <Space h="md" />
@@ -45,6 +48,7 @@ export default function Records() {
             <EventCalendar />
 
         </div>
+            )}
         </>
     )
 }
