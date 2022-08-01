@@ -40,7 +40,7 @@ const resolvers = {
     Mutation: {
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-
+            
             if (!user) {
                 throw new AuthenticationError("Invalid credentials");
             };
@@ -120,6 +120,37 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
+        updateUser: async (parent, { username, email }, context) => {
+            if (context.user) {
+                const updateUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $set: {
+                        username: username,
+                        email: email,
+                    }},
+                    { new: true, runValidators: true }
+                );
+                return updateUser;
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        },
+        deleteUser: async (parent, args, context) => {
+            if (context.user) {
+                const user = await User.findOne({ _id: context.user._id}) // this needs to be done to get the ambitions ids
+                
+                await User.findOneAndDelete({ // putting const user at this method returns null making it not possible to delete the user's ambitions
+                    _id: context.user._id
+                });
+                
+                await Ambitions.deleteMany( // with const user = await User.findOne() the ambition ids belonging to the user can be retrieved to delete them from the database
+                    { _id: { $in: user.ambitions } }
+                );
+                
+                
+                return user;
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        }, 
     },
 };
 
