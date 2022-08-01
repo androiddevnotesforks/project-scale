@@ -59,16 +59,6 @@ export default function UpdateAmbition() {
 
     }, [endValue, dailyPlan])
 
-
-    const form = useForm({
-        initialValues: {
-            dailyPlan: dailyPlan,
-            endValue: endValue,
-            identity: identity,
-        },
-
-    });
-
     function handleChangeEnd(event: any) {
         setEndValue(event.target.value);
 
@@ -129,7 +119,6 @@ export default function UpdateAmbition() {
                     return data.identityCategories
                 })}
                 required
-                // {...form.getInputProps('identity')}
                 value={identity}
                 onChange={(event) => setIdentity(event.target.value)}
             />
@@ -138,7 +127,6 @@ export default function UpdateAmbition() {
                 required // requires entry
                 label="Are you changing the end value?"
                 placeholder="Example: 5000.21"
-                // {...form.getInputProps('endValue')} // uses text input on submit
                 value={endValue}
                 onChange={handleChangeEnd}
                 error={endErr}
@@ -148,7 +136,6 @@ export default function UpdateAmbition() {
                 required // requires entry
                 label="Has your daily plan changed?"
                 placeholder="When I wake up, then I will do something. When it is 11:30am, then I will do something else."
-                // {...form.getInputProps('dailyPlan')} // text input
                 value={dailyPlan}
                 onChange={handleChangeDaily}
                 error={dailyErr}
