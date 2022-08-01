@@ -58,9 +58,8 @@ const typeDefs = gql`
         addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
         addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
         # plan for removing identity, ambitions and maybe calendar entries
-        updateEmail(email: String!): User
-        updateUsername(username: String!): User
-        deleteAccount(_id: ID!): User
+        updateUser(username: String!, email: String!): User
+        deleteUser: User
         updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
         deleteAmbition(ambitionId: ID!): Ambitions
     }
