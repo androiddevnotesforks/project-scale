@@ -51,17 +51,14 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        # maybe I'll put in a mutation to update user...
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        # addAmbition(identity: ID!, timeLimit: Int!, category: ID!): Ambitions
-        addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
-        addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
-        # plan for removing identity, ambitions and maybe calendar entries
-        updateUser(username: String!, email: String!): User
+        updateUser(username: String!, email: String!, password: String!): Auth
         deleteUser: User
+        addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
         updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
         deleteAmbition(ambitionId: ID!): Ambitions
+        addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
     }
 `;
 

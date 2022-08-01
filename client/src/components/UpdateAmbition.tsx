@@ -1,19 +1,11 @@
-// putting a button into viewAmbitions...
-// will open up a modal to view settings for an ambition...
-// there will be a switch to change ambition status to public
-// there will be the option to update ambition... it needs to set the state using the same form as making a new ambition minus the ambition...
-// and then there will be a button to delete ambition which requires typing in the name of the ambition to enable the button to delete
-
 import { useEffect, useState } from "react";
 import { Button, NativeSelect, TextInput, Loader, Textarea, Modal, Group } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { CATEGORY_IDENTITIES } from "../utils/queries";
 import { UPDATE_AMBITION } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 
 export default function UpdateAmbition() {
-
     
     const { loading, data } = useQuery(CATEGORY_IDENTITIES, {
         fetchPolicy: "cache-and-network"
@@ -33,9 +25,6 @@ export default function UpdateAmbition() {
     const [dailyPlan, setDailyPlan] = useState(state.ambitions.dailyPlan); // how they are going to get there
     const [endValue, setEndValue] = useState(state.ambitions.endValue); // where they want to be
 
-    // console.log(identity);
-    // console.log(dailyPlan);
-    // console.log(endValue);
     const [dailyErr, setDailyErr] = useState("");
     const [endErr, setEndErr] = useState("");
     const [disableButton, setDisableButton] = useState(true);
@@ -62,7 +51,6 @@ export default function UpdateAmbition() {
     function handleChangeEnd(event: any) {
         setEndValue(event.target.value);
 
-        // Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
         Number(endValue) ? setErrorCheckOne(true) : setErrorCheckOne(false);
 
         errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
@@ -71,10 +59,7 @@ export default function UpdateAmbition() {
     function handleChangeDaily(event: any) {
         setDailyPlan(event.target.value);   
 
-        // dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
-        // dailyPlan.length === 0 ? setDailyErr("You need a daily plan if you are going to achieve something.") : setDailyErr("");
         dailyPlan.length > 1000 ? setErrorCheckTwo(false) : setErrorCheckTwo(true);
-
 
         errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
     };

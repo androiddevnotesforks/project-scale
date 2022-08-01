@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, TextInput, Modal, Group } from "@mantine/core";
 import { useSelector } from "react-redux";
-import { useMutation} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { DELETE_AMBITION } from "../utils/mutations";
-
-
 
 export default function DeleteAmbition() {
 
@@ -15,10 +13,8 @@ export default function DeleteAmbition() {
     const [disableButton, setDisableButton] = useState(true);
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
     const [endValue, setEndValue] = useState(""); // for textinput for deleting the ambition
-    // const [endErr, setEndErr] = useState("");
 
-
-    const [opened, setOpened] = useState(false);
+    const [opened, setOpened] = useState(false); // opens/closes the modal
 
     useEffect(() => {
         setIdentity(state.ambitions.identity)
@@ -47,7 +43,8 @@ export default function DeleteAmbition() {
             }
 
             // eslint-disable-next-line no-restricted-globals
-            location.reload();     
+            location.reload();
+            // setOpened((o) => (!o)) // page not rerendering afterwards     
     };
 
     return (

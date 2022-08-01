@@ -120,17 +120,21 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        updateUser: async (parent, { username, email }, context) => {
+        updateUser: async (parent, { username, email, password }, context) => {
             if (context.user) {
                 const updateUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $set: {
                         username: username,
                         email: email,
+                        password: password,
                     }},
-                    { new: true, runValidators: true }
+                    { new: true}
                 );
-                return updateUser;
+                console.log(updateUser);
+                const token = signToken(updateUser); // creates a JWT and assigns it to the user
+
+                return { updateUser, token };
             }
             throw new AuthenticationError("Session expired, login again.");
         },
