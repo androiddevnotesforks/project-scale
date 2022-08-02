@@ -69,3 +69,19 @@ export const SEARCH_EVENTS = gql`
     }
 `;
 
+export const SEARCH_PUBLIC_AMBITIONS = gql`
+    query SearchPublicAmbitions($public: Boolean!) {
+      searchPublicAmbitions(public: $public) {
+        _id
+        identity
+        endValue
+        category
+        public
+        daysCount
+          events {
+            createdAt
+            dataInput
+          }
+      }
+    }
+`;
