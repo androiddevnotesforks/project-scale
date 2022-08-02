@@ -71,9 +71,7 @@ export default function DeleteUser() {
                 </form>
                 </Modal>
 
-                <Group position="center" style={{padding: "1em"}}>
-                    <Button radius="lg" variant="gradient" color="crimson" onClick={() => setOpened(true)}>Delete Account!</Button>
-                </Group>
+                <Button radius="lg" fullWidth variant="outline" color="red" onClick={() => setOpened(true)}>Delete Account!</Button>
             </div>
                 )}
         </>

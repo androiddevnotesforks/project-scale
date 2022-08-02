@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import {
   ApolloClient,
@@ -59,38 +59,44 @@ const client = new ApolloClient({
 });
 
 function App() {
+  
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-
+  
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light'); // when pressing a specific icon it toggles the light/dark mode
   const toggleColorScheme = (value?: ColorScheme) =>
-      setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+  setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
 
   // fixed issue for why the routing wasn't working, source: https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor
   return (
     <ApolloProvider client={client}>
       <Router>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-       <MantineProvider theme={{ colorScheme: colorScheme }} withGlobalStyles withNormalizeCSS>
+       <MantineProvider 
+       theme={{ colorScheme: colorScheme}} 
+      //  theme={{ colorScheme: colorScheme }} 
+       withGlobalStyles withNormalizeCSS>
         <AppShell // the default styles implemented in appShell was overwriting the colorScheme
+          styles={(theme) => ({main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] },})}
           navbarOffsetBreakpoint="sm"
         navbar={
-          <Navbar p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
-            <Stack align="center" spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
+          <Navbar sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })} p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
+            <Stack spacing="xl">
               <Link to="/">
-                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(255, 89, 0, 1)' }}>Home</Button>
+                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Home</Button>
               </Link>
               <Link to="/search">
-                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(171, 97, 97, 1)' }}>Search</Button>
+                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Search</Button>
               </Link>
             {Auth.loggedIn() ? (
-              <Stack align="center" spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
+              <Stack spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })}>
                 <Link to="/ego">
-                    <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(18, 18, 18, 1)' }}>Ego</Button>
+                    <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Ego</Button>
                 </Link>
-                    <Button radius="lg" variant="gradient" gradient={{ from: 'crimson', to: 'rgba(18, 255, 243, 1)' }} onClick={Auth.logout}>Logout</Button>
+                    <Button radius="lg" fullWidth variant="outline" color="cyan" onClick={Auth.logout}>Logout</Button>
                 <Link to="/settings">
-                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'gray' }}>Settings</Button>
+                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Settings</Button>
                 </Link>
                 </Stack>
               ) : (
@@ -100,7 +106,7 @@ function App() {
           </Navbar>
         }
         header={
-          <Header height={70} p="md">
+          <Header sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })} height={70} p="md">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", height: '100%' }}>
               <MediaQuery largerThan="sm" styles={{ display: "none"}}>
                 <Burger
@@ -111,12 +117,10 @@ function App() {
                   mr="xl"
                 />
               </MediaQuery>
-              {/* <Group position='apart' spacing="xl"> */}
                 <Text>Project S.C.A.L.E.</Text>
                 <Button radius="xl" color={colorScheme === "dark" ? "yellow" : "blue"} onClick={() => toggleColorScheme()} title="Toggle mode">
                   {colorScheme === "dark" ? "Light" : "Dark"}
                 </Button>
-              {/* </Group> */}
             </div>
           </Header>
         }
