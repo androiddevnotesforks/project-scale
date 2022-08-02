@@ -23,33 +23,15 @@ export default function EventCalendar() {
     });
 
     const viewRecords = data?.searchEvents.events || [];
-    const viewAmbition = data?.searchEvents || [];
-
-    // const test = new Date(viewRecords["0"]["createdAt"]);
- 
+     
     useEffect(() => {
-        // const test = isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"])) ? viewRecords["0"]["createdAt"] : console.log("no")
-        if (!loading) {
+        if (!loading) { // to prevent page errors
             selectEvent()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value])
+    }, [value]);
 
-    function selectEvent() {
-        
-        // setValue(new Date())
-        // console.log(value);
-        // isSameDate(value || new Date(), new Date(viewRecords["0"]["createdAt"])) ? console.log("sth")
-        //  : console.log("no")
-
-
-        // if (isSameDate(value || new Date(), new Date({...viewRecords.createdAt}))) {
-        //     return `Date: ${{...viewRecords.createdAt}}, 
-        //     Data Input: ${{...viewRecords.dataInput}}, 
-        //     Notes: ${{...viewRecords.notes}}.`
-        // } else {
-        //     return 0
-        // }
+    function selectEvent() { // for displaying data when clicking on the calendar
 
       return  viewRecords.map((date: any) => {
             if (isSameDate(value || new Date(), new Date(date.createdAt))) {
@@ -59,7 +41,7 @@ export default function EventCalendar() {
             }
         })
         
-    }
+    };
 
     // console.log({...viewRecords});
     console.log(viewRecords.map((date:any) => {
@@ -69,34 +51,6 @@ export default function EventCalendar() {
             return 0
         }
     }));
-    
-    // Chart data...
-
-    
-
-    // console.log(value);
-    
-    // console.log(state.ambitions.ambitionId);
-    // console.log(data);
-    
-    // console.log(viewRecords["0"]["createdAt"]);
-    // console.log(viewAmbition);
-    
-    // console.log(isSameDate(new Date(), new Date('Sunday, July 31, 2022')) + " did it work???");
-
-    
-    // eslint-disable-next-line no-self-compare
-    // if (new Date(2020,0,5) === new Date(2020,0,5)) {
-    //     console.log("true... this time");
-    // } else {
-    //     console.log("nope");
-        
-    // }
-
-    // need to make an onClick function, when you click on a date, it takes value which is clicked on and compares it to the events held, if there is a match then it will render the event data...
-    
-
-    // console.log(value);
     
     return (
         <>
