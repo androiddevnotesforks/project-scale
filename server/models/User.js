@@ -27,12 +27,12 @@ const userSchema = new Schema({
 });
 
 // set up pre-save middleware to create password
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function(next) { // this line is the reason why findOneAndUpdate will not hash a changed password! source: https://mongoosejs.com/docs/middleware.html#pre
     if (this.isNew || this.isModified('password')) {
       const saltRounds = 10; // enough salt?
       this.password = await bcrypt.hash(this.password, saltRounds);
     }
-  
+
     next();
 });
   

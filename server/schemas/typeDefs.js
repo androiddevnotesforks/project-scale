@@ -53,7 +53,8 @@ const typeDefs = gql`
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        updateUser(username: String!, email: String!, password: String!): Auth
+        updateUser(username: String!, email: String!): Auth
+        changePassword(password: String!): Auth
         deleteUser: User
         addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
         updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions

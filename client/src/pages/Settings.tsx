@@ -1,6 +1,7 @@
 import { Space, Text, Group } from "@mantine/core";
 import DeleteUser from "../components/DeleteUser";
 import UpdateUser from "../components/UpdateUser";
+import ChangePassword from "../components/ChangePassword";
 
 export default function Settings() {
 
@@ -8,10 +9,18 @@ export default function Settings() {
         <>
         <Group position="center" style={{padding: "1em"}}>
         <Text>
-            You can update your username, email and password.
+            You can update your username, email.
         </Text>
         <Space />
         <UpdateUser />
+        </Group>
+        <Space />
+        <Group position="center" style={{padding: "1em"}}>
+        <Text>
+            You can change your password.
+        </Text>
+        <Space />
+        <ChangePassword />
         </Group>
         <Space />
         <Group position="center" style={{padding: "1em"}}>

@@ -70,16 +70,16 @@ export const DELETE_AMBITION = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($username: String!, $email: String!, $password: String!) {
-    updateUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email
+      mutation UpdateUser($username: String!, $email: String!) {
+        updateUser(username: $username, email: $email) {
+        token
+        user {
+          _id
+          username
+          email
+        }
       }
     }
-  }
 `;
 
 export const DELETE_USER = gql`
@@ -93,4 +93,17 @@ export const DELETE_USER = gql`
       }
     }
   }
+`;
+
+export const CHANGE_PASSWORD = gql`
+      mutation ChangePassword($password: String!) {
+        updateUser(password: $password) {
+        token
+        user {
+          _id
+          username
+          email
+        }
+      }
+    }
 `;
