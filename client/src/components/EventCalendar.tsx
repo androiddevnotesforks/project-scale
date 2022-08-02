@@ -36,6 +36,7 @@ export default function EventCalendar() {
       return  viewRecords.map((date: any) => {
             if (isSameDate(value || new Date(), new Date(date.createdAt))) {
                 return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
+                // note, you can actually stick <Card /> component in the return statement to actually render
             } else {
                 return null
             }
