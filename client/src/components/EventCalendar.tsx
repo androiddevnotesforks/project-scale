@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, isSameDate, DatePicker } from "@mantine/dates";
-import { Text, Indicator, Loader, Space } from "@mantine/core";
+import { Text, Indicator, Loader, Space, Card, Badge, Grid, Stack, SimpleGrid } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { SEARCH_EVENTS } from "../utils/queries";
 import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
+import "../App.css";
 
 import { Chart, registerables } from 'chart.js'; // required to actually get chart.js with react-chartjs-2 to work
 Chart.register(...registerables); // to get the package working, source: https://www.chartjs.org/docs/next/getting-started/integration.html
@@ -35,7 +36,25 @@ export default function EventCalendar() {
 
       return  viewRecords.map((date: any) => {
             if (isSameDate(value || new Date(), new Date(date.createdAt))) {
-                return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
+                var eventCreatedAt = `Date: ${date.createdAt}`;
+                var eventDataInput = `Data Input: ${date.dataInput}`;
+                var eventNotes = (date.notes) ? `Notes: ${date.notes}` : null ;
+
+                return <Card key={date.createdAt} shadow="sm" p="sm" radius="md" withBorder style={{margin: "1em"}} >
+                    <Stack >
+                        <Text >
+                            {eventCreatedAt}
+                        </Text>
+                        <Text >
+                            {eventDataInput}
+                        </Text>
+                        <Text >
+                            {eventNotes}
+                        </Text>
+                    </Stack>
+                </Card>
+
+                // return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
                 // note, you can actually stick <Card /> component in the return statement to actually render
             } else {
                 return null
@@ -59,7 +78,16 @@ export default function EventCalendar() {
             <Loader color="red" size="xl" />
             ) : (
         <div>
+            <Grid grow>
+            <Grid.Col
+            md={6}
+            lg={3} 
+            // span={3}
+            >
+
+            
             <Calendar 
+                fullWidth
                 value={value} 
                 onChange={setValue}
                 renderDay={(date) => {
@@ -75,11 +103,22 @@ export default function EventCalendar() {
                     )
                 }} 
             />
-            <Space />
-            <Text >
+            </Grid.Col>
+            <Grid.Col 
+            md={6}
+            lg={3} 
+            // span={3}
+            >
                 {selectEvent()}
-            </Text>
-            <Space />
+            </Grid.Col>
+
+            <Grid.Col 
+            className="chart"
+            md={12}
+            lg={6}
+            // span={6} 
+            // style={{position: "relative", height:"80vh", width:"80vw"}}
+            >
             <Line 
                 datasetIdKey="eventsChart"
                 data={{
@@ -99,6 +138,7 @@ export default function EventCalendar() {
                     ], // hmmm
                 }}
                 options={{
+                    // maintainAspectRatio: false,
                     scales: {
                         y: {
                             title: {
@@ -115,6 +155,8 @@ export default function EventCalendar() {
                     }
                 }}
                  />
+                </Grid.Col>
+            </Grid>
         </div>
         )}
 
