@@ -5,7 +5,6 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
     Query: {
         user: async (parent, args, context) => { // requires resolver context and the use of the JWT to verify the user is using their account
-            // console.log(context.user);
             if (context.user) {
                 return User.findOne({
                     _id: context.user._id
@@ -40,15 +39,14 @@ const resolvers = {
     },
     Mutation: {
         login: async (parent, { email, password }) => {
-            // console.log(email, password);
             const user = await User.findOne({ email });
-            // console.log(user);
+
             if (!user) {
                 throw new AuthenticationError("Invalid credentials");
             };
 
             const correctPw = await user.isCorrectPassword(password);
-            // console.log(correctPw);
+            
             if (!correctPw) {
                 throw new AuthenticationError("Invalid credentials");
             };
@@ -123,9 +121,6 @@ const resolvers = {
             throw new AuthenticationError("Session expired, login again.");
         },
         updateUser: async (parent, { username, email }, context) => {
-            // console.log(username, email, password);
-            // console.log(context.user);
-            console.log(context.user);
             if (context.user) {
                 const updateUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
@@ -135,13 +130,10 @@ const resolvers = {
                     }},
                     { new: true, runValidators: true }
                 );
-                console.log(updateUser);
-                // const user = await User.findOne({ _id: context.user._id}) 
-                // console.log(user);
+
                 const token = signToken(updateUser); // creates a JWT and assigns it to the user
-                // console.log(token);
+
                 return { token, updateUser };
-                // return updateUser;
             }
             throw new AuthenticationError("Session expired, login again.");
         },
@@ -163,25 +155,28 @@ const resolvers = {
             throw new AuthenticationError("Session expired, login again.");
         },
         changePassword: async (parent, { password }, context) => {
+            console.log(password);
+            console.log(context.user);
             if (context.user) {
                 const user = await User.findOne({ _id: context.user._id});
 
-                const savePassword = await user.save({ $set: {
-                    password: password,
-                }});
-
-                console.log(savePassword);
+                if (user) { // how to save correctly to trigger prehook for password hashing, source: https://mongoosejs.com/docs/documents.html#updating-using-save
+                    user.password = password;
+                    await user.save()
+                } else {
+                    throw new AuthenticationError("Invalid credentials");
+                }
 
                 const correctPw = await user.isCorrectPassword(password);
 
                 if (!correctPw) {
                 throw new AuthenticationError("Invalid credentials");
+                };  
 
                 const token = signToken(user); // creates a JWT and assigns it to the user
 
                 return { user, token }
 
-            };
             }
             throw new AuthenticationError("Session expired, login again.");
 
