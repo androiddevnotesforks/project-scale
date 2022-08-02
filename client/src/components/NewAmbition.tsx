@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { Button, NativeSelect, TextInput, Loader, Textarea } from "@mantine/core";
 import { ADD_AMBITION } from "../utils/mutations";
-import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES } from "../utils/queries";
+import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES, USER } from "../utils/queries";
 import { useMutation, useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
 
 export default function NewAmbition() {
+    const state: any = useSelector(state => state)
+
+    // state.ambitions.money
+    // state.ambitions.weight
+    // state.ambitions.hobby
+    // state.ambitions.enigma
+
     const { loading, data } = useQuery(CATEGORY_AMBITIONS, {
         fetchPolicy: "cache-and-network"
       });
@@ -17,7 +25,11 @@ export default function NewAmbition() {
 
     const identitiesData = loadingDataTwo.data?.identities || [];
 
-    const [addAmbition, { error }] = useMutation(ADD_AMBITION);
+    const [addAmbition, { error }] = useMutation(ADD_AMBITION, {
+        refetchQueries: [
+            {query: USER}, // so that the page re-renders with the new user data
+        ]
+    });
 
     const [identity, setIdentity] = useState("Determined"); // default states need to be set
     const [ambition, setAmbition] = useState("Lose Weight"); // default states need to be set
@@ -54,8 +66,12 @@ export default function NewAmbition() {
             }
 
             // eslint-disable-next-line no-restricted-globals
-            location.reload();
+            // location.reload(); // no longer needing to use this when I can refetch apollo queries.
     };
+
+    const ambitionLabel = (ambition === "Lose Weight") ? "How much do you want to weigh? e.g. Enter 68.8kg as 68.8" : (ambition === "Save Money") ? "How much money do you want to spend per week? e.g. Enter $75.25 as 75.25" : (ambition === "New Profession") ? "How much time do you want to spend each day researching a new profession? e.g. Enter 30 minutes as 30" : (ambition === "New Hobby") ? "How many minutes do you want to spend per day on a new hobby? e.g. Enter 30 minutes as 30" : "How much in units of measurement do you want to use to perform this task? e.g. Enter 20 units as 20";
+
+    const ambitionPlaceholder = (ambition === "Lose Weight") ? "68.8" : (ambition === "Save Money") ? "75.25" : (ambition === "New Profession") ? "30" : (ambition === "New Hobby") ? "30" : "20";
     
     return (
     <>
@@ -92,8 +108,8 @@ export default function NewAmbition() {
 
         <TextInput // end value
             required // requires entry
-            label={ ambition === "Save Money" ? ("How much money do you want to save? e.g. Enter $5000.21 as 5000.21") : ("How much do you want to weigh? e.g. Enter 68.8kg as 68.8")}
-            placeholder="Example: 5000.21"
+            label={ambitionLabel}
+            placeholder={ambitionPlaceholder}
             onChange={(event) => setEndValue(event.target.value)}
             value={endValue}
             error={endErr}

@@ -3,12 +3,17 @@ import { Button, TextInput, Modal, Group } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { DELETE_AMBITION } from "../utils/mutations";
+import { USER } from "../utils/queries";
 
 export default function DeleteAmbition() {
 
     const state: any = useSelector(state  => state)
 
-    const [deleteAmbition, { error }] = useMutation(DELETE_AMBITION);
+    const [deleteAmbition, { error }] = useMutation(DELETE_AMBITION, {
+        refetchQueries: [
+            {query: USER}, // so that the page re-renders with the new user data
+        ]
+    });
 
     const [disableButton, setDisableButton] = useState(true);
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
@@ -43,8 +48,8 @@ export default function DeleteAmbition() {
             }
 
             // eslint-disable-next-line no-restricted-globals
-            location.reload();
-            // setOpened((o) => (!o)) // page not rerendering afterwards     
+            // location.reload();
+            setOpened((o) => (!o))  
     };
 
     return (
