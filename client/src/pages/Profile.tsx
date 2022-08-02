@@ -7,6 +7,8 @@ import ViewAmbitions from "../components/ViewAmbitions";
 import { USERNAME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
+
+
 export default function Profile() {
     const { loading, data } = useQuery(USERNAME, {
         fetchPolicy: "cache-and-network"
@@ -49,21 +51,20 @@ export default function Profile() {
         {loading ? (
             <Loader color="red" size="xl" />
             ) : (
+
                 <div className="clamps">
             <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
             <Space h="md" />
-
-            <Group position="center" spacing="xl">
-                <Button onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start an ambition</Button>
-                <Button onClick={() => setViewAmbitions((o) => (!o))} color={"teal"}>View your ambitions</Button>
-            </Group>
-            <Collapse in={openNewAmbition}>
+                
+                
                 <NewAmbition />
-            </Collapse>
+
+                <Button variant="outline" fullWidth mt="xl" uppercase onClick={() => setViewAmbitions((o) => (!o))} color={"teal"}>View your ambitions</Button>
+
             <Collapse in={viewAmbitions}>
                 <ViewAmbitions />
             </Collapse>
-        </div>
+            </div>
         )}
       </> 
     );
