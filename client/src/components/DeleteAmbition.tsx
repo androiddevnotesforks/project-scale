@@ -17,7 +17,7 @@ export default function DeleteAmbition() {
 
     const [disableButton, setDisableButton] = useState(true);
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
-    const [endValue, setEndValue] = useState(""); // for textinput for deleting the ambition
+    const [identityConfirm, setIdentityConfirm] = useState(""); // for textinput for deleting the ambition
 
     const [opened, setOpened] = useState(false); // opens/closes the modal
 
@@ -28,10 +28,10 @@ export default function DeleteAmbition() {
     }, [opened])
 
     useEffect(() => {
-        (endValue === identity) ? setDisableButton(false) : setDisableButton(true)
+        (identityConfirm === identity) ? setDisableButton(false) : setDisableButton(true)
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [endValue])
+    }, [identityConfirm])
 
 
     const handleDeleteSubmit = async (event: any) => {
@@ -50,11 +50,16 @@ export default function DeleteAmbition() {
             setOpened((o) => (!o))  
     };
 
+    function onClose() {
+        setOpened(false);
+        setIdentityConfirm(""); // to erase text if the user closes the modal and if they open it again, it will not remember so that it prevents an accidental submit
+    }
+
     return (
         <>
         <Modal
                 opened={opened}
-                onClose={() => setOpened(false)}
+                onClose={onClose}
                 title="Delete Ambition?"
                 >     
 
@@ -65,11 +70,11 @@ export default function DeleteAmbition() {
                 required // requires entry
                 label={`To delete ambition, type out your ego inside the quotes to confirm deletion and then submit! I am... "${state.ambitions.identity}"`}
                 placeholder="..."
-                value={endValue}
-                onChange={(event) => setEndValue(event.target.value)}
+                value={identityConfirm}
+                onChange={(event) => setIdentityConfirm(event.target.value)}
                 />
     
-                <Button radius="lg" disabled={disableButton} color={"red"} type="submit">Delete!</Button>
+                <Button mt="md" radius="lg" fullWidth variant="outline" color="red" disabled={disableButton} type="submit">Delete!</Button>
             </form>
             </Modal>
 

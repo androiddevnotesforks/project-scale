@@ -109,8 +109,7 @@ export default function UpdateAmbition() {
                 error={dailyErr}
                 />
     
-
-                <Button radius="lg" disabled={disableButton} color={"red"} type="submit">Change!</Button>
+                <Button mt="md" radius="lg" fullWidth variant="outline" color="teal" disabled={disableButton} type="submit">Change!</Button>
             </form>
             </Modal>
             

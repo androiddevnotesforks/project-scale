@@ -36,7 +36,7 @@ export default function SearchAmbitions() {
             {loading ? (
             <Loader color="red" size="xl" />
             ) : (
-            <div>
+            <div className="chart">
 
         <Line 
                 datasetIdKey="eventsChart"
