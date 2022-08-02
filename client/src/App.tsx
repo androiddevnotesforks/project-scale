@@ -13,20 +13,18 @@ import {
   AppShell,
   Navbar,
   Header,
-  // Footer,
-  // Aside,
   Text,
   MediaQuery,
   Burger,
   useMantineTheme,
   Button,
-  Tabs,
   Center,
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
   Group,
   Space,
+  Stack
 } from '@mantine/core';
 
 // import pages here
@@ -78,37 +76,27 @@ function App() {
           navbarOffsetBreakpoint="sm"
         navbar={
           <Navbar p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
-            <Center>
-              <Tabs color="teal" variant="pills" orientation="vertical" defaultValue="Home">
-                <Tabs.List>
-                  <Link to="/">
-                    <Tabs.Tab value="Home">Home</Tabs.Tab>
-                  </Link>
-                  {Auth.loggedIn() ? (
-                  <Link to="/profile">
-                    <Tabs.Tab value="Profile">Profile</Tabs.Tab>
-                  </Link>
-                  ) : (
-                    null
-                  )}
-                  <Link to="/search">
-                    <Tabs.Tab value="search">Search</Tabs.Tab>
-                  </Link>
-                </Tabs.List>
-              </Tabs>
-            </Center>
-            {Auth.loggedIn() ? (
-              // profile button or tab also appears here
-              <Group position="center" style={{padding: "1em"}}>
-                <Button color={"red"} onClick={Auth.logout}>Logout</Button>
-              <Space />
-              <Link to="/settings">
-                <Button color={"gray"}>Settings</Button>
+            <Stack align="center" spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
+              <Link to="/">
+                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(255, 89, 0, 1)' }}>Home</Button>
               </Link>
-              </Group>
+              <Link to="/search">
+                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(171, 97, 97, 1)' }}>Search</Button>
+              </Link>
+            {Auth.loggedIn() ? (
+              <Stack align="center" spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}>
+                <Link to="/ego">
+                    <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'rgba(18, 18, 18, 1)' }}>Ego</Button>
+                </Link>
+                    <Button radius="lg" variant="gradient" gradient={{ from: 'crimson', to: 'rgba(18, 255, 243, 1)' }} onClick={Auth.logout}>Logout</Button>
+                <Link to="/settings">
+                  <Button radius="lg" onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="gradient" gradient={{ from: 'crimson', to: 'gray' }}>Settings</Button>
+                </Link>
+                </Stack>
               ) : (
               <LoginSignup />
             )}
+            </Stack>
           </Navbar>
         }
         header={
@@ -136,7 +124,7 @@ function App() {
           <div>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/ego" element={<Profile />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/records" element={<Records />} />
                 <Route path="/settings" element={<Settings />} />
