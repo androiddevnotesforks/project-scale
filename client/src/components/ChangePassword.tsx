@@ -26,17 +26,12 @@ export default function ChangePassword() {
 
     const handlePasswordSubmit = async (event: any) => {
         event.preventDefault();
-
-        console.log(form.values.password);
-        console.log("what??");
-        
-        console.log(event);
-        
         
         try {
-            const { data } = await changePassword({
+            // const { data } = await changePassword({
+                await changePassword({
                 variables: {
-                    password: form.values.password
+                    password: form.values.password,
                 },
             });
             } catch (error) {
@@ -53,10 +48,8 @@ export default function ChangePassword() {
                 onClose={() => setOpened(false)}
                 title="Change Password"
               >
-                <form onSubmit={() => {
-                    form.onSubmit((values) => handlePasswordSubmit(values))
-                }}>
-                        {/* form.onSubmit((values) => console.log(values)) */}
+                <form onSubmit={handlePasswordSubmit}>
+
                 <PasswordInput // password field
                     required
                     label="Password"

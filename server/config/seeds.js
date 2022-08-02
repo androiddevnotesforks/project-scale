@@ -157,6 +157,9 @@ db.once("open", async () => {
           {createdAt: "August 1, 2022",
           dataInput: 81.4,
           notes: "Ate 400g of chicken, caused weight gain."},
+          {createdAt: "August 2, 2022",
+          dataInput: 80.0,
+          notes: ""},
         ]
     });
 

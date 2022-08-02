@@ -97,13 +97,13 @@ export const DELETE_USER = gql`
 
 export const CHANGE_PASSWORD = gql`
       mutation ChangePassword($password: String!) {
-        updateUser(password: $password) {
-        token
-        user {
-          _id
-          username
-          email
+        changePassword(password: $password) {
+          token
+          user {
+            _id
+            username
+            email
+          }
         }
       }
-    }
 `;
