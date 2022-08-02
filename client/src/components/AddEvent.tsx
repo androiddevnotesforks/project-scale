@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import { Button, Modal, Group, TextInput, Textarea } from "@mantine/core"
 import { useSelector } from "react-redux";
 import { ADD_EVENT as ADD_EVENT_MUTATION } from "../utils/mutations";
+import { USER } from "../utils/queries";
 import { useMutation } from "@apollo/client";
 
 export default function AddEvent() {
     
-    const [addEvent, { error }] = useMutation(ADD_EVENT_MUTATION);
+    const [addEvent, { error }] = useMutation(ADD_EVENT_MUTATION, {
+        refetchQueries: [
+            {query: USER}, // so that the page re-renders with the new user data
+        ]
+    });
 
     const state: any = useSelector(state => state)
 
@@ -48,7 +53,7 @@ export default function AddEvent() {
             }
 
             // eslint-disable-next-line no-restricted-globals
-            location.reload();
+            // location.reload();
       };
   
     return (

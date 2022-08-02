@@ -5,6 +5,10 @@ const initialState = {
     identity: "",
     endValue: "",
     dailyPlan: "",
+    weight: "kg",
+    money: "dollars",
+    hobby: "minutes",
+    enigma: "units",
 }
 
 const ambitionsSlice = createSlice({
