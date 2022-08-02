@@ -4,6 +4,7 @@ import { useForm } from "@mantine/form";
 import { USER } from "../utils/queries";
 import { UPDATE_USER } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
+import Auth from "../utils/auth";
 
 const emailValidation = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ; // regex taken from 16-Stu_React-Forms utils/helpers.js
 
@@ -29,15 +30,15 @@ export default function UpdateUser() {
         initialValues: { // objects for the fields you are using
             username: '',
             email: '',
-            password: '',
-            confirmPassword: '',
+            // password: '',
+            // confirmPassword: '',
         },
     
         validate: { // validate function that occurs on Submit.
             username: (value) => (value.length < 2 ? 'Username must have at least 2 letters.' : null),
             email: (value) => (emailValidation.test(value) ? null : 'Invalid email'),
-            password: (value) => (value.length < 8 ? 'Password must contain at least 8 characters.' : null),
-            confirmPassword: (value, values) => value !== values.password ? "Confirm password did not match password." : null, 
+            // password: (value) => (value.length < 8 ? 'Password must contain at least 8 characters.' : null),
+            // confirmPassword: (value, values) => value !== values.password ? "Confirm password did not match password." : null, 
         },
       });
     
@@ -57,9 +58,24 @@ export default function UpdateUser() {
 
     const handleUserSubmit = async (event: any) => {
         event.preventDefault();
+
+        console.log(event);
+        console.log("....");
+        console.log("userData._id");
+        console.log("....");
+        
+        // console.log(username);
+        // console.log(email);
+        // // console.log(form.values.password);
+        // console.log(userData._id);
+        console.log(form.values);
+        console.log("what??");
+        console.log(form);
+        console.log("huh???");
+        
+        // console.log(event);
         console.log(username);
         console.log(email);
-        console.log(form.values.password);
         
         
         
@@ -68,14 +84,13 @@ export default function UpdateUser() {
                 variables: {
                     username: username,
                     email: email,
-                    password: form.values.password,
                 },
             });
             } catch (error) {
                 console.log(error);
             }
 
-            setOpened(false);      
+            // Auth.logout(); 
     };
 
     return (
@@ -89,7 +104,13 @@ export default function UpdateUser() {
                 onClose={() => setOpened(false)}
                 title="Update User"
               >
-                <form onSubmit={handleUserSubmit}>
+                <form onSubmit={
+                    // () => {
+                    // form.onSubmit((values) =>
+                    handleUserSubmit
+                    // console.log(values)
+                    // (values: any, event: any) => {handleUserSubmit(values, event)}
+                }>
                 <TextInput //username field
                     required // requires entry
                     label="Username"
@@ -108,7 +129,7 @@ export default function UpdateUser() {
                     onChange={(event) => setEmail(event.target.value)}
                     />
         
-                <PasswordInput // password field
+                {/* <PasswordInput // password field
                     required
                     label="Password"
                     placeholder="Enter Password"
@@ -120,7 +141,7 @@ export default function UpdateUser() {
                     label="Confirm password"
                     placeholder="Confirm Password"
                     {...form.getInputProps("confirmPassword")} // uses password input on submit
-                  />
+                  /> */}
         
                 <Group position="apart" spacing="xl" mt="md">
                   <Button color={"teal"} type="submit">Update!</Button>
