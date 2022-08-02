@@ -26,16 +26,16 @@ const resolvers = {
         identities: async () => {
             return await Identity.find();
         },
-        ambitions: async () => { // assuming it will find all public ambitions that are true
-            return await Ambitions.find();
-        },
         searchEvents: async (parent, { ambitionId }, context) => {
             return await Ambitions.findOne({
                 _id: ambitionId
             });
         },
-        // will have to consider querying ambitions when displaying them publicly
-        // see redux store for reference: products
+        searchPublicAmbitions: async (parent, { public }) => { 
+            return await Ambitions.find({
+                public: public
+            });
+        },
     },
     Mutation: {
         login: async (parent, { email, password }) => {

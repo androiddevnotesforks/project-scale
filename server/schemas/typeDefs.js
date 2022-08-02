@@ -46,8 +46,8 @@ const typeDefs = gql`
         username: User
         categories: [Category]
         identities: [Identity]
-        ambitions: [Ambitions]
         searchEvents(ambitionId: ID!): Ambitions
+        searchPublicAmbitions(public: Boolean!): [Ambitions]
     }
 
     type Mutation {
