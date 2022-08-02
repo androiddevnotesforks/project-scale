@@ -26,10 +26,14 @@ export default function AddEvent() {
     const [disableButton, setDisableButton] = useState(true);
 
     useEffect(() => {
+
+        if (dataInputVal) { // ensures validation isn't fired off on load
         Number(dataInputVal) ? setDataInputErr("") : setDataInputErr("Your data input must be numbers only, e.g. 88.8");
-        (Number(dataInputVal) === Number(confirmData)) ? setDisableButton(false) : setDisableButton(true);
+        }
         
         notesVal.length < 256 ? setNotesErr("") : setNotesErr("You cannot type more than 255 characters.");
+
+        (Number(dataInputVal) === Number(confirmData) && notesVal.length < 256) ? setDisableButton(false) : setDisableButton(true);
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notesVal, dataInputVal, confirmData])
@@ -52,8 +56,6 @@ export default function AddEvent() {
                 console.log(error);              
             }
 
-            // eslint-disable-next-line no-restricted-globals
-            // location.reload();
       };
   
     return (
@@ -91,13 +93,11 @@ export default function AddEvent() {
                     error={notesErr}
                 />
 
-                <Group position="apart" spacing="xl" mt="md">
-                    <Button disabled={disableButton} color={"red"} type="submit">Record!</Button>
-                </Group>
+                <Button disabled={disableButton} variant="outline" color={"red"} type="submit">Record!</Button>
             </form>
         </Modal>
 
-        <Button radius="lg" variant="gradient" gradient={{ from: 'crimson', to: 'teal' }} fullWidth onClick={() => setOpened(true)}>Create Record</Button>
+        <Button mt="sm" variant="outline" color="grape" fullWidth onClick={() => setOpened(true)}>Create Record</Button>
     </>
     );
 };

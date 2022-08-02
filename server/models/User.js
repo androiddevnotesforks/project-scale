@@ -11,7 +11,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: [/.+@.+\..+/, 'Must use a valid email address'], // validation for now
+        match: [/\S+@\S+\.\S+/, 'Must use a valid email address'], // regex from: https://bobbyhadz.com/blog/react-check-if-email-is-valid
     },
     password: {
         type: String,

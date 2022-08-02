@@ -70,9 +70,7 @@ export default function ChangePassword() {
               </form>
               </Modal>
 
-                <Group position="center" style={{padding: "1em"}}>
-                    <Button radius="lg" variant="gradient" gradient={{ from: 'blue', to: 'orange' }} onClick={() => setOpened(true)}>Change Password</Button>
-                </Group>
+              <Button radius="lg" variant="outline" color="violet" onClick={() => setOpened(true)}>Change Password</Button>
             </>
         );
 }

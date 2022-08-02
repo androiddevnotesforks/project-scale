@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, NativeSelect, TextInput, Loader, Textarea, Modal, Group } from "@mantine/core";
+import { Button, NativeSelect, TextInput, Loader, Textarea, Modal } from "@mantine/core";
 import { CATEGORY_IDENTITIES } from "../utils/queries";
 import { UPDATE_AMBITION } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
@@ -16,11 +16,7 @@ export default function UpdateAmbition() {
     const [updateAmbition, { error }] = useMutation(UPDATE_AMBITION);
 
     const state: any = useSelector(state => state);
-    console.log(state.ambitions.identity);
-    console.log(state.ambitions.endValue);
-    console.log(state.ambitions.dailyPlan);
 
-    
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
     const [dailyPlan, setDailyPlan] = useState(state.ambitions.dailyPlan); // how they are going to get there
     const [endValue, setEndValue] = useState(state.ambitions.endValue); // where they want to be
@@ -28,8 +24,6 @@ export default function UpdateAmbition() {
     const [dailyErr, setDailyErr] = useState("");
     const [endErr, setEndErr] = useState("");
     const [disableButton, setDisableButton] = useState(true);
-    const [errorCheckOne, setErrorCheckOne] = useState(false);
-    const [errorCheckTwo, setErrorCheckTwo] = useState(false);
 
     const [opened, setOpened] = useState(false);
     
@@ -42,27 +36,16 @@ export default function UpdateAmbition() {
     }, [opened])
     
     useEffect(() => {
-        Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
+        if (endValue) { // ensures validation isn't fired off on load
+            Number(endValue) ? setEndErr("") : setEndErr("Your ending value must be numbers only, e.g. 88.8");
+        }
+        
         dailyPlan.length > 1000 ? setDailyErr("You cannot type more than 1000 characters.") : setDailyErr("");
         dailyPlan.length === 0 ? setDailyErr("You need a daily plan if you are going to achieve something.") : setDailyErr("");
 
+        (Number(endValue) && dailyPlan.length <= 1000 && dailyPlan.length > 0) ? setDisableButton(false) : setDisableButton(true) // to enable/disable submit button
+
     }, [endValue, dailyPlan])
-
-    function handleChangeEnd(event: any) {
-        setEndValue(event.target.value);
-
-        Number(endValue) ? setErrorCheckOne(true) : setErrorCheckOne(false);
-
-        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
-    };
-
-    function handleChangeDaily(event: any) {
-        setDailyPlan(event.target.value);   
-
-        dailyPlan.length > 1000 ? setErrorCheckTwo(false) : setErrorCheckTwo(true);
-
-        errorCheckOne && errorCheckTwo ? setDisableButton(false) : setDisableButton(true);
-    };
 
     const handleAmbitionSubmit = async (event: any) => {
         event.preventDefault();
@@ -113,7 +96,7 @@ export default function UpdateAmbition() {
                 label="Are you changing the end value?"
                 placeholder="Example: 5000.21"
                 value={endValue}
-                onChange={handleChangeEnd}
+                onChange={(event) => setEndValue(event.target.value)}
                 error={endErr}
                 />
     
@@ -122,7 +105,7 @@ export default function UpdateAmbition() {
                 label="Has your daily plan changed?"
                 placeholder="When I wake up, then I will do something. When it is 11:30am, then I will do something else."
                 value={dailyPlan}
-                onChange={handleChangeDaily}
+                onChange={(event) => setDailyPlan(event.target.value)}
                 error={dailyErr}
                 />
     
@@ -133,9 +116,7 @@ export default function UpdateAmbition() {
             
             )}
 
-                <Group position="center" style={{padding: "1em"}}>
-                    <Button radius="lg" variant="gradient" gradient={{ from: 'lime', to: 'orange' }} onClick={() => setOpened(true)}>Update Ambition</Button>
-                </Group>
+                <Button radius="lg" fullWidth mt="sm" variant="outline" color="cyan" onClick={() => setOpened(true)}>Update Ambition</Button>
             </>
         );
 }

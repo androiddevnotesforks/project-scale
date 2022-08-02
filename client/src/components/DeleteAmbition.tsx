@@ -47,8 +47,6 @@ export default function DeleteAmbition() {
                 console.log(error);
             }
 
-            // eslint-disable-next-line no-restricted-globals
-            // location.reload();
             setOpened((o) => (!o))  
     };
 
@@ -65,7 +63,7 @@ export default function DeleteAmbition() {
             
             <TextInput // end value
                 required // requires entry
-                label={`You must type out your quoted ego to confirm deletion and then submit! I am... "${state.ambitions.identity}"`}
+                label={`To delete ambition, type out your ego inside the quotes to confirm deletion and then submit! I am... "${state.ambitions.identity}"`}
                 placeholder="..."
                 value={endValue}
                 onChange={(event) => setEndValue(event.target.value)}
@@ -75,9 +73,7 @@ export default function DeleteAmbition() {
             </form>
             </Modal>
 
-            <Group position="center" style={{padding: "1em"}}>
-                    <Button radius="lg" variant="gradient" gradient={{ from: 'crimson', to: 'black' }} onClick={() => setOpened(true)}>Delete Ambition!</Button>
-            </Group>
+            <Button mt="sm" radius="lg" fullWidth variant="outline" color="orange" onClick={() => setOpened(true)}>Delete Ambition!</Button>
         </>
     );
 }

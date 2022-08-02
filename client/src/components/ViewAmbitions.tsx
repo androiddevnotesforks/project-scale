@@ -108,11 +108,11 @@ export default function ViewAmbitions() {
                                 null
                             ) : (
                             <Link to="/records">
-                                <Button>View Records</Button>
+                                <Button variant="outline" color="lime" fullWidth mt="sm" >View Records</Button>
                             </Link>
                             )}
                             <UpdateAmbition />
-                            <Space />
+                            {/* <Space /> */}
                             {/* <Group position="center" spacing="xl">
                                 <Button onClick={() => setOpenAmbitionSettings((o) => (!o))} color={"gray"}>Settings</Button>
                             </Group>
