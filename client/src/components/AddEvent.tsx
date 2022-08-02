@@ -93,7 +93,7 @@ export default function AddEvent() {
                     error={notesErr}
                 />
 
-                <Button disabled={disableButton} variant="outline" color={"red"} type="submit">Record!</Button>
+                <Button mt="md" fullWidth disabled={disableButton} variant="outline" color={"red"} type="submit">Record!</Button>
             </form>
         </Modal>
 

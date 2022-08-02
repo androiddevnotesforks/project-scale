@@ -132,7 +132,7 @@ export default function NewAmbition() {
             error={dailyErr}
         />
 
-            <Button mt="sm" fullWidth radius="lg" disabled={disableButton} color="teal" type="submit">Start!</Button>
+            <Button variant="outline" mt="sm" fullWidth radius="lg" disabled={disableButton} color="red" type="submit">Start!</Button>
         </form>
         </Collapse>
         </>

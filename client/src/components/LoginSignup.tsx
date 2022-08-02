@@ -1,57 +1,50 @@
-import { useState } from 'react';
-import { Modal, Button, Group, TextInput, PasswordInput, Text } from '@mantine/core';
+import { useState, useEffect } from 'react';
+import { Modal, Button, Group, TextInput, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const emailValidation = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ; // regex taken from 16-Stu_React-Forms utils/helpers.js
-
 export default function LoginSignup() {
 
   const [addUser] = useMutation(ADD_USER);
   const [login, { error }] = useMutation(LOGIN);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  
   const [opened, setOpened] = useState(false);
   const [signup, setSignup] = useState(false);
-    // reusing form code from my react portfolio
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const form = useForm({ // useForm is a Mantine function
-    initialValues: { // objects for the fields you are using
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    },
 
-    validate: { // validate function that occurs on Submit.
-        username: (value) => (value.length < 2 ? 'Username must have at least 2 letters.' : null),
-        email: (value) => (emailValidation.test(value) ? null : 'Invalid email'),
-        password: (value) => (value.length < 8 ? 'Password must contain at least 8 characters.' : null),
-        confirmPassword: (value, values) => value !== values.password ? "Confirm password did not match password." : null, 
-    },
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const logOn = useForm({ // useForm is a Mantine function
-    initialValues: { // objects for the fields you are using
-        email: '',
-        password: '',
-    },
+  const [usernameErr, setUsernameErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [loginErr, setLoginErr] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
 
-    validate: { // validate function that occurs on Submit.
-        email: (value) => (emailValidation.test(value) ? null : 'Invalid email'),
-        password: (value) => (value.length < 8 ? 'Password must contain at least 8 characters.' : null),
-    },
-  });
+  const emailValidation = /\S+@\S+\.\S+/.test(email) // regex from: https://bobbyhadz.com/blog/react-check-if-email-is-valid
+
+  useEffect(() => {
+    (username && username.length < 2) ? setUsernameErr("Username must have at least 2 characters.") : setUsernameErr("");
+    if (email) {
+      (emailValidation) ? setEmailErr("") : setEmailErr("That is not a valid email address.");
+    }
+    (password && password.length < 8) ? setPasswordErr("Password needs to be at least 8 characters long.") : setPasswordErr("");
+
+    (username.length > 1 && emailValidation && password.length > 7 && password === confirmPassword) ? setDisableButton(false) : setDisableButton(true)
+
+}, [username, email, password, confirmPassword])
 
     const handleSignUpSubmit = async (event: any) => {
       event.preventDefault();
       
       const mutationResponse = await addUser({
         variables: {
-          username: form.values.username,
-          email: form.values.email,
-          password: form.values.password,
+          username: username,
+          email: email,
+          password: password,
         },
       });
       const token = mutationResponse.data.addUser.token;
@@ -64,8 +57,8 @@ export default function LoginSignup() {
       try {
         const mutationResponse = await login({
           variables: { 
-            email: logOn.values.email, 
-            password: logOn.values.password},
+            email: email, 
+            password: password},
         });
         
         const token = mutationResponse.data.login.token;
@@ -73,43 +66,56 @@ export default function LoginSignup() {
         Auth.login(token);
       } catch (e) {
         console.log(e);
+        setLoginErr("Invalid email and/or password.")
       }
     };
+
+    function onClose() {
+      setOpened(false);
+      setUsername(""); // clears form fields
+      setEmail(""); // clears form fields
+      setPassword(""); // clears form fields
+      setConfirmPassword(""); // clears form fields
+    }
 
   return (
     <>
     {signup === false ? (
         <Modal
         opened={opened}
-        onClose={() => setOpened(false)}
+        onClose={onClose}
         title="Login"
       >
-        {/* <form onSubmit={login.onSubmit((values) => console.log(values))}> */}
+
         <form onSubmit={handleLoginSubmit}>
         <TextInput // email field
             required // requires entry
             label="Email"
             placeholder="your@email.com"
-            {...logOn.getInputProps('email')} // uses email input on submit
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            error={loginErr}
             />
 
         <PasswordInput // password field
             required
             label="Password"
             placeholder="Enter Password"
-            {...logOn.getInputProps("password")} // uses password input on submit
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            error={loginErr}
           />
 
         <Group position="apart" spacing="xl" mt="md">
-          <Button color={"teal"} type="submit">Login</Button>
-          <Button color={"orange"} radius="lg" onClick={() => setSignup(true)}>Click here to signup</Button>
+          <Button variant='outline' color={"teal"} type="submit">Login</Button>
+          <Button variant='outline' color={"orange"} radius="lg" onClick={() => setSignup(true)}>Click here to signup</Button>
         </Group>
       </form>
       </Modal>
     ) : (
         <Modal
         opened={opened}
-        onClose={() => setOpened(false)}
+        onClose={onClose}
         title="Signup!"
       >
         <form onSubmit={handleSignUpSubmit}>
@@ -117,33 +123,40 @@ export default function LoginSignup() {
             required // requires entry
             label="Username"
             placeholder="Your username"
-            {...form.getInputProps('username')} // uses username input on submit
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+            error={usernameErr}
         />
 
         <TextInput // email field
             required // requires entry
             label="Email"
             placeholder="your@email.com"
-            {...form.getInputProps('email')} // uses email input on submit
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            error={emailErr}
             />
 
         <PasswordInput // password field
             required
             label="Password"
             placeholder="Enter Password"
-            {...form.getInputProps("password")} // uses password input on submit
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            error={passwordErr}
           />
 
         <PasswordInput // password field
             required
             label="Confirm password"
             placeholder="Confirm Password"
-            {...form.getInputProps("confirmPassword")} // uses password input on submit
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
           />
 
         <Group position="apart" spacing="xl" mt="md">
-          <Button color={"teal"} type="submit">Signup</Button>
-          <Button color={"orange"} radius="lg" onClick={() => setSignup(false)}>Click here to login</Button>
+          <Button disabled={disableButton} variant='outline' color="teal" type="submit">Signup</Button>
+          <Button variant='outline' color="orange" radius="lg" onClick={() => setSignup(false)}>Click here to login</Button>
         </Group>
       </form>
       </Modal>

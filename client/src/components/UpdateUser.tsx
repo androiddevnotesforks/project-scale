@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, TextInput, PasswordInput, Loader, Modal, Group } from "@mantine/core";
+import { Button, Text, TextInput, Loader, Modal } from "@mantine/core";
 import { USER } from "../utils/queries";
 import { UPDATE_USER } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
@@ -13,15 +13,15 @@ export default function UpdateUser() {
     const userData = data?.user || [];
 
     const [updateUser, { error }] = useMutation(UPDATE_USER);
-
-    // console.log(userData);
     
     const [username, setUsername] = useState(userData.username); // default states need to be set
     const [email, setEmail] = useState(userData.email); // how they are going to get there
     const [usernameErr, setUsernameErr] = useState("");
     const [emailErr, setEmailErr] = useState("");
+    const [submitErr, setSubmitErr] = useState("");
 
     const [opened, setOpened] = useState(false);
+    const [disableButton, setDisableButton] = useState(true);
 
     const emailValidation = /\S+@\S+\.\S+/.test(email) // regex from: https://bobbyhadz.com/blog/react-check-if-email-is-valid
     
@@ -33,8 +33,12 @@ export default function UpdateUser() {
     }, [opened])
     
     useEffect(() => {
-        (username.length < 2) ? setUsernameErr("Username must have at least 2 characters.") : setUsernameErr("");
-        (emailValidation) ? setEmailErr("") : setEmailErr("That is not a valid email address.");
+        if (!loading) {
+            (username.length < 2) ? setUsernameErr("Username must have at least 2 characters.") : setUsernameErr("");
+            (emailValidation) ? setEmailErr("") : setEmailErr("That is not a valid email address.");
+    
+            (username.length > 1 && emailValidation) ? setDisableButton(false) : setDisableButton(true)
+        }
 
     }, [username, email])
 
@@ -50,6 +54,7 @@ export default function UpdateUser() {
             });
             } catch (error) {
                 console.log(error);
+                setSubmitErr("That username and/or email is already in use.")
             }
     };
 
@@ -82,13 +87,14 @@ export default function UpdateUser() {
                     onChange={(event) => setEmail(event.target.value)}
                     error={emailErr}
                     />
-    
-                  <Button mt="md" fullWidth variant="outline" color={"teal"} type="submit">Update!</Button>
+
+                  <Text size="xs" color="red">{submitErr}</Text>
+                  <Button mt="md" disabled={disableButton} fullWidth variant="outline" color={"teal"} type="submit">Update!</Button>
               </form>
               </Modal>
             )}
 
-            <Button radius="lg" variant="outline" color="red" onClick={() => setOpened(true)}>Update User</Button>
+            <Button radius="lg" variant="outline" color="grape" onClick={() => setOpened(true)}>Update User</Button>
             </>
         );
 }

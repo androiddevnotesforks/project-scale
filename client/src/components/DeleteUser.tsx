@@ -44,6 +44,11 @@ export default function DeleteUser() {
             Auth.logout();
     };
 
+    function onClose() {
+        setOpened(false);
+        setUserConfirm(""); // to erase text if the user closes the modal and if they open it again, it will not remember so that it prevents an accidental submit
+    }
+
     return (
         <>
             {loading ? (
@@ -52,7 +57,7 @@ export default function DeleteUser() {
             <div>
                 <Modal
                     opened={opened}
-                    onClose={() => setOpened(false)}
+                    onClose={onClose}
                     title="Delete Ambition?"
                     >     
 
@@ -61,13 +66,13 @@ export default function DeleteUser() {
                 
                 <TextInput // end value
                     required // requires entry
-                    label={`You must type out your username to confirm deletion and then submit! I am... "${username}"`}
+                    label={`To delete your account, type out your username inside the quotes to confirm deletion and then submit! I am... "${username}"`}
                     placeholder="..."
                     value={userConfirm}
                     onChange={(event) => setUserConfirm(event.target.value)}
                     />
 
-                    <Button radius="lg" disabled={disableButton} color={"red"} type="submit">Delete!</Button>
+                    <Button mt="md" radius="lg" fullWidth variant="outline" color="red" disabled={disableButton} type="submit">Delete!</Button>
                 </form>
                 </Modal>
 
