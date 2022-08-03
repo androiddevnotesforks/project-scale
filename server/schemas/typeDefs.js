@@ -58,6 +58,7 @@ const typeDefs = gql`
         deleteUser: User
         addAmbition(identity: String!, category: String!, dailyPlan: String!, endValue: String!): Ambitions
         updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
+        publicAmbition(ambitionId: ID!, public: Boolean!): Ambitions
         deleteAmbition(ambitionId: ID!): Ambitions
         addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions # assuming we are referencing its nearest parent to save: Ambitions and not the top-level parent: User
     }

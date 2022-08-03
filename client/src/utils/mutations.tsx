@@ -107,3 +107,12 @@ export const CHANGE_PASSWORD = gql`
         }
       }
 `;
+
+export const UPDATE_PUBLIC_AMBITION = gql`
+    mutation PublicAmbition($ambitionId: ID!, $public: Boolean!) {
+      publicAmbition(ambitionId: $ambitionId, public: $public) {
+        _id
+        public
+    }
+  }
+`;

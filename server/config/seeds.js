@@ -160,6 +160,9 @@ db.once("open", async () => {
           {createdAt: "August 2, 2022",
           dataInput: 80.0,
           notes: ""},
+          {createdAt: "August 3, 2022",
+          dataInput: 79.9,
+          notes: ""},
         ]
     });
 
