@@ -3,6 +3,7 @@ import { Button, NativeSelect, TextInput, Loader, Textarea, Collapse } from "@ma
 import { ADD_AMBITION } from "../utils/mutations";
 import { CATEGORY_AMBITIONS, CATEGORY_IDENTITIES, USER } from "../utils/queries";
 import { useMutation, useQuery } from "@apollo/client";
+import { Mountain } from "tabler-icons-react";
 
 export default function NewAmbition() {
     const { loading, data } = useQuery(CATEGORY_AMBITIONS, { // query ambitions for form data
@@ -79,7 +80,7 @@ export default function NewAmbition() {
             <Loader color="red" size="xl" />
         ) : (
         <>
-        <Button variant="outline" mt="xl" fullWidth uppercase onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start a new ambition</Button>
+        <Button leftIcon={<Mountain size={24} strokeWidth={2} color={'crimson'}/>} variant="outline" mt="xl" fullWidth uppercase onClick={() => setOpenNewAmbition((o) => (!o))} color={"red"}>Start a new ambition</Button>
 
         <Collapse in={openNewAmbition}>
         <form onSubmit={handleAmbitionSubmit}>
