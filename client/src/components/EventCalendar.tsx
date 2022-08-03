@@ -28,14 +28,13 @@ export default function EventCalendar() {
     // const viewRecords = data?.searchEvents.events || [];
     const viewRecords = data?.searchEvents || [];
     
+    //  console.log(viewRecords.events);
      
     useEffect(() => {
         if (!loading) { // to prevent page errors
             selectEvent()
             getFirstDate()
             getLastDate()
-            // setFirstDate(new Date(viewRecords.events.at(0).createdAt))
-            // setLastDate(new Date(viewRecords.events.at(-1).createdAt))
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
@@ -48,6 +47,40 @@ export default function EventCalendar() {
 
     function getLastDate() {
         return new Date(viewRecords.events.at(-1).createdAt)
+    }
+
+    function stats() {
+        const category = (viewRecords.category === "Lose Weight" && viewRecords.events.length >= 2) 
+                            ? `Weight difference from start to end: ${Math.floor(viewRecords.events.at(0).dataInput - viewRecords.events.at(-1).dataInput)}kg` 
+                            : (viewRecords.category === "Save Money" && viewRecords.events.length >= 7) 
+                            ? `$${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / 7)} spent per week` 
+                            : ((viewRecords.category === "New Profession" && viewRecords.events.length >= 2) || (viewRecords.category === "New Hobby" && viewRecords.events.length >= 2)) 
+                            ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} minutes` 
+                            : (viewRecords.category === "???" && viewRecords.events.length >= 2) 
+                            ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} units. Daily: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)}` 
+                            : `More data required for calculations.`
+
+
+        return (
+            <>
+                <Text style={{textAlign: "center"}}>{`First record: ${viewRecords.events.at(0).createdAt}`} </Text>
+                <Text style={{textAlign: "center"}}>{`Last record: ${viewRecords.events.at(-1).createdAt}`} </Text>
+                <Text style={{textAlign: "center"}}>{category}</Text>
+            </>
+        )
+    }
+
+    function yAxisLabels() {
+
+        const units = (viewRecords.category === "Lose Weight") 
+                ? "Weight (kg)" 
+                : (viewRecords.category === "Save Money") 
+                ? "Dollars Spent ($)"
+                : ((viewRecords.category === "New Profession") || (viewRecords.category === "New Hobby"))
+                ? "Minutes Spent"
+                : "Units"
+
+        return units 
     }
 
 
@@ -87,7 +120,6 @@ export default function EventCalendar() {
                     </Stack>
                 </Card>
 
-                // return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
                 // note, you can actually stick <Card /> component in the return statement to actually render
             } else {
                 return null
@@ -111,6 +143,8 @@ export default function EventCalendar() {
             <Loader color="red" size="xl" />
             ) : (
         <div>
+            {stats()}
+
             <Grid grow>
             <Grid.Col
             md={6}
@@ -152,6 +186,7 @@ export default function EventCalendar() {
                     datasets: [
                         {
                             data: viewRecords.events.map((data: any) => {
+                                // return data.dataInput
                                 return data.dataInput
                             }),
                             label: viewRecords.category,
@@ -169,7 +204,7 @@ export default function EventCalendar() {
                         y: {
                             title: {
                               display: true,
-                              text: "Weight (kg)",
+                              text: yAxisLabels(),
                             },
                           },
                           x: {
