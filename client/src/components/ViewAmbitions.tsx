@@ -17,7 +17,7 @@ export default function ViewAmbitions() {
 
     const viewAmbitionsData = data?.user.ambitions || [];
 
-    console.log(viewAmbitionsData);
+    // console.log(viewAmbitionsData);
     
 
     // const eventsData = data?.user.ambitions.events || [];

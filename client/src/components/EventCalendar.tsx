@@ -4,7 +4,7 @@ import { Text, Indicator, Loader, Space, Card, Badge, Grid, Stack, SimpleGrid } 
 import { useQuery } from "@apollo/client";
 import { SEARCH_EVENTS } from "../utils/queries";
 import { useSelector } from "react-redux";
-import { Line } from "react-chartjs-2";
+import { getDatasetAtEvent, Line } from "react-chartjs-2";
 import "../App.css";
 
 import { Chart, registerables } from 'chart.js'; // required to actually get chart.js with react-chartjs-2 to work
@@ -15,6 +15,8 @@ export default function EventCalendar() {
     const state: any = useSelector(state => state)
     
     const [value, setValue] = useState<Date | null>(null); // if useState is not written like this then onChange doesn't work due to how the NPM package works, source: https://mantine.dev/dates/date-picker/
+    // const [firstDate, setFirstDate] = useState(null)
+    // const [lastDate, setLastDate] = useState(null)
     
     const { loading, data } = useQuery(SEARCH_EVENTS, {
         variables : {
@@ -23,22 +25,53 @@ export default function EventCalendar() {
         fetchPolicy: "cache-and-network"
     });
 
-    const viewRecords = data?.searchEvents.events || [];
+    // const viewRecords = data?.searchEvents.events || [];
+    const viewRecords = data?.searchEvents || [];
+    
      
     useEffect(() => {
         if (!loading) { // to prevent page errors
             selectEvent()
+            getFirstDate()
+            getLastDate()
+            // setFirstDate(new Date(viewRecords.events.at(0).createdAt))
+            // setLastDate(new Date(viewRecords.events.at(-1).createdAt))
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
+    // console.log(firstDate, lastDate);
+    
+    function getFirstDate() {
+        return new Date(viewRecords.events.at(0).createdAt)
+    }
+
+    function getLastDate() {
+        return new Date(viewRecords.events.at(-1).createdAt)
+    }
+
+
+    function displayDataPoint() {
+
+        return viewRecords.events.map((date: any) => {
+            if (isSameDate(value || new Date(), new Date(date.createdAt))) {
+                
+                return "rgba(0, 255, 64, 1)"
+            } else {
+                return "violet"
+            }
+        });
+    };
+        
+
     function selectEvent() { // for displaying data when clicking on the calendar
 
-      return  viewRecords.map((date: any) => {
+      return  viewRecords.events.map((date: any) => {
             if (isSameDate(value || new Date(), new Date(date.createdAt))) {
                 var eventCreatedAt = `Date: ${date.createdAt}`;
                 var eventDataInput = `Data Input: ${date.dataInput}`;
                 var eventNotes = (date.notes) ? `Notes: ${date.notes}` : null ;
+
 
                 return <Card key={date.createdAt} shadow="sm" p="sm" radius="md" withBorder style={{margin: "1em"}} >
                     <Stack >
@@ -64,13 +97,13 @@ export default function EventCalendar() {
     };
 
     // console.log({...viewRecords});
-    console.log(viewRecords.map((date:any) => {
-        if (isSameDate(value || new Date(), new Date(date.createdAt))) {
-            return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
-        } else {
-            return 0
-        }
-    }));
+    // console.log(viewRecords.map((date:any) => {
+    //     if (isSameDate(value || new Date(), new Date(date.createdAt))) {
+    //         return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
+    //     } else {
+    //         return 0
+    //     }
+    // }));
     
     return (
         <>
@@ -90,18 +123,8 @@ export default function EventCalendar() {
                 fullWidth
                 value={value} 
                 onChange={setValue}
-                renderDay={(date) => {
-                    const day = date.getDate();
-                    // console.log(day);
-                    // console.log(date);
-                    
-                    
-                    return (
-                        <Indicator size={10} color="teal" offset={8} disabled={day !== 31}>
-                            <div>{day}</div>
-                        </Indicator>
-                    )
-                }} 
+                minDate={getFirstDate()}
+                maxDate={getLastDate()}
             />
             </Grid.Col>
             <Grid.Col 
@@ -122,17 +145,20 @@ export default function EventCalendar() {
             <Line 
                 datasetIdKey="eventsChart"
                 data={{
-                    labels: viewRecords.map((data: any, index: any) => { // source for knowing index can be used as a parameter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+                    labels: viewRecords.events.map((data: any, index: any) => { // source for knowing index can be used as a parameter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
                     
                         return index + 1
                     }),//array x-axis
                     datasets: [
                         {
-                            data: viewRecords.map((data: any) => {
+                            data: viewRecords.events.map((data: any) => {
                                 return data.dataInput
                             }),
-                            label: "Lose Weight",
+                            label: viewRecords.category,
                             borderColor: "crimson",
+                            backgroundColor: (displayDataPoint())
+                            // backgroundColor: "violet",
+                            // backgroundColor: 
 
                         },
                     ], // hmmm
