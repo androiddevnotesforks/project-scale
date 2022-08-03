@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader, Collapse } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader, Stack, Accordion } from '@mantine/core';
 import { USER } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import { ADD_AMBITION_ID } from "../features/ambitions";
@@ -68,6 +68,10 @@ export default function ViewAmbitions() {
                     } else {
                         recentEvent = null   
                     }
+
+                    const aimMeasurement = (data.category === "Lose Weight") ? "kg" : (data.category === "Save Money") ? "dollars per week" : (data.category === "New Profession" || data.category === "New Hobby") ? "minutes per day" : "units"
+
+                    const egoColour = (data.identity === "Determined") ? "red" : (data.identity === "Inspired") ? "yellow" : (data.identity === "Bored") ? "blue" : (data.identity === "???") ? "violet" : "green"
                     
                     return (
                         <Grid.Col key={data._id} span={4}>
@@ -79,24 +83,28 @@ export default function ViewAmbitions() {
                                alt="Norway"
                             /> */}
                             {/* </Card.Section> */}
-                        <Group position="apart" mt="xs" mb="xs">
-                            <Text>
-                                {`Ambition: ${data.category}`}
-                            </Text>
-                            <Badge color="red">
+                        <Stack>
+                            <Badge color={egoColour} >
                                 {`I am... ${data.identity}`}
                             </Badge>
-                        </Group>
-    
-                        <Text>
-                            {/* something else goes here... */}
-                            {`starting point: ${data.dailyPlan}`}
-                            <Space />
-                            {`end point: ${data.endValue}`}
-                            {/* {`events: ${data.events}`} */}
-                            <Space />
-                            {`public: ${data.public}`}
-                        </Text>
+                            <Text style={{textAlign: "center"}}>
+                                {`Ambition: ${data.category}`}
+                            </Text>
+                            <Text style={{textAlign: "center"}}>
+                                {`Aim: ${data.endValue} ${aimMeasurement}`}
+                            </Text>
+                            <Accordion variant="contained" defaultValue="dailyPlan">
+                                <Accordion.Item value="dailyPlan">
+                                    <Accordion.Control>Daily Plan:</Accordion.Control>
+                                        <Accordion.Panel>
+                                            {`${data.dailyPlan}`}
+                                        </Accordion.Panel>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Text style={{textAlign: "center"}}>
+                                {`Is this ambition public? ${(data.public) ? "Yes." : "No."}`}
+                            </Text>
+                        </Stack>
                         <div onClick={() => dispatch(ADD_AMBITION_ID({
                             ambitionId: data._id,
                             identity: data.identity,
