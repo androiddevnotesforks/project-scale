@@ -5,6 +5,7 @@ const initialState = {
     identity: "",
     endValue: "",
     dailyPlan: "",
+    public: false,
     weight: "kg",
     money: "dollars",
     hobby: "minutes",
@@ -22,6 +23,7 @@ const ambitionsSlice = createSlice({
                 identity: action.payload.identity,
                 endValue: action.payload.endValue,
                 dailyPlan: action.payload.dailyPlan,
+                public: action.payload.public,
             };
         }
     }
