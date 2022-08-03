@@ -3,7 +3,7 @@ import { Card, Image, Text, Badge, Button, Group, Space, Grid, Loader, Collapse 
 import { USER } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import { ADD_AMBITION_ID } from "../features/ambitions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AddEvent from "./AddEvent";
 import { Link } from "react-router-dom";
 import { isSameDate } from "@mantine/dates";
@@ -16,6 +16,9 @@ export default function ViewAmbitions() {
     });
 
     const viewAmbitionsData = data?.user.ambitions || [];
+
+    console.log(viewAmbitionsData);
+    
 
     // const eventsData = data?.user.ambitions.events || [];
 
@@ -99,6 +102,7 @@ export default function ViewAmbitions() {
                             identity: data.identity,
                             endValue: data.endValue,
                             dailyPlan: data.dailyPlan,
+                            public: data.public,
                         }))}>
                             {(isSameDate(new Date(), new Date(recentEvent))) ? (
                                 null ) : (

@@ -4,6 +4,7 @@ import { CATEGORY_IDENTITIES } from "../utils/queries";
 import { UPDATE_AMBITION } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
+import PublicAmbition from "./PublicAmbition";
 
 export default function UpdateAmbition() {
     
@@ -16,6 +17,7 @@ export default function UpdateAmbition() {
     const [updateAmbition, { error }] = useMutation(UPDATE_AMBITION);
 
     const state: any = useSelector(state => state);
+    
 
     const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
     const [dailyPlan, setDailyPlan] = useState(state.ambitions.dailyPlan); // how they are going to get there
@@ -109,7 +111,8 @@ export default function UpdateAmbition() {
                 error={dailyErr}
                 />
     
-                <Button mt="md" radius="lg" fullWidth variant="outline" color="teal" disabled={disableButton} type="submit">Change!</Button>
+                <Button fullWidth mt="md" radius="lg" variant="outline" color="teal" disabled={disableButton} type="submit">Change!</Button>
+                <PublicAmbition />
             </form>
             </Modal>
             

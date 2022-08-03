@@ -11,7 +11,7 @@ export default function SearchAmbitions() {
 
     const { loading, data } = useQuery(SEARCH_PUBLIC_AMBITIONS, {
         variables : {
-            public: false, // should return only ambitions that are public which saves on data retrieval
+            public: true, // should return only ambitions that are public which saves on data retrieval
         },
         fetchPolicy: "cache-and-network"
     });
@@ -19,12 +19,16 @@ export default function SearchAmbitions() {
     const viewAmbitions = data?.searchPublicAmbitions || [];
     // const viewEvents = data?.searchPublicAmbitions['0']["events"] || [];
     
-    console.log(viewAmbitions["0"]);
-    console.log(viewAmbitions.length);
+    // console.log(viewAmbitions);
+    // console.log(viewAmbitions["0"]);
+    // console.log(Object.hasOwn(viewAmbitions, 0));
+    
+    
+    // console.log(viewAmbitions.length);
     
     // console.log(viewEvents);
     const [activePage, setPage] = useState(1);
-    console.log(activePage);
+    // console.log(activePage);
     
     // useEffect(() => {
 
@@ -35,7 +39,10 @@ export default function SearchAmbitions() {
         <>
             {loading ? (
             <Loader color="red" size="xl" />
-            ) : (
+            ) : (!loading && Object.hasOwn(viewAmbitions, 0)) ? 
+            
+            (
+
             <div className="chart">
 
         <Line 
@@ -84,6 +91,12 @@ export default function SearchAmbitions() {
                  />
                 <Pagination page={activePage} onChange={setPage} total={viewAmbitions.length} color="teal" size="lg" radius="md" withControls={false} />
             </div>
+            ) : (
+                <div>
+                    <Text>
+                        (You cannot hear their voices ... ... ...)
+                    </Text>
+                </div>
             )}
                 </>
                 );
