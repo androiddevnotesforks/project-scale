@@ -155,8 +155,6 @@ const resolvers = {
             throw new AuthenticationError("Session expired, login again.");
         },
         changePassword: async (parent, { password }, context) => {
-            console.log(password);
-            console.log(context.user);
             if (context.user) {
                 const user = await User.findOne({ _id: context.user._id});
 
@@ -181,6 +179,19 @@ const resolvers = {
             throw new AuthenticationError("Session expired, login again.");
 
         },
+        publicAmbition: async (parent, { ambitionId, public }, context) => {
+            if (context.user) {
+                const updatePublic = await Ambitions.findOneAndUpdate(
+                    { _id: ambitionId },
+                    { $set: {
+                        public: public,
+                    }},
+                    { new: true, runValidators: true }
+                );
+                return updatePublic;
+            }
+            throw new AuthenticationError("Session expired, login again.");
+        }
     },
 };
 
