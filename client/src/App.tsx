@@ -27,6 +27,8 @@ import {
   Stack
 } from '@mantine/core';
 
+import { Settings as SettingsIcon, Logout, Search as SearchIcon, UserCircle, Butterfly, Moon, Sun } from 'tabler-icons-react';
+
 // import pages here
 import Home from "./pages/Home";
 import NoMatch from './pages/NoMatch';
@@ -84,19 +86,19 @@ function App() {
           <Navbar sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })} p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
             <Stack spacing="xl">
               <Link to="/">
-                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Home</Button>
+                  <Button leftIcon={<Butterfly size={24} strokeWidth={2} color={'#40bfb2'}/>} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Home</Button>
               </Link>
               <Link to="/search">
-                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Search</Button>
+                  <Button leftIcon={<SearchIcon size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Search</Button>
               </Link>
             {Auth.loggedIn() ? (
               <Stack spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })}>
                 <Link to="/ego">
-                    <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Ego</Button>
+                    <Button leftIcon={<UserCircle size={24} strokeWidth={2} color={'#40bfb2'}/>} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Ego</Button>
                 </Link>
-                    <Button radius="lg" fullWidth variant="outline" color="cyan" onClick={Auth.logout}>Logout</Button>
+                    <Button leftIcon={<Logout size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth variant="outline" color="cyan" onClick={Auth.logout}>Logout</Button>
                 <Link to="/settings">
-                  <Button radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Settings</Button>
+                  <Button leftIcon={<SettingsIcon size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Settings</Button>
                 </Link>
                 </Stack>
               ) : (
@@ -118,7 +120,10 @@ function App() {
                 />
               </MediaQuery>
                 <Text>Project S.C.A.L.E.</Text>
-                <Button radius="xl" color={colorScheme === "dark" ? "yellow" : "blue"} onClick={() => toggleColorScheme()} title="Toggle mode">
+                <Button leftIcon={(colorScheme === 'dark') 
+                                  ? <Sun size={24} strokeWidth={2} color={'yellow'} /> 
+                                  : <Moon size={24} strokeWidth={2} color={'#40bfb2'} />} 
+                                    radius="xl" variant='outline' color={colorScheme === "dark" ? "yellow" : "blue"} onClick={() => toggleColorScheme()} title="Toggle mode">
                   {colorScheme === "dark" ? "Light" : "Dark"}
                 </Button>
             </div>

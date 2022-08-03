@@ -3,6 +3,7 @@ import { Button, Text, TextInput, Loader, Modal } from "@mantine/core";
 import { USER } from "../utils/queries";
 import { UPDATE_USER } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
+import { UserCheck } from "tabler-icons-react";
 
 export default function UpdateUser() {
 
@@ -94,7 +95,7 @@ export default function UpdateUser() {
               </Modal>
             )}
 
-            <Button radius="lg" variant="outline" color="grape" onClick={() => setOpened(true)}>Update User</Button>
+            <Button leftIcon={<UserCheck size={24} strokeWidth={2} color={'purple'} />} radius="lg" variant="outline" color="grape" onClick={() => setOpened(true)}>Update User</Button>
             </>
         );
 }

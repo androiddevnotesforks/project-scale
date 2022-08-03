@@ -4,6 +4,8 @@ import { useMutation, useQuery} from "@apollo/client";
 import { DELETE_USER } from "../utils/mutations";
 import { USERNAME } from "../utils/queries";
 import Auth from "../utils/auth";
+import { UserExclamation } from 'tabler-icons-react';
+
 
 export default function DeleteUser() {
     const { loading, data } = useQuery(USERNAME, {
@@ -76,7 +78,7 @@ export default function DeleteUser() {
                 </form>
                 </Modal>
 
-                <Button radius="lg" fullWidth variant="outline" color="red" onClick={() => setOpened(true)}>Delete Account!</Button>
+                <Button leftIcon={<UserExclamation size={24} strokeWidth={2} color={'red'}/>} radius="lg" fullWidth variant="outline" color="red" onClick={() => setOpened(true)}>Delete Account!</Button>
             </div>
                 )}
         </>

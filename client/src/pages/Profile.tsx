@@ -6,7 +6,7 @@ import NewAmbition from "../components/NewAmbition";
 import ViewAmbitions from "../components/ViewAmbitions";
 import { USERNAME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
-
+import { View360 } from "tabler-icons-react";
 
 
 export default function Profile() {
@@ -41,10 +41,7 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
 
-    const [openNewAmbition, setOpenNewAmbition] = useState(false)
     const [viewAmbitions, setViewAmbitions] = useState(false)
-
-    // on clicking to start a new ambition, you will be asked to select an identity...
 
     return (
        <>
@@ -59,7 +56,7 @@ export default function Profile() {
                 
                 <NewAmbition />
 
-                <Button variant="outline" fullWidth mt="xl" uppercase onClick={() => setViewAmbitions((o) => (!o))} color={"teal"}>View your ambitions</Button>
+                <Button leftIcon={<View360 size={24} strokeWidth={2} color={'green'} />} variant="outline" fullWidth mt="xl" uppercase onClick={() => setViewAmbitions((o) => (!o))} color={"teal"}>View your ambitions</Button>
 
             <Collapse in={viewAmbitions}>
                 <ViewAmbitions />

@@ -3,6 +3,8 @@ import { Button, TextInput, PasswordInput, Modal, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { CHANGE_PASSWORD } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
+import { FocusCentered } from 'tabler-icons-react';
+
 
 export default function ChangePassword() {
 
@@ -72,7 +74,7 @@ export default function ChangePassword() {
               </form>
               </Modal>
 
-              <Button radius="lg" variant="outline" color="violet" onClick={() => setOpened(true)}>Change Password</Button>
+              <Button leftIcon={<FocusCentered size={24} strokeWidth={2} color={'violet'}/>} radius="lg" variant="outline" color="violet" onClick={() => setOpened(true)}>Change Password</Button>
             </>
         );
 }
