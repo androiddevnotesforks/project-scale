@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { isSameDate } from "@mantine/dates";
 import UpdateAmbition from "./UpdateAmbition";
 import DeleteAmbition from "./DeleteAmbition";
+import { ChartDots } from "tabler-icons-react";
 
 export default function ViewAmbitions() {
     const { loading, data } = useQuery(USER, {
@@ -120,7 +121,7 @@ export default function ViewAmbitions() {
                                 null
                             ) : (
                             <Link to="/records">
-                                <Button variant="outline" color="lime" fullWidth mt="sm" >View Records</Button>
+                                <Button leftIcon={<ChartDots size={24} strokeWidth={2} color={'lime'}/>} variant="outline" color="lime" fullWidth mt="sm" >View Records</Button>
                             </Link>
                             )}
                             <UpdateAmbition />

@@ -4,6 +4,8 @@ import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Login } from 'tabler-icons-react';
+import { UserPlus } from 'tabler-icons-react';
 
 export default function LoginSignup() {
 
@@ -108,7 +110,7 @@ export default function LoginSignup() {
 
         <Group position="apart" spacing="xl" mt="md">
           <Button variant='outline' color={"teal"} type="submit">Login</Button>
-          <Button variant='outline' color={"orange"} radius="lg" onClick={() => setSignup(true)}>Click here to signup</Button>
+          <Button leftIcon={<UserPlus size={24} strokeWidth={2} color={'orange'}/>} variant='outline' color={"orange"} radius="lg" onClick={() => setSignup(true)}>Click here to signup</Button>
         </Group>
       </form>
       </Modal>
@@ -156,7 +158,7 @@ export default function LoginSignup() {
 
         <Group position="apart" spacing="xl" mt="md">
           <Button disabled={disableButton} variant='outline' color="teal" type="submit">Signup</Button>
-          <Button variant='outline' color="orange" radius="lg" onClick={() => setSignup(false)}>Click here to login</Button>
+          <Button leftIcon={<Login size={24} strokeWidth={2} color={'orange'}/>} variant='outline' color="orange" radius="lg" onClick={() => setSignup(false)}>Click here to login</Button>
         </Group>
       </form>
       </Modal>

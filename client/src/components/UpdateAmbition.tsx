@@ -5,6 +5,7 @@ import { UPDATE_AMBITION } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import PublicAmbition from "./PublicAmbition";
+import { WorldUpload } from "tabler-icons-react";
 
 export default function UpdateAmbition() {
     
@@ -118,7 +119,7 @@ export default function UpdateAmbition() {
             
             )}
 
-                <Button radius="lg" fullWidth mt="sm" variant="outline" color="cyan" onClick={() => setOpened(true)}>Update Ambition</Button>
+                <Button leftIcon={<WorldUpload size={24} strokeWidth={2} color={'cyan'}/>} radius="lg" fullWidth mt="sm" variant="outline" color="cyan" onClick={() => setOpened(true)}>Update Ambition</Button>
             </>
         );
 }
