@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Text, Loader, Space, Pagination } from "@mantine/core";
+import { useState} from "react";
+import { Text, Loader, Grid, Group, Pagination } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { SEARCH_PUBLIC_AMBITIONS } from "../utils/queries";
 import { Line } from "react-chartjs-2";
@@ -17,22 +17,22 @@ export default function SearchAmbitions() {
     });
 
     const viewAmbitions = data?.searchPublicAmbitions || [];
-    // const viewEvents = data?.searchPublicAmbitions['0']["events"] || [];
-    
-    // console.log(viewAmbitions);
-    // console.log(viewAmbitions["0"]);
-    // console.log(Object.hasOwn(viewAmbitions, 0));
-    
-    
-    // console.log(viewAmbitions.length);
-    
-    // console.log(viewEvents);
-    const [activePage, setPage] = useState(1);
-    // console.log(activePage);
-    
-    // useEffect(() => {
+        
 
-    // }, [activePage])
+    const [activePage, setPage] = useState(1);
+    
+    function yAxisLabels() {
+
+        const units = (viewAmbitions[activePage-1].category === "Lose Weight") 
+                ? "Weight (kg)" 
+                : (viewAmbitions[activePage-1].category === "Save Money") 
+                ? "Dollars Spent ($)"
+                : ((viewAmbitions[activePage-1].category === "New Profession") || (viewAmbitions[activePage-1].category === "New Hobby"))
+                ? "Minutes Spent"
+                : "Units"
+
+        return units 
+    }
     
 
     return (
@@ -42,10 +42,14 @@ export default function SearchAmbitions() {
             ) : (!loading && Object.hasOwn(viewAmbitions, 0)) ? 
             
             (
-
-            <div className="chart">
-
-        <Line 
+                <div className="chart">
+                    <Grid>
+            <Grid.Col 
+            md={12}
+            lg={10}
+            >
+           
+            <Line 
                 datasetIdKey="eventsChart"
                 data={{
                     labels: viewAmbitions[activePage-1].events.map((data: any, index: any) => { // source for knowing index can be used as a parameter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
@@ -56,17 +60,10 @@ export default function SearchAmbitions() {
                     datasets: [
                         {
                             data: viewAmbitions[activePage-1].events.map((data: any, index: any, array: any) => {
-                                // console.log(data.dataInput);
-                                // console.log(data.array);
-                                // console.log(array);
-                                // console.log(data.events);
-                                
-                                
-                                
                                 
                                 return data.dataInput
                             }),
-                            label: "Lose Weight",
+                            label: viewAmbitions[activePage-1].category,
                             borderColor: "crimson",
 
                         },
@@ -77,7 +74,7 @@ export default function SearchAmbitions() {
                         y: {
                             title: {
                               display: true,
-                              text: "Weight (kg)",
+                              text: yAxisLabels(),
                             },
                           },
                           x: {
@@ -89,7 +86,17 @@ export default function SearchAmbitions() {
                         }
                     }}
                  />
+                 </Grid.Col>
+                 <Grid.Col
+                    md={0} 
+                    lg={2}
+                      >
+
+                </Grid.Col>
+                 </Grid>
+                 <Group mt="md" position="center">
                 <Pagination page={activePage} onChange={setPage} total={viewAmbitions.length} color="teal" size="lg" radius="md" withControls={false} />
+                 </Group>
             </div>
             ) : (
                 <div>
