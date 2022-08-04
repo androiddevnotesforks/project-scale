@@ -88,6 +88,14 @@ export default function EventCalendar() {
             }
         });
     };
+
+    const ambitionUnits = (state.category === "Lose Weight") 
+                                    ? "kg" 
+                                    : (state.category === "Save Money") 
+                                    ? " dollars" 
+                                    : (state.category === "New Profession" || state.category === "New Hobby") 
+                                    ? " minutes" 
+                                    : " units";
         
 
     function selectEvent() { // for displaying data when clicking on the calendar
@@ -95,7 +103,7 @@ export default function EventCalendar() {
       return  viewRecords.events.map((date: any) => {
             if (isSameDate(value || new Date(), new Date(date.createdAt))) {
                 var eventCreatedAt = `Date: ${date.createdAt}`;
-                var eventDataInput = `Data Input: ${date.dataInput}`;
+                var eventDataInput = `Data Input: ${date.dataInput}${ambitionUnits}`;
                 var eventNotes = (date.notes) ? `Notes: ${date.notes}` : null ;
 
 

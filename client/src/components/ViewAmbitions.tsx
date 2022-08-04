@@ -19,6 +19,9 @@ export default function ViewAmbitions() {
 
     const dispatch = useDispatch();
 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
     return (
         <>
             {loading ? (
@@ -29,7 +32,8 @@ export default function ViewAmbitions() {
                 {viewAmbitionsData.map((data: any) => {
                     
                     var recentEvent; // need to make undefined variable to get if statements inside the return statement to work
-
+                        
+                        
                     if (Object.hasOwn(data.events, 0)) { // checks if an object contains an array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
                         recentEvent = (data.events.at(-1).createdAt) // .at method gets the last createdAt date in the array, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
                     } else {
@@ -73,8 +77,9 @@ export default function ViewAmbitions() {
                             dailyPlan: data.dailyPlan,
                             public: data.public,
                         }))}>
-                            {(isSameDate(new Date(), new Date(recentEvent))) ? (
-                                null ) : (
+                            {(isSameDate(new Date(), new Date(recentEvent)) || (isSameDate(tomorrow, new Date(recentEvent))) ) 
+                                ? ( null ) 
+                                : (
                                     <AddEvent />
                             )}
                             {(!recentEvent) ? (

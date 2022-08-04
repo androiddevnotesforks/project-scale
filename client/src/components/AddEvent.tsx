@@ -39,7 +39,13 @@ export default function AddEvent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notesVal, dataInputVal, confirmData])
 
-    const ambitionLabel = (state.category === "Lose Weight") ? "Input current weight, e.g. Enter 68.8kg as 68.8" : (state.category === "Save Money") ? "Input how much money you spent the previous day, e.g. Enter $55.25 as 55.25" : (state.category === "New Profession" || state.category === "New Hobby") ? "Input how much time you spent on this ambition the previous day, e.g. Enter 20 minutes as 20" : "Input how many units of the task that you did the previous day, e.g. Enter 10 units as 20";
+    const ambitionLabel = (state.category === "Lose Weight") 
+                                    ? "Input current weight, e.g. Enter 68.8kg as 68.8" 
+                                    : (state.category === "Save Money") 
+                                    ? "Input how much money you spent the previous day, e.g. Enter $55.25 as 55.25" 
+                                    : (state.category === "New Profession" || state.category === "New Hobby") 
+                                    ? "Input how much time you spent on this ambition the previous day, e.g. Enter 20 minutes as 20" 
+                                    : "Input how many units of the task that you did the previous day, e.g. Enter 10 units as 10";
     
     const handleFormSubmit = async (event: any) => {
         event.preventDefault();
