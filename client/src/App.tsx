@@ -36,6 +36,7 @@ import Profile from './pages/Profile';
 import Search from "./pages/Search";
 
 import LoginSignup from './components/LoginSignup';
+import FAQModal from './components/FAQModal';
 
 import Auth from "./utils/auth";
 import Records from './pages/Records';
@@ -65,7 +66,7 @@ function App() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light'); // when pressing a specific icon it toggles the light/dark mode
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('dark'); // when pressing a specific icon it toggles the light/dark mode
   const toggleColorScheme = (value?: ColorScheme) =>
   setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
@@ -100,9 +101,13 @@ function App() {
                 <NavLink className={({isActive}) => (isActive ? "active" : "inactive")} to="/settings">
                   <Button leftIcon={<SettingsIcon size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Settings</Button>
                 </NavLink>
+                <FAQModal />
                 </Stack>
               ) : (
-              <LoginSignup />
+              <Stack spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })}>
+                <LoginSignup />
+                <FAQModal />
+              </Stack>
             )}
             </Stack>
           </Navbar>
@@ -119,7 +124,7 @@ function App() {
                   mr="xl"
                 />
               </MediaQuery>
-                <Text>Project S.C.A.L.E.</Text>
+                <Text>S.C.A.L.E. Up!</Text>
                 <Button leftIcon={(colorScheme === 'dark') 
                                   ? <Sun size={24} strokeWidth={2} color={'yellow'} /> 
                                   : <Moon size={24} strokeWidth={2} color={'#40bfb2'} />} 

@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, Group, TextInput, PasswordInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { Login } from 'tabler-icons-react';
-import { UserPlus } from 'tabler-icons-react';
+import { Login, UserPlus } from 'tabler-icons-react';
 
 export default function LoginSignup() {
 
@@ -29,13 +27,22 @@ export default function LoginSignup() {
   const emailValidation = /\S+@\S+\.\S+/.test(email) // regex from: https://bobbyhadz.com/blog/react-check-if-email-is-valid
 
   useEffect(() => {
-    (username && username.length < 2) ? setUsernameErr("Username must have at least 2 characters.") : setUsernameErr("");
-    if (email) {
-      (emailValidation) ? setEmailErr("") : setEmailErr("That is not a valid email address.");
-    }
-    (password && password.length < 8) ? setPasswordErr("Password needs to be at least 8 characters long.") : setPasswordErr("");
+    (username && username.length < 2) 
+        ? setUsernameErr("Username must have at least 2 characters.") 
+        : setUsernameErr("");
 
-    (username.length > 1 && emailValidation && password.length > 7 && password === confirmPassword) ? setDisableButton(false) : setDisableButton(true)
+    if (email) {
+      (emailValidation) 
+          ? setEmailErr("") 
+          : setEmailErr("That is not a valid email address.");
+    }
+    (password && password.length < 8) 
+        ? setPasswordErr("Password needs to be at least 8 characters long.") 
+        : setPasswordErr("");
+
+    (username.length > 1 && emailValidation && password.length > 7 && password === confirmPassword) 
+        ? setDisableButton(false) 
+        : setDisableButton(true)
 
 }, [username, email, password, confirmPassword])
 
@@ -148,7 +155,7 @@ export default function LoginSignup() {
             error={passwordErr}
           />
 
-        <PasswordInput // password field
+        <PasswordInput // confirm password field
             required
             label="Confirm password"
             placeholder="Confirm Password"
