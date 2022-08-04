@@ -20,7 +20,10 @@ export default function ViewAmbitions() {
     const dispatch = useDispatch();
 
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 1); // needed to fix timezone bug thanks to heroku server location, source: https://stackoverflow.com/questions/3674539/incrementing-a-date-in-javascript
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // needed to fix timezone bug thanks to heroku server location
 
     return (
         <>
@@ -77,7 +80,7 @@ export default function ViewAmbitions() {
                             dailyPlan: data.dailyPlan,
                             public: data.public,
                         }))}>
-                            {(isSameDate(new Date(), new Date(recentEvent)) || (isSameDate(tomorrow, new Date(recentEvent))) ) 
+                            {(isSameDate(new Date(), new Date(recentEvent)) || (isSameDate(tomorrow, new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent))) ) 
                                 ? ( null ) 
                                 : (
                                     <AddEvent />

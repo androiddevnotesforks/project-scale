@@ -57,3 +57,18 @@ test("Tommorow Logic, threeArray", () => {
     expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))).toBe(false);
 
 })
+
+test("Yesterday Logic, threeArray", () => {
+    var recentEvent = threeArray.at(-1);
+    console.log(threeArray.at(-1)); // object returns undefined if it is out of range
+    const yesterday = new Date();
+    console.log(yesterday);
+    yesterday.setDate(yesterday.getDate() - 1);
+    console.log(yesterday);
+
+    expect((isSameDate(new Date(), new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(new Date(), new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+
+})
