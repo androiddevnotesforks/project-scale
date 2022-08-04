@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Tabs, Loader, Text, Button } from "@mantine/core";
+import { Text } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import SearchAmbitions from "../components/SearchAmbitions";
 import "../App.css";
@@ -32,7 +32,6 @@ export default function Search() {
     return (
         <div className="clamps">
             <Text style={{textAlign: "center"}} sx={textColour} size="lg">{text}</Text>
-            {/* <Button color={"red"}>Search for others' ambitions</Button> */}
             <SearchAmbitions />
         </div>
     );

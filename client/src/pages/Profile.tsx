@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Tabs, Loader, Text, Button, Group, Space, Collapse } from "@mantine/core"
+import { useEffect, useState } from "react";
+import { Loader, Text, Button, Space, Collapse } from "@mantine/core"
 import { useInterval } from "@mantine/hooks";
 import "../App.css"
 import NewAmbition from "../components/NewAmbition";

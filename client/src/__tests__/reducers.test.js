@@ -7,7 +7,7 @@ const initialState = {
     notes: "",
 };
 
-const alternateState = {
+const alternateState = { // not needed now.
     ambitionId: "12345xf00",
     dataInput: "123.45",
     notes: "Something happened today.",

@@ -4,19 +4,10 @@ const eventsSchema = require("./Events"); // importing subdocument schema
 
 const ambitionsSchema = new Schema({
     identity: { 
-        // type: Schema.Types.ObjectId,
-        // ref: "Identity",
-        // required: true
         type: String,
         required: true 
     },
-    // timeLimit: { // might end up not using a time limit
-    //     type: Number,
-    //     required: true,
-    //     max: 365, //days...
-    //     min: 7 //days
-    // },
-    dailyPlan: { // starting value
+    dailyPlan: {
         type: String,
         required: true
     },
@@ -24,10 +15,7 @@ const ambitionsSchema = new Schema({
         type: String,
         required: true
     },
-    category: { // every ambition belongs to a category
-        // type: Schema.Types.ObjectId,
-        // ref: "Category",
-        // required: true
+    category: { 
         type: String,
         required: true
     },
@@ -50,6 +38,5 @@ ambitionsSchema.virtual("daysCount").get(function () {
 })
 
 const Ambitions = model("Ambitions", ambitionsSchema);
-// do i create sideEffects as a submodel or just put it in with the schema?...
 
 module.exports = Ambitions;

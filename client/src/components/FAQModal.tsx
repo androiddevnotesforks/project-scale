@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Button, Stack, Text, Accordion } from '@mantine/core';
+import { Modal, Button, Text, Accordion } from '@mantine/core';
 import { Book2 } from 'tabler-icons-react';
 
 export default function FAQModal() {
