@@ -5,7 +5,6 @@ import SearchAmbitions from "../components/SearchAmbitions";
 import "../App.css";
 
 export default function Search() {
-  // so what you want to do is... query the ambitions... any that have public as true will then be displayed using chart.js... need to consider using pagination so that you can look at a few at a time or something...
 
     const message = "Do you hear their voices? ... ... ...";
     const splitMessage = message.split("");
@@ -14,7 +13,7 @@ export default function Search() {
     const [textColour, setTextColour] = useState({})
 
     const [seconds, setSeconds] = useState(0);
-    const interval = useInterval(() => setSeconds((s) => s + 1), 140);
+    const interval = useInterval(() => setSeconds((s) => s + 1), 120);
 
 
     useEffect(() => {
