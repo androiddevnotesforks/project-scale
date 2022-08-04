@@ -2,14 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     ambitionId: "",
+    category: "",
     identity: "",
     endValue: "",
     dailyPlan: "",
     public: false,
-    weight: "kg",
-    money: "dollars",
-    hobby: "minutes",
-    enigma: "units",
 }
 
 const ambitionsSlice = createSlice({
@@ -20,6 +17,7 @@ const ambitionsSlice = createSlice({
             return {
                 ...state,
                 ambitionId: action.payload.ambitionId,
+                category: action.payload.category,
                 identity: action.payload.identity,
                 endValue: action.payload.endValue,
                 dailyPlan: action.payload.dailyPlan,
