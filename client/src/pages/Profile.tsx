@@ -25,7 +25,7 @@ export default function Profile() {
     const [textColour, setTextColour] = useState({})
 
     const [seconds, setSeconds] = useState(0);
-    const interval = useInterval(() => setSeconds((s) => s + 1), 140);
+    const interval = useInterval(() => setSeconds((s) => s + 1), 120);
 
 
     useEffect(() => {
