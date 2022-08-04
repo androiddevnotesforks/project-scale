@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ADD_EVENT as ADD_EVENT_MUTATION } from "../utils/mutations";
 import { USER } from "../utils/queries";
 import { useMutation } from "@apollo/client";
+import { StairsUp } from "tabler-icons-react";
 
 export default function AddEvent() {
     
@@ -97,7 +98,7 @@ export default function AddEvent() {
             </form>
         </Modal>
 
-        <Button mt="sm" variant="outline" color="grape" fullWidth onClick={() => setOpened(true)}>Create Record</Button>
+        <Button leftIcon={<StairsUp size={24} strokeWidth={2} color={'violet'}/>} mt="sm" variant="outline" color="grape" fullWidth onClick={() => setOpened(true)}>Create Record</Button>
     </>
     );
 };

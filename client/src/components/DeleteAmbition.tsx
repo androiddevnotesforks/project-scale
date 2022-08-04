@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { DELETE_AMBITION } from "../utils/mutations";
 import { USER } from "../utils/queries";
+import { WorldOff } from "tabler-icons-react";
 
 export default function DeleteAmbition() {
 
@@ -78,7 +79,7 @@ export default function DeleteAmbition() {
             </form>
             </Modal>
 
-            <Button mt="sm" radius="lg" fullWidth variant="outline" color="orange" onClick={() => setOpened(true)}>Delete Ambition!</Button>
+            <Button leftIcon={<WorldOff size={24} strokeWidth={2} color={'orange'}/>} mt="sm" radius="lg" fullWidth variant="outline" color="orange" onClick={() => setOpened(true)}>Delete Ambition!</Button>
         </>
     );
 }
