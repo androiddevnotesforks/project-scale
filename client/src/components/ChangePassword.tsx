@@ -41,7 +41,7 @@ export default function ChangePassword() {
                 console.log(error);
             }
 
-          
+            onClose();
     };
 
     function onClose() {

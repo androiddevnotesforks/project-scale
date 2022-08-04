@@ -61,6 +61,8 @@ export default function UpdateUser() {
                 console.log(error);
                 setSubmitErr("That username and/or email is already in use.")
             }
+
+            setOpened(false);
     };
 
     return (
