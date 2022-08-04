@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, TextInput, Modal, Group, Loader } from "@mantine/core";
+import { Button, TextInput, Modal, Loader } from "@mantine/core";
 import { useMutation, useQuery} from "@apollo/client";
 import { DELETE_USER } from "../utils/mutations";
 import { USERNAME } from "../utils/queries";

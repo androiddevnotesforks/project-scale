@@ -1,8 +1,7 @@
-require("dotenv").config();
-
 const jwt = require("jsonwebtoken");
 
 const secret = tokenSecret;
+// const secret = "thiscouldbeasecret";
 const expiration = "3h"; // changed to three hours
 
 module.exports = {

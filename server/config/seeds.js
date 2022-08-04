@@ -5,6 +5,7 @@ db.once("open", async () => {
     await Ambitions.deleteMany();
     await Category.deleteMany();
     await Identity.deleteMany();
+    await User.deleteMany();
 
     const ambitions = await Ambitions.create({
         category: "Lose Weight",
@@ -253,6 +254,7 @@ db.once("open", async () => {
         { ambitionCategories: "???"}
     ]);
     
+    console.log("Ambitions seeded");
     console.log('Categories seeded');
 
     const identities = await Identity.insertMany([
@@ -264,8 +266,6 @@ db.once("open", async () => {
     ]);
     
     console.log("Identities seeded");
-
-    await User.deleteMany();
 
     const jack = await User.create({
         username: "r134x7",

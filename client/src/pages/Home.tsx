@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Text } from '@mantine/core';
 import { useInterval } from "@mantine/hooks";
 import "../App.css" // have to import the css to get it to work
@@ -7,10 +7,10 @@ const Home = () => {
 
     const one = "Do you hear it? ... ... ...";
     const splitOne = one.split("");
-    // const test = ["Do", "you", "hear", "it?", "...", "...", "..."]
+    
     const two = "Can you hear their voices? ... ... ...";
     const splitTwo = two.split("");
-    // const splitTwo = ["Can", "you", "hear", "their", "voices?", "...", "...", "..."]
+    
     const three = "I want to be fit!";
     const splitThree = three.split("");
 
@@ -53,28 +53,20 @@ const Home = () => {
     const [pageThree, setPageThree] = useState(false)
 
     const [seconds, setSeconds] = useState(0);
-    // const [secondsTwo, setSecondsTwo] = useState((splitTwo.length - 1));
-    // const [secondsTwo, setSecondsTwo] = useState(0);
+    
     const interval = useInterval(() => setSeconds((s) => s + 1), 120);
-    // const intervalTwo = useInterval(() => setSecondsTwo((t) => t + 1), 500);
-
 
     useEffect(() => {
-        // if (seconds === splitOne.length - 1) {
+        
         if (seconds >= splitOne.length) { // LINE ONE
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             setTextColour({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
-            // setSeconds(0);
-            // setText("");
-            // intervalTwo.start();
+            
         } else if (seconds <= splitOne.length + 1) {
             interval.start();
             setText(text + splitOne[seconds])
         }
 
         if (seconds === splitOne.length + splitTwo.length + 1) { // LINE TWO
-            // interval.stop();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             setTextColourTwo({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
         } else if (seconds >= splitOne.length + 1 && seconds <= splitOne.length + splitTwo.length + 1) {
             interval.start();
@@ -82,7 +74,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + 1) { // LINE THREE
-            // interval.stop();
 
         } else if (seconds >= splitOne.length + splitTwo.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + 1) {
             interval.start();
@@ -90,7 +81,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + splitFour.length + 1) { // LINE FOUR
-            // interval.stop();
 
         } else if (seconds >= splitOne.length + splitTwo.length + splitThree.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + 1) {
             interval.start();
@@ -98,7 +88,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + 1) { // LINE FIVE
-            // interval.stop();
             setPageTwo(true)
 
         } else if (seconds >= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + 1) {
@@ -107,8 +96,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + 1) { // TEXTSIX LINE ONE PAGE TWO!
-            // interval.stop();
-
             setTextColourSix({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
 
         } else if (seconds >= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + 1) {
@@ -117,8 +104,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + splitSeven.length + 1) { // TEXTSEVEN LINE TWO PAGE TWO!
-            // interval.stop();
-            
             setTextColourSeven({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
 
         } else if (seconds >= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + splitSeven.length + 1) {
@@ -127,8 +112,6 @@ const Home = () => {
         }
 
         if (seconds === splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + splitSeven.length + splitEight.length + 1) { // TEXTEIGHT LINE THREE PAGE TWO!
-            // interval.stop();
-            
             setTextColourEight({ color: 'crimson', fontSize: 18, lineHeight: 1.4 });
 
         } else if (seconds >= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + splitSeven.length + 1 && seconds <= splitOne.length + splitTwo.length + splitThree.length + splitFour.length + splitFive.length + splitSix.length + splitSeven.length + splitEight.length + 1) {
@@ -173,7 +156,7 @@ const Home = () => {
         </div>
         ) : (
             <div className="clamps">
-            <Text mt="md" style={{textAlign: "center"}} sx={{ color: 'crimson', fontSize: 40, lineHeight: 1.4 }} size="lg">S.C.A.L.E. Up!</Text>
+            <Text className="fade" mt="md" style={{textAlign: "center"}} sx={{ color: 'crimson', fontSize: 40, lineHeight: 1.4 }} size="lg">S.C.A.L.E. Up!</Text>
         </div>
         )
     );

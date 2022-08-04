@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, TextInput, PasswordInput, Modal, Group } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Button, PasswordInput, Modal } from "@mantine/core";
 import { CHANGE_PASSWORD } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { FocusCentered } from 'tabler-icons-react';

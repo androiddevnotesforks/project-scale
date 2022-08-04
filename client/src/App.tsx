@@ -8,7 +8,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-// import { AppShell, Navbar, Header } from '@mantine/core';
 import {
   AppShell,
   Navbar,
@@ -18,29 +17,25 @@ import {
   Burger,
   useMantineTheme,
   Button,
-  Center,
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
-  Group,
-  Space,
   Stack
 } from '@mantine/core';
 
 import { Settings as SettingsIcon, Logout, Search as SearchIcon, UserCircle, Butterfly, Moon, Sun } from 'tabler-icons-react';
 
-// import pages here
 import Home from "./pages/Home";
 import NoMatch from './pages/NoMatch';
 import Profile from './pages/Profile';
 import Search from "./pages/Search";
+import Records from './pages/Records';
+import Settings from './pages/Settings';
 
 import LoginSignup from './components/LoginSignup';
 import FAQModal from './components/FAQModal';
 
 import Auth from "./utils/auth";
-import Records from './pages/Records';
-import Settings from './pages/Settings';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -77,8 +72,7 @@ function App() {
       <Router>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
        <MantineProvider 
-       theme={{ colorScheme: colorScheme}} 
-      //  theme={{ colorScheme: colorScheme }} 
+       theme={{ colorScheme: colorScheme}}  
        withGlobalStyles withNormalizeCSS>
         <AppShell // the default styles implemented in appShell was overwriting the colorScheme
           styles={(theme) => ({main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] },})}

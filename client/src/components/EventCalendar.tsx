@@ -15,8 +15,6 @@ export default function EventCalendar() {
     const state: any = useSelector(state => state)
     
     const [value, setValue] = useState<Date | null>(null); // if useState is not written like this then onChange doesn't work due to how the NPM package works, source: https://mantine.dev/dates/date-picker/
-    // const [firstDate, setFirstDate] = useState(null)
-    // const [lastDate, setLastDate] = useState(null)
     
     const { loading, data } = useQuery(SEARCH_EVENTS, {
         variables : {
@@ -25,10 +23,7 @@ export default function EventCalendar() {
         fetchPolicy: "cache-and-network"
     });
 
-    // const viewRecords = data?.searchEvents.events || [];
     const viewRecords = data?.searchEvents || [];
-    
-    //  console.log(viewRecords.events);
      
     useEffect(() => {
         if (!loading) { // to prevent page errors
@@ -38,8 +33,6 @@ export default function EventCalendar() {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
-
-    // console.log(firstDate, lastDate);
     
     function getFirstDate() {
         return new Date(viewRecords.events.at(0).createdAt)
@@ -127,15 +120,6 @@ export default function EventCalendar() {
         })
         
     };
-
-    // console.log({...viewRecords});
-    // console.log(viewRecords.map((date:any) => {
-    //     if (isSameDate(value || new Date(), new Date(date.createdAt))) {
-    //         return `Date: ${date.createdAt}, Data Input: ${date.dataInput}, Notes: ${date.notes}`
-    //     } else {
-    //         return 0
-    //     }
-    // }));
     
     return (
         <>
@@ -149,7 +133,6 @@ export default function EventCalendar() {
             <Grid.Col
             md={6}
             lg={3} 
-            // span={3}
             >
 
             
@@ -164,7 +147,6 @@ export default function EventCalendar() {
             <Grid.Col 
             md={6}
             lg={3} 
-            // span={3}
             >
                 {selectEvent()}
             </Grid.Col>
@@ -173,8 +155,6 @@ export default function EventCalendar() {
             className="chart"
             md={12}
             lg={6}
-            // span={6} 
-            // style={{position: "relative", height:"80vh", width:"80vw"}}
             >
             <Line 
                 datasetIdKey="eventsChart"
@@ -186,20 +166,15 @@ export default function EventCalendar() {
                     datasets: [
                         {
                             data: viewRecords.events.map((data: any) => {
-                                // return data.dataInput
                                 return data.dataInput
                             }),
                             label: viewRecords.category,
                             borderColor: "crimson",
                             backgroundColor: (displayDataPoint())
-                            // backgroundColor: "violet",
-                            // backgroundColor: 
-
                         },
                     ], // hmmm
                 }}
                 options={{
-                    // maintainAspectRatio: false,
                     scales: {
                         y: {
                             title: {

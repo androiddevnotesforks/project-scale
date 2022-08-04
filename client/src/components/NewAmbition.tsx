@@ -91,7 +91,6 @@ export default function NewAmbition() {
             description="I am..."
             // data={["Determined", "Inspired"]}
             data={identitiesData.map((data: any) => {
-                // console.log(data);
                 return data.identityCategories
             })}
             required
@@ -105,7 +104,6 @@ export default function NewAmbition() {
             description="I am going to..."
             // data={["Lose Weight", "Save Money"]}
             data={ambitionsData.map((data: any) => {
-                // console.log(data);
                 return data.ambitionCategories
             })}
             required
