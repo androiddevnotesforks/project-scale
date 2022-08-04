@@ -16,7 +16,18 @@ export default function FAQModal() {
         title="Frequently asked questions."
       >
 
-        <Accordion variant="contained" radius="md" defaultValue="createRecord">
+        <Accordion variant="contained" radius="md" defaultValue="whenRecord">
+            <Accordion.Item value="whenRecord">
+              <Accordion.Control>
+              <Text style={{fontWeight: "bold"}}>
+                  When should I create records in my ambitions?
+              </Text>
+              </Accordion.Control>
+              <Accordion.Panel>
+              It is suggested you create a record after you wake up each day. 
+              </Accordion.Panel>
+            </Accordion.Item>
+
             <Accordion.Item value="createRecord">
               <Accordion.Control>
               <Text style={{fontWeight: "bold"}}>

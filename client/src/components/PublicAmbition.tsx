@@ -10,17 +10,13 @@ export default function PublicAmbition() {
 
     const state: any = useSelector(state => state);
 
-    const [publicStatus] = useState(state.ambitions.public);
+    const [publicStatus] = useState(state.public);
     const [switchMessage, setSwitchMessage] = useState("")
 
     const [opened, setOpened] = useState(false);
-    // public status isn't changing...
-    console.log(publicStatus);
-    console.log(state.ambitions.ambitionId);
-    
     
     useEffect(() => {
-        (state.ambitions.public) ? setSwitchMessage("Make Abmition not viewable to anyone in Search?") : setSwitchMessage("Make ambition viewable to anyone in Search?")
+        (state.public) ? setSwitchMessage("Make Abmition not viewable to anyone in Search?") : setSwitchMessage("Make ambition viewable to anyone in Search?")
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [opened])
@@ -31,7 +27,7 @@ export default function PublicAmbition() {
         try {
             const { data } = await updatePublicAmbition({
                 variables: {
-                    ambitionId: state.ambitions.ambitionId,
+                    ambitionId: state.ambitionId,
                     public: !publicStatus,
                 },
             });

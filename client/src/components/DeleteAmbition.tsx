@@ -17,13 +17,13 @@ export default function DeleteAmbition() {
     });
 
     const [disableButton, setDisableButton] = useState(true);
-    const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
+    const [identity, setIdentity] = useState(state.identity); // default states need to be set
     const [identityConfirm, setIdentityConfirm] = useState(""); // for textinput for deleting the ambition
 
     const [opened, setOpened] = useState(false); // opens/closes the modal
 
     useEffect(() => {
-        setIdentity(state.ambitions.identity)
+        setIdentity(state.identity)
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [opened])
@@ -41,7 +41,7 @@ export default function DeleteAmbition() {
         try {
             const { data } = await deleteAmbition({
                 variables: {
-                    ambitionId: state.ambitions.ambitionId,
+                    ambitionId: state.ambitionId,
                 },
             });
             } catch (error) {
@@ -69,7 +69,7 @@ export default function DeleteAmbition() {
             
             <TextInput // end value
                 required // requires entry
-                label={`To delete ambition, type out your ego inside the quotes to confirm deletion and then submit! I am... "${state.ambitions.identity}"`}
+                label={`To delete ambition, type out your ego inside the quotes to confirm deletion and then submit! I am... "${state.identity}"`}
                 placeholder="..."
                 value={identityConfirm}
                 onChange={(event) => setIdentityConfirm(event.target.value)}

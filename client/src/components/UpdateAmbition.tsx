@@ -20,9 +20,9 @@ export default function UpdateAmbition() {
     const state: any = useSelector(state => state);
     
 
-    const [identity, setIdentity] = useState(state.ambitions.identity); // default states need to be set
-    const [dailyPlan, setDailyPlan] = useState(state.ambitions.dailyPlan); // how they are going to get there
-    const [endValue, setEndValue] = useState(state.ambitions.endValue); // where they want to be
+    const [identity, setIdentity] = useState(state.identity); // default states need to be set
+    const [dailyPlan, setDailyPlan] = useState(state.dailyPlan); // how they are going to get there
+    const [endValue, setEndValue] = useState(state.endValue); // where they want to be
 
     const [dailyErr, setDailyErr] = useState("");
     const [endErr, setEndErr] = useState("");
@@ -31,9 +31,9 @@ export default function UpdateAmbition() {
     const [opened, setOpened] = useState(false);
     
     useEffect(() => {
-        setIdentity(state.ambitions.identity)
-        setDailyPlan(state.ambitions.dailyPlan)
-        setEndValue(state.ambitions.endValue)
+        setIdentity(state.identity)
+        setDailyPlan(state.dailyPlan)
+        setEndValue(state.endValue)
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [opened])
@@ -56,7 +56,7 @@ export default function UpdateAmbition() {
         try {
             const { data } = await updateAmbition({
                 variables: {
-                    ambitionId: state.ambitions.ambitionId,
+                    ambitionId: state.ambitionId,
                     identity: identity,
                     dailyPlan: dailyPlan,
                     endValue: endValue,

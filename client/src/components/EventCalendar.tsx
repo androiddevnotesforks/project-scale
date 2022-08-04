@@ -20,7 +20,7 @@ export default function EventCalendar() {
     
     const { loading, data } = useQuery(SEARCH_EVENTS, {
         variables : {
-            ambitionId: state.ambitions.ambitionId
+            ambitionId: state.ambitionId
         },
         fetchPolicy: "cache-and-network"
     });

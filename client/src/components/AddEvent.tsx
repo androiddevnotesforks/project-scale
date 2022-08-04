@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Group, TextInput, Textarea } from "@mantine/core"
+import { Button, Modal, TextInput, Textarea } from "@mantine/core"
 import { useSelector } from "react-redux";
 import { ADD_EVENT as ADD_EVENT_MUTATION } from "../utils/mutations";
 import { USER } from "../utils/queries";
@@ -38,17 +38,19 @@ export default function AddEvent() {
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notesVal, dataInputVal, confirmData])
+
+    const ambitionLabel = (state.category === "Lose Weight") ? "Input current weight, e.g. Enter 68.8kg as 68.8" : (state.category === "Save Money") ? "Input how much money you spent the previous day, e.g. Enter $55.25 as 55.25" : (state.category === "New Profession" || state.category === "New Hobby") ? "Input how much time you spent on this ambition the previous day, e.g. Enter 20 minutes as 20" : "Input how many units of the task that you did the previous day, e.g. Enter 10 units as 20";
     
     const handleFormSubmit = async (event: any) => {
         event.preventDefault();
         
-        // doing the dispatch below overcomplicated the process and caused issues, it was only necessary to dispatch the ambitions ID and that's it for this whole process
-        // dispatch(ADD_EVENT({ dataInput: form.values.dataInput, notes: form.values.notes, }))
+        // doing the dispatch in this block overcomplicated the process and caused issues, it was only necessary to dispatch the ambitions ID and that's it for this whole process
+        // dispatch(ADD_EVENT({ dataInput: form.values.dataInput, notes: form.values.notes, })) // the dispatch that didn't need to be used
         
         try {
             const { data } = await addEvent({
                 variables: {
-                    ambitionId: state.ambitions.ambitionId, // gets the Ambition ID that was dispatched when clicking to open up the events modal
+                    ambitionId: state.ambitionId, // gets the Ambition ID that was dispatched when clicking to open up the events modal
                     dataInput: Number(dataInputVal), // needs number not string due to model type
                     notes: notesVal, 
                 },
@@ -70,7 +72,7 @@ export default function AddEvent() {
 
                 <TextInput // datainput
                     required // requires entry
-                    label="Input data"
+                    label={ambitionLabel}
                     placeholder="..."
                     value={dataInputVal}
                     onChange={(event) => setDataInputVal(event.target.value)}
@@ -87,7 +89,7 @@ export default function AddEvent() {
 
                 <Textarea // notes
                     label="Notes"
-                    description="(Optional) Write anything of significance that is relevant to your ambition."
+                    description="(Optional) Note anything that has changed since you began this ambition."
                     placeholder="..."
                     value={notesVal}
                     onChange={(event) => setNotesVal(event.target.value)}

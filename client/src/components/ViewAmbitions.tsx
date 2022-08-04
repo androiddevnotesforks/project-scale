@@ -94,7 +94,7 @@ export default function ViewAmbitions() {
                             <Text style={{textAlign: "center"}}>
                                 {`Aim: ${data.endValue} ${aimMeasurement}`}
                             </Text>
-                            <Accordion variant="contained" defaultValue="dailyPlan">
+                            <Accordion variant="contained">
                                 <Accordion.Item value="dailyPlan">
                                     <Accordion.Control>Daily Plan:</Accordion.Control>
                                         <Accordion.Panel>
@@ -108,6 +108,7 @@ export default function ViewAmbitions() {
                         </Stack>
                         <div onClick={() => dispatch(ADD_AMBITION_ID({
                             ambitionId: data._id,
+                            category: data.category,
                             identity: data.identity,
                             endValue: data.endValue,
                             dailyPlan: data.dailyPlan,
