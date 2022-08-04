@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'; // source for NavLink CSS styling: https://www.kindacode.com/article/react-router-how-to-highlight-active-link/
 import {
   ApolloClient,
   InMemoryCache,
@@ -85,21 +85,21 @@ function App() {
         navbar={
           <Navbar sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })} p="xl" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 175, lg: 175 }}>
             <Stack spacing="xl">
-              <Link to="/">
+              <NavLink className={({isActive}) => (isActive ? "active" : "inactive")} to="/">
                   <Button leftIcon={<Butterfly size={24} strokeWidth={2} color={'#40bfb2'}/>} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Home</Button>
-              </Link>
-              <Link to="/search">
+              </NavLink>
+              <NavLink className={({isActive}) => (isActive ? "active" : "inactive")} to="/search">
                   <Button leftIcon={<SearchIcon size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Search</Button>
-              </Link>
+              </NavLink>
             {Auth.loggedIn() ? (
               <Stack spacing="xl" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1] })}>
-                <Link to="/ego">
+                <NavLink className={({isActive}) => (isActive ? "active" : "inactive")} to="/ego">
                     <Button leftIcon={<UserCircle size={24} strokeWidth={2} color={'#40bfb2'}/>} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Ego</Button>
-                </Link>
+                </NavLink>
                     <Button leftIcon={<Logout size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth variant="outline" color="cyan" onClick={Auth.logout}>Logout</Button>
-                <Link to="/settings">
+                <NavLink className={({isActive}) => (isActive ? "active" : "inactive")} to="/settings">
                   <Button leftIcon={<SettingsIcon size={24} strokeWidth={2} color={'#40bfb2'} />} radius="lg" fullWidth onClick={() => (opened === true) ? setOpened((o) => !o) : null} variant="outline" color="cyan">Settings</Button>
-                </Link>
+                </NavLink>
                 </Stack>
               ) : (
               <LoginSignup />
