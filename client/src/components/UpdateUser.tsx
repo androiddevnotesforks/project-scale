@@ -13,7 +13,11 @@ export default function UpdateUser() {
 
     const userData = data?.user || [];
 
-    const [updateUser, { error }] = useMutation(UPDATE_USER);
+    const [updateUser, { error }] = useMutation(UPDATE_USER, {
+        refetchQueries: [
+            {query: USER}, // so that the page re-renders with the new user data
+        ]
+    });
     
     const [username, setUsername] = useState(userData.username); // default states need to be set
     const [email, setEmail] = useState(userData.email); // how they are going to get there

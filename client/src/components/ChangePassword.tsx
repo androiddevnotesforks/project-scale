@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Button, PasswordInput, Modal } from "@mantine/core";
 import { CHANGE_PASSWORD } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
+import { USER } from "../utils/queries";
 import { FocusCentered } from 'tabler-icons-react';
 
 
 export default function ChangePassword() {
 
-    const [changePassword, { error }] = useMutation(CHANGE_PASSWORD);
+    const [changePassword, { error }] = useMutation(CHANGE_PASSWORD, {
+      refetchQueries: [
+          {query: USER}, // so that the page re-renders with the new user data
+      ]
+  });
 
     const [opened, setOpened] = useState(false);
 
@@ -35,6 +40,8 @@ export default function ChangePassword() {
             } catch (error) {
                 console.log(error);
             }
+
+          
     };
 
     function onClose() {
