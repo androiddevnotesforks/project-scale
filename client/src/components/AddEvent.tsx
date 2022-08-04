@@ -59,6 +59,7 @@ export default function AddEvent() {
                 console.log(error);              
             }
 
+            setOpened(false) // to fix bug where modal seems to not close automatically on mobile
       };
   
     return (

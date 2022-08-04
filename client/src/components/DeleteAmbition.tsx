@@ -48,7 +48,7 @@ export default function DeleteAmbition() {
                 console.log(error);
             }
 
-            setOpened((o) => (!o))  
+            setOpened(false) // to fix bug where modal seems to not close automatically on mobile  
     };
 
     function onClose() {
