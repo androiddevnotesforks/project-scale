@@ -53,7 +53,7 @@ export default function EventCalendar() {
         const category = (viewRecords.category === "Lose Weight" && viewRecords.events.length >= 2) 
                             ? `Weight difference from start to end: ${Math.floor(viewRecords.events.at(0).dataInput - viewRecords.events.at(-1).dataInput)}kg.` 
                             : (viewRecords.category === "Save Money" && viewRecords.events.length >= 7) 
-                            ? `$${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / 7)} spent per week. Daily: $${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)} spent per day.` 
+                            ? `$${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / (viewRecords.events.length / 7))} spent per week. Daily: $${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)} spent per day.` 
                             : ((viewRecords.category === "New Profession" && viewRecords.events.length >= 2) || (viewRecords.category === "New Hobby" && viewRecords.events.length >= 2)) 
                             ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} minutes. Daily: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)} minutes.` 
                             : (viewRecords.category === "???" && viewRecords.events.length >= 2) 
