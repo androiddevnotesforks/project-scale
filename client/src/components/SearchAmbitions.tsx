@@ -20,6 +20,27 @@ export default function SearchAmbitions() {
         
 
     const [activePage, setPage] = useState(1);
+
+    function stats() {
+        const category = (viewAmbitions[activePage-1].category === "Lose Weight" && viewAmbitions[activePage-1].events.length >= 2) 
+                            ? `Weight difference from start to end: ${Math.floor(viewAmbitions[activePage-1].events.at(0).dataInput - viewAmbitions[activePage-1].events.at(-1).dataInput)}kg.` 
+                            : (viewAmbitions[activePage-1].category === "Save Money" && viewAmbitions[activePage-1].events.length >= 7) 
+                            ? `$${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / 7)} spent per week. Daily: $${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewAmbitions[activePage-1].events.length)} spent per day.` 
+                            : ((viewAmbitions[activePage-1].category === "New Profession" && viewAmbitions[activePage-1].events.length >= 2) || (viewAmbitions[activePage-1].category === "New Hobby" && viewAmbitions[activePage-1].events.length >= 2)) 
+                            ? `Total: ${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} minutes. Daily: ${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewAmbitions[activePage-1].events.length)} minutes.` 
+                            : (viewAmbitions[activePage-1].category === "???" && viewAmbitions[activePage-1].events.length >= 2) 
+                            ? `Total: ${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} units. Daily: ${Math.floor(viewAmbitions[activePage-1].events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewAmbitions[activePage-1].events.length)}` 
+                            : `More data required for calculations.`
+
+
+        return (
+            <>
+                <Text mt="md" style={{textAlign: "center"}}>{`First record: ${viewAmbitions[activePage-1].events.at(0).createdAt}`} </Text>
+                <Text style={{textAlign: "center"}}>{`Last record: ${viewAmbitions[activePage-1].events.at(-1).createdAt}`} </Text>
+                <Text style={{textAlign: "center"}}>{category}</Text>
+            </>
+        )
+    }
     
     function yAxisLabels() {
 
@@ -43,11 +64,12 @@ export default function SearchAmbitions() {
             
             (
                 <div className="chart">
-                    <Grid>
-            <Grid.Col 
-            md={12}
-            lg={10}
-            >
+                    {stats()}
+            <Grid>
+                <Grid.Col 
+                md={12}
+                lg={10}
+                >
            
             <Line 
                 datasetIdKey="eventsChart"

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Calendar, isSameDate, DatePicker } from "@mantine/dates";
-import { Text, Indicator, Loader, Space, Card, Badge, Grid, Stack, SimpleGrid } from "@mantine/core";
+import { Calendar, isSameDate } from "@mantine/dates";
+import { Text, Loader, Card, Grid, Stack } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { SEARCH_EVENTS } from "../utils/queries";
 import { useSelector } from "react-redux";
-import { getDatasetAtEvent, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import "../App.css";
 
 import { Chart, registerables } from 'chart.js'; // required to actually get chart.js with react-chartjs-2 to work
@@ -51,11 +51,11 @@ export default function EventCalendar() {
 
     function stats() {
         const category = (viewRecords.category === "Lose Weight" && viewRecords.events.length >= 2) 
-                            ? `Weight difference from start to end: ${Math.floor(viewRecords.events.at(0).dataInput - viewRecords.events.at(-1).dataInput)}kg` 
+                            ? `Weight difference from start to end: ${Math.floor(viewRecords.events.at(0).dataInput - viewRecords.events.at(-1).dataInput)}kg.` 
                             : (viewRecords.category === "Save Money" && viewRecords.events.length >= 7) 
-                            ? `$${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / 7)} spent per week` 
+                            ? `$${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / 7)} spent per week. Daily: $${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)} spent per day.` 
                             : ((viewRecords.category === "New Profession" && viewRecords.events.length >= 2) || (viewRecords.category === "New Hobby" && viewRecords.events.length >= 2)) 
-                            ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} minutes` 
+                            ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} minutes. Daily: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)} minutes.` 
                             : (viewRecords.category === "???" && viewRecords.events.length >= 2) 
                             ? `Total: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ))} units. Daily: ${Math.floor(viewRecords.events.reduce((previous: any, current: any) => previous + current.dataInput, 0 ) / viewRecords.events.length)}` 
                             : `More data required for calculations.`
@@ -63,7 +63,7 @@ export default function EventCalendar() {
 
         return (
             <>
-                <Text style={{textAlign: "center"}}>{`First record: ${viewRecords.events.at(0).createdAt}`} </Text>
+                <Text mt="md" style={{textAlign: "center"}}>{`First record: ${viewRecords.events.at(0).createdAt}`} </Text>
                 <Text style={{textAlign: "center"}}>{`Last record: ${viewRecords.events.at(-1).createdAt}`} </Text>
                 <Text style={{textAlign: "center"}}>{category}</Text>
             </>
