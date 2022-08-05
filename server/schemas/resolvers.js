@@ -75,12 +75,12 @@ const resolvers = {
             }
             throw new AuthenticationError("Session expired, login again.");
         },
-        addEvent: async (parent, { ambitionId, dataInput, notes }, context) => {
+        addEvent: async (parent, { ambitionId, createdAt, dataInput, notes }, context) => {
             if (context.user) {
                 const addEvent = await Ambitions.findOneAndUpdate(
                     { _id: ambitionId },
                     { $addToSet: {
-                        events: { dataInput, notes },
+                        events: { createdAt, dataInput, notes },
                         },
                     },
                     { new: true, runValidators: true }

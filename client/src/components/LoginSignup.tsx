@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Modal, Button, Group, TextInput, PasswordInput } from '@mantine/core';
+import { Modal, Button, Group, Text, TextInput, PasswordInput } from '@mantine/core';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -22,6 +22,7 @@ export default function LoginSignup() {
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [loginErr, setLoginErr] = useState("");
+  const [signupErr, setSignupErr] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
   const emailValidation = /\S+@\S+\.\S+/.test(email) // regex from: https://bobbyhadz.com/blog/react-check-if-email-is-valid
@@ -49,15 +50,21 @@ export default function LoginSignup() {
     const handleSignUpSubmit = async (event: any) => {
       event.preventDefault();
       
-      const mutationResponse = await addUser({
-        variables: {
-          username: username,
-          email: email,
-          password: password,
-        },
-      });
-      const token = mutationResponse.data.addUser.token;
-      Auth.login(token);
+      try {
+        const mutationResponse = await addUser({
+          variables: {
+            username: username,
+            email: email,
+            password: password,
+          },
+        });
+
+        const token = mutationResponse.data.addUser.token;
+        Auth.login(token);
+      } catch (error) {
+        console.log(error);
+        setSignupErr("That username and/or email is already in use.")
+      }
     };
 
     const handleLoginSubmit = async (event: any) => {
@@ -73,8 +80,8 @@ export default function LoginSignup() {
         const token = mutationResponse.data.login.token;
         
         Auth.login(token);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
         setLoginErr("Invalid email and/or password.")
       }
     };
@@ -163,6 +170,7 @@ export default function LoginSignup() {
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
 
+          <Text size="xs" color="red">{signupErr}</Text>
         <Group position="apart" spacing="xl" mt="md">
           <Button disabled={disableButton} variant='outline' color="teal" type="submit">Signup</Button>
           <Button leftIcon={<Login size={24} strokeWidth={2} color={'orange'}/>} variant='outline' color="orange" radius="lg" onClick={() => setSignup(false)}>Click here to login</Button>

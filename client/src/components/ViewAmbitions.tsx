@@ -80,11 +80,20 @@ export default function ViewAmbitions() {
                             dailyPlan: data.dailyPlan,
                             public: data.public,
                         }))}>
-                            {((isSameDate(new Date(), new Date(recentEvent))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent))))) 
-                                ? ( null ) 
+                            {((isSameDate(new Date(), new Date(recentEvent)))) 
+                                ? ( 
+                                        <Accordion variant="contained">
+                                            <Accordion.Item value="savedRecord">
+                                                <Accordion.Control>Record saved:</Accordion.Control>
+                                                    <Accordion.Panel>
+                                                        {`Record has already been written for the date: ${data.events.at(-1).createdAt}`}
+                                                    </Accordion.Panel>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                 ) 
                                 : (
                                     <AddEvent />
-                            )}
+                                  )}
                             {(!recentEvent) ? (
                                 null
                             ) : (

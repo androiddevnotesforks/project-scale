@@ -60,7 +60,7 @@ const typeDefs = gql`
         updateAmbition(ambitionId: ID!, identity: String!, dailyPlan: String!, endValue: String!): Ambitions
         publicAmbition(ambitionId: ID!, public: Boolean!): Ambitions
         deleteAmbition(ambitionId: ID!): Ambitions
-        addEvent(ambitionId: ID!, dataInput: Float!, notes: String): Ambitions 
+        addEvent(ambitionId: ID!, createdAt: String! dataInput: Float!, notes: String): Ambitions 
     }
 `;
 

@@ -57,6 +57,7 @@ export default function AddEvent() {
             const { data } = await addEvent({
                 variables: {
                     ambitionId: state.ambitionId, // gets the Ambition ID that was dispatched when clicking to open up the events modal
+                    createdAt: new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }), // solves the server issue regarding timezones
                     dataInput: Number(dataInputVal), // needs number not string due to model type
                     notes: notesVal, 
                 },
