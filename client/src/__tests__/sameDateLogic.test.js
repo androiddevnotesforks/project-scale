@@ -72,3 +72,72 @@ test("Yesterday Logic, threeArray", () => {
     expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
 
 })
+
+test("multi Logic future, threeArray", () => {
+    var recentEvent = threeArray.at(-1);
+    console.log(threeArray.at(-1)); // object returns undefined if it is out of range
+    const yesterday = new Date();
+    console.log(yesterday);
+    yesterday.setDate(yesterday.getDate() - 1);
+    console.log(yesterday);
+
+    const tomorrow = new Date();
+    console.log(tomorrow);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log(tomorrow);
+
+    expect((isSameDate(new Date(), new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(tomorrow, new Date(recentEvent)))).toBe(true);
+    expect((isSameDate(new Date(), new Date(recentEvent))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent))))).toBe(true)
+
+    // expect((isSameDate(new Date(), new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    // expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+
+})
+
+test("multi Logic today, threeArray", () => {
+    var recentEvent = threeArray.at(0);
+    // console.log(threeArray.at(-1)); // object returns undefined if it is out of range
+    const yesterday = new Date();
+    console.log(yesterday);
+    yesterday.setDate(yesterday.getDate() - 1);
+    console.log(yesterday);
+
+    const tomorrow = new Date();
+    console.log(tomorrow);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log(tomorrow);
+
+    expect((isSameDate(new Date(), new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(yesterday, new Date(recentEvent)))).toBe(true);
+    expect((isSameDate(tomorrow, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(new Date(), new Date(recentEvent))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent))))).toBe(true)
+
+    // expect((isSameDate(new Date(), new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    // expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+
+})
+
+test("multi Logic past, threeArray", () => {
+    var recentEvent = threeArray.at(1);
+    // console.log(threeArray.at(-1)); // object returns undefined if it is out of range
+    const yesterday = new Date();
+    console.log(yesterday);
+    yesterday.setDate(yesterday.getDate() - 1);
+    console.log(yesterday);
+
+    const tomorrow = new Date();
+    console.log(tomorrow);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log(tomorrow);
+
+    expect((isSameDate(new Date(), new Date(recentEvent)))).toBe(true);
+    expect((isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(tomorrow, new Date(recentEvent)))).toBe(false);
+    expect((isSameDate(new Date(), new Date(recentEvent))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent))))).toBe(true)
+
+    // expect((isSameDate(new Date(), new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+    // expect((isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent)))).toBe(false);
+
+})

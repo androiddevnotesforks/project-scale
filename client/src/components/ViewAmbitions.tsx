@@ -80,7 +80,7 @@ export default function ViewAmbitions() {
                             dailyPlan: data.dailyPlan,
                             public: data.public,
                         }))}>
-                            {(isSameDate(new Date(), new Date(recentEvent)) || (isSameDate(tomorrow, new Date(recentEvent))) || (isSameDate(yesterday, new Date(recentEvent))) ) 
+                            {((isSameDate(new Date(), new Date(recentEvent))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(tomorrow, new Date(recentEvent)))) || ((!isSameDate(new Date(), new Date(recentEvent))) && (isSameDate(yesterday, new Date(recentEvent))))) 
                                 ? ( null ) 
                                 : (
                                     <AddEvent />
