@@ -69,7 +69,7 @@ function App() {
   // fixed issue for why the routing wasn't working, source: https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor
   return (
     <ApolloProvider client={client}>
-      <Router basename='/'>
+      <Router>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
        <MantineProvider 
        theme={{ colorScheme: colorScheme}}  
