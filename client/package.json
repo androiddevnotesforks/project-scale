@@ -1,5 +1,6 @@
 {
   "name": "project-scale",
+  "homepage": "https://project-scale.vercel.app/",
   "version": "0.1.0",
   "engines": {
     "node": "16.x"

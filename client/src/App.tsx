@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'; // source for NavLink CSS styling: https://www.kindacode.com/article/react-router-how-to-highlight-active-link/
 import {
   ApolloClient,
@@ -69,7 +69,7 @@ function App() {
   // fixed issue for why the routing wasn't working, source: https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor
   return (
     <ApolloProvider client={client}>
-      <Router>
+      <Router basename='/'>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
        <MantineProvider 
        theme={{ colorScheme: colorScheme}}  
