@@ -37,7 +37,8 @@
     
   # Deployed App  
 
-  Deployed Heroku app link: [https://ambitions-scale-up.herokuapp.com/](https://ambitions-scale-up.herokuapp.com/)
+  No longer deployed on Heroku, it has now been deployed on Render.
+  Deployed Render app link: [https://ambitions-scale-up.onrender.com/](https://ambitions-scale-up.onrender.com/)
   
 
   # Tests
